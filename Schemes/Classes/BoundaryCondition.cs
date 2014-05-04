@@ -17,7 +17,7 @@ namespace Schemes.Classes
         public int Index
         {
             get
-            {
+            { 
                 switch (Location)
                 {
                     case BoundaryConditionLocation.Left:

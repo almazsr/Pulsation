@@ -51,14 +51,13 @@ namespace Schemes.UI
         public void Init()
         {
             Func<double, double, double> rightPart = (r, t) => 0;
-            DiffusionCylindricScheme scheme = new DiffusionCylindricScheme(2*Math.PI,
-                                                                           (r, t) => -(Math.Cos(t)/r) - r*Math.Sin(t), 1);
             Grid1D grid = Grid1D.Build(0, 1, 100);
             double[] ut0 = new double[grid.N];
             for (int i = 0; i < grid.N; i++)
             {
                 ut0[i] = 0;
             }
+            TimeLimitCondition timeLimitCondition = new TimeLimitCondition(2*Math.PI);
             var boundaryConditions = new[]
                                          {
                                              new BoundaryCondition(t => 0, BoundaryConditionLocation.Left,
@@ -66,38 +65,8 @@ namespace Schemes.UI
                                              new BoundaryCondition(t => Math.Cos(t), BoundaryConditionLocation.Right,
                                                                    BoundaryConditionType.Dirichlet)
                                          };
-            var solution = scheme.Solve(grid, boundaryConditions, ut0, 1E-3);
-
-            Func<double, double, double> uExact = (r, t) => r * t;
-            int n = 0;
-            foreach (var layer in solution.Layers)
-            {
-                double[] g = new double[grid.N];
-                grid.CopyTo(g, 0);
-                Shape2D shape = new Curve2D(g, layer);
-                shape.Color = Color.Black;
-                shape.Visible = true;
-                shapes.Add(shape);
-            }
-        }
-
-        public void Init1()
-        {
-            Func<double, double, double> rightPart = (r, t) => r - t / r;
-            DiffusionCylindricScheme scheme = new DiffusionCylindricScheme(2*Math.PI);
-            Grid1D grid = Grid1D.Build(1, 2, 100);
-            double[] ut0 = new double[grid.N];
-            for (int i = 0; i < grid.N; i++)
-            {
-                ut0[i] = 0;
-            }
-            var solution = scheme.Solve(grid, new[]
-                                   {
-                                       new BoundaryCondition(t => 1-t, BoundaryConditionLocation.Left,
-                                                             BoundaryConditionType.Dirichlet),
-                                       new BoundaryCondition(t=>2-t/2, BoundaryConditionLocation.Right,
-                                                             BoundaryConditionType.Dirichlet)
-                                   }, ut0, 1E-3);
+            var scheme = new CrankNicolsonCylindricScheme1D(boundaryConditions, (r, t) => -(Math.Cos(t) / r) - r * Math.Sin(t), 1);
+            var solution = scheme.Solve(timeLimitCondition, grid, ut0, 1E-3);
 
             Func<double, double, double> uExact = (r, t) => r * t;
             int n = 0;

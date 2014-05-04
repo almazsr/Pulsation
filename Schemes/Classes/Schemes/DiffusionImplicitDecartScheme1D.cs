@@ -1,0 +1,35 @@
+using System;
+using System.Collections.Generic;
+using Schemes.TimeDependent1D;
+
+namespace Schemes.Classes.Schemes
+{
+    /// <summary>
+    /// dU/dt=a^2*d^2U/dx^2+F(r,t)
+    /// </summary>
+    public class DiffusionImplicitDecartScheme1D : DiffusionScheme1D
+    {
+        public DiffusionImplicitDecartScheme1D(IList<BoundaryCondition> boundaryConditions, Func<double, double, double> fFunc, double a) : base(boundaryConditions, fFunc, a)
+        {
+        }
+
+        public DiffusionImplicitDecartScheme1D(IList<BoundaryCondition> boundaryConditions) : base(boundaryConditions)
+        {
+        }
+
+        protected internal override void FillMatrix(TriDiagMatrix matrix, double[] currentLayer, Grid1D grid, double t, double dt)
+        {
+            double[] Un = currentLayer;
+            for (int i = 1; i < matrix.N - 1; i++)
+            {
+                double x = grid[i];
+                double dx = grid.h;
+                double a2 = a * a;
+                matrix.A[i] = -a2 * dt / (dx * dx);
+                matrix.C[i] = 1 + 2 * a2 * dt / (dx * dx);
+                matrix.B[i] = -a2 * dt / (dx * dx);
+                matrix.F[i] = Un[i] + dt * FFunc(x, t);
+            }
+        }
+    }
+}

@@ -6,7 +6,7 @@ namespace Pulsation.Models
 {
     public class PulsationLaminarCalculationData : INotifyPropertyChanged
     {
-        public PulsationLaminarCalculationData(double tMax = DefaultTMax, double gridMin = DefaultGridMin, double gridMax = DefaultGridMax, int dAngle = DefaultAngle, int nGrid = DefaultNGrid)
+        public PulsationLaminarCalculationData(double tMax = DefaultTMax, double gridMin = DefaultGridMin, double gridMax = DefaultGridMax, double dAngle = DefaultAngle, int nGrid = DefaultNGrid)
         {
             this.dAngle = dAngle;
             this.TMax = tMax;
@@ -17,12 +17,11 @@ namespace Pulsation.Models
         }
 
         #region Constants
-
-        public const double DefaultTMax = 2*Math.PI;
+        public const double DefaultTMax = 20*Math.PI;
         public const double DefaultGridMin = 0;
         public const double DefaultGridMax = 1;
 
-        public const int DefaultAngle = 30;
+        public const double DefaultAngle = 30;
         public const int DefaultNTime = 100;
         public const int DefaultNGrid = 100;
         #endregion
@@ -142,9 +141,9 @@ namespace Pulsation.Models
             get { return (GridMax - GridMin)/(NGrid - 1); }
         }
 
-        private int _dAngle;
+        private double _dAngle;
 
-        public int dAngle
+        public double dAngle
         {
             get { return _dAngle; }
             set

@@ -4,8 +4,10 @@ using Schemes.TimeDependent1D;
 
 namespace Schemes.Interfaces
 {
-    public interface IScheme1D : IFinishCondition
+    public interface IScheme1D
     {
-        TimeDependent1DSolution Solve(Grid1D grid, IList<BoundaryCondition> boundaryConditions, double[] initialLayer, double dt);
+        IList<BoundaryCondition> BoundaryConditions { get; }
+
+        TimeDependent1DSolution Solve(IStopCondition stopCondition, Grid1D grid, double[] initialLayer, double dt);
     }
 }

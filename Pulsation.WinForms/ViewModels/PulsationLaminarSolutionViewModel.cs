@@ -3,23 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using OpenGlExtensions.Classes;
 using Pulsation.Models;
-using Schemes.TimeDependent1D;
 
 namespace Pulsation.WinForms.ViewModels
 {
-    public class PulsationLaminarExactSolutionViewModel : INotifyPropertyChanged
+    public class PulsationLaminarSolutionViewModel : INotifyPropertyChanged
     {
-        public PulsationLaminarExactSolutionViewModel(double chartPaddingInPercent = 0.1)
+        public PulsationLaminarSolutionViewModel(double chartPaddingInPercent = 0.1)
         {
             ChartPaddingInPercent = chartPaddingInPercent;
             CurrentLayerIndex = 0;            
             PhysicalData = new PulsationLaminarPhysicalData();
-            CalculationData = new PulsationLaminarCalculationData(10*Math.PI, 0,1);
+            CalculationData = new PulsationLaminarCalculationData();
             CurveGroups = new Dictionary<string, List<Curve2D>>();
         }
 
         #region Settings
-
         private bool _exactSolutionVisible;
 
         public bool ExactSolutionVisible
@@ -72,6 +70,32 @@ namespace Pulsation.WinForms.ViewModels
 
         public event EventHandler ImplicitSchemeSolutionVisibleChanged;
 
+        private bool _crankNikolsonSchemeSolutionVisible;
+
+        public bool CrankNikolsonSchemeSolutionVisible
+        {
+            get { return _crankNikolsonSchemeSolutionVisible; }
+            set
+            {
+                if (_crankNikolsonSchemeSolutionVisible != value)
+                {
+                    _crankNikolsonSchemeSolutionVisible = value;
+                    OnPropertyChanged("CrankNikolsonSchemeSolutionVisible");
+                    OnCrankNikolsonSchemeSolutionVisibleChanged();
+                }
+            }
+        }
+
+        protected virtual void OnCrankNikolsonSchemeSolutionVisibleChanged()
+        {
+            if (CrankNikolsonSchemeSolutionVisibleChanged != null)
+            {
+                CrankNikolsonSchemeSolutionVisibleChanged(this, new EventArgs());
+            }
+        }
+
+        public event EventHandler CrankNikolsonSchemeSolutionVisibleChanged;
+
         private double _ChartPadding;
 
         public double ChartPaddingInPercent
@@ -121,7 +145,7 @@ namespace Pulsation.WinForms.ViewModels
 
         public event EventHandler SolvedChanged;
 
-        public int Angle
+        public double Angle
         {
             get
             {

@@ -47,13 +47,14 @@
             this.tbdt = new System.Windows.Forms.TextBox();
             this.cbImplicitScheme = new System.Windows.Forms.CheckBox();
             this.cbExactSolution = new System.Windows.Forms.CheckBox();
+            this.cbCrankNikolsonSolution = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.trbLayer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.point2DBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSolve
             // 
-            this.btnSolve.Location = new System.Drawing.Point(384, 477);
+            this.btnSolve.Location = new System.Drawing.Point(384, 454);
             this.btnSolve.Name = "btnSolve";
             this.btnSolve.Size = new System.Drawing.Size(75, 23);
             this.btnSolve.TabIndex = 1;
@@ -191,7 +192,7 @@
             // cbImplicitScheme
             // 
             this.cbImplicitScheme.AutoSize = true;
-            this.cbImplicitScheme.Location = new System.Drawing.Point(190, 479);
+            this.cbImplicitScheme.Location = new System.Drawing.Point(157, 482);
             this.cbImplicitScheme.Name = "cbImplicitScheme";
             this.cbImplicitScheme.Size = new System.Drawing.Size(104, 17);
             this.cbImplicitScheme.TabIndex = 22;
@@ -201,18 +202,29 @@
             // cbExactSolution
             // 
             this.cbExactSolution.AutoSize = true;
-            this.cbExactSolution.Location = new System.Drawing.Point(300, 481);
+            this.cbExactSolution.Location = new System.Drawing.Point(267, 482);
             this.cbExactSolution.Name = "cbExactSolution";
             this.cbExactSolution.Size = new System.Drawing.Size(62, 17);
             this.cbExactSolution.TabIndex = 23;
             this.cbExactSolution.Text = "Точное";
             this.cbExactSolution.UseVisualStyleBackColor = true;
             // 
+            // cbCrankNikolsonSolution
+            // 
+            this.cbCrankNikolsonSolution.AutoSize = true;
+            this.cbCrankNikolsonSolution.Location = new System.Drawing.Point(339, 483);
+            this.cbCrankNikolsonSolution.Name = "cbCrankNikolsonSolution";
+            this.cbCrankNikolsonSolution.Size = new System.Drawing.Size(122, 17);
+            this.cbCrankNikolsonSolution.TabIndex = 24;
+            this.cbCrankNikolsonSolution.Text = "Кранка-Николсона";
+            this.cbCrankNikolsonSolution.UseVisualStyleBackColor = true;
+            // 
             // PulsationLaminarView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(473, 567);
+            this.Controls.Add(this.cbCrankNikolsonSolution);
             this.Controls.Add(this.cbExactSolution);
             this.Controls.Add(this.cbImplicitScheme);
             this.Controls.Add(this.label4);
@@ -259,6 +271,7 @@
         private System.Windows.Forms.TextBox tbdt;
         private System.Windows.Forms.CheckBox cbImplicitScheme;
         private System.Windows.Forms.CheckBox cbExactSolution;
+        private System.Windows.Forms.CheckBox cbCrankNikolsonSolution;
     }
 }
 

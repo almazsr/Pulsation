@@ -1,4 +1,8 @@
-﻿namespace Pulsation.Models
+﻿using System;
+using Schemes.Classes;
+using Schemes.Enums;
+
+namespace Pulsation.Models
 {
     public class PulsationLaminarPhysicalData
     {
@@ -7,15 +11,30 @@
         {
             this.s = s;
             this.Re = Re;
-        } 
+            BoundaryConditions = new[]
+                                         {
+                                             new BoundaryCondition(t => 0, BoundaryConditionLocation.Left,
+                                                                   BoundaryConditionType.Neumann),
+                                             new BoundaryCondition(t => 0, BoundaryConditionLocation.Right,
+                                                                   BoundaryConditionType.Dirichlet)
+                                         };
+        }
         #endregion
+
+        public double F(double r, double t)
+        {
+            double s2 = s*s;
+            return Re / s2 * Math.Cos(t);
+        }
+
+        public BoundaryCondition[] BoundaryConditions { get; private set; }
 
         #region Constants
         public const double Defaults = 2.849;
         public const double DefaultRe = 1;
         #endregion
 
-        #region Properties
+        #region Properties        
 
         public double s { get; set; } 
         public double Re { get; set; } 

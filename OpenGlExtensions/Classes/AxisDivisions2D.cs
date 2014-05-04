@@ -11,7 +11,7 @@ namespace OpenGlExtensions.Classes
         {
             Context2D = axis.Context2D;
             Axis = axis;
-            NumberFormat = "0.##";
+            NumberFormat = "0.#####";
             Count = 10;
             Color = Color.Black;
             NumbersVisible = true;

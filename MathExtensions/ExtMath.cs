@@ -1,65 +1,105 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using Wolfram.NETLink;
 
 namespace MathExtensions
 {
     public static class ExtMath
     {
-        public const int NBerBei = 10;
+        public static int NBerBei = 300; 
+        private static IKernelLink _mathLink;
 
+        //#region MathLink
+        //public static double bei(double x)
+        //{
+        //    _mathLink.Evaluate(string.Format("KelvinBei[{0:0.000000000}]", x));
+        //    _mathLink.WaitForAnswer();
+        //    return _mathLink.GetDouble();
+        //}
+
+        //public static double ber(double x)
+        //{
+        //    _mathLink.Evaluate(string.Format("KelvinBer[{0:0.000000000}]", x));
+        //    _mathLink.WaitForAnswer();
+        //    return _mathLink.GetDouble();
+        //} 
+        //#endregion
+
+        #region Functions
         public static double bei(double x)
         {
-            double sum = 0;
-            for (int k = 0; k < NBerBei; k++)
+            if (x == 0)
             {
-                sum += Math.Pow(-1, k) * Math.Pow(x, 4 * k + 2) / (Math.Pow(2, 4 * k + 2) * Math.Pow(Fact(2 * k + 1), 2));
+                return 0;
             }
-            return sum;
-        }
-
-        public static long Fact(long n)
-        {
-            long result = 1;
-            for (int k = 1; k <= n; k++)
+            else
             {
-                result *= k;
+                int sign = 1;
+                double termi, term = x * x / 4;
+                double sum = term * sign;
+                for (int i = 1; i <= NBerBei; i++)
+                {
+                    sign = -sign;
+                    termi = Math.Pow((x/(4*i)) * (x/(4*i+2)), 2);
+                    term = term * termi;
+                    sum += sign * term;
+                    if (Math.Abs(term / sum) < 1E-12)
+                    {
+                        break;
+                    }
+                }
+                return sum;
             }
-            return result;
         }
 
         public static double ber(double x)
         {
-            double sum = 0;
-            for (int k = 0; k < NBerBei; k++)
+            if (x == 0)
             {
-                sum += Math.Pow(-1, k) * Math.Pow(x, 4 * k) / (Math.Pow(2, 4 * k) * Math.Pow(Fact(2 * k), 2));
+                return 1;
             }
-            return sum;
+            else
+            {
+                int sign = 1;
+                double termi, term = 1;
+                double sum = term*sign;
+                for (int i = 1; i <= NBerBei; i++)
+                {
+                    sign = -sign;
+                    termi = Math.Pow((x/(4*i)) * (x/(4*i-2)), 2);
+                    term = term * termi;
+                    sum += sign * term;
+                    if (Math.Abs(term / sum) < 1E-12)
+                    {
+                        break;
+                    }
+                }
+                return sum;
+            }
+        } 
+        #endregion
+
+        public static Dictionary<int, BigInteger> _factorials = new Dictionary<int, BigInteger>();
+
+        public static BigInteger Fact(int n)
+        {
+            if (!_factorials.ContainsKey(n))
+            {
+                BigInteger result = 1;
+                for (int k = 1; k <= n; k++)
+                {
+                    result *= k;
+                }
+                _factorials.Add(n, result);
+            }
+            return _factorials[n];            
         }
 
         public static double Norm(double[] a, double[] b)
         {
             return Math.Sqrt(a.Select((t, i) => (t - b[i])*(t - b[i])).Sum());
-        }
-
-        public static double[] TriDiag(double[] A, double[] C, double[] B, double[] F, int n)
-        {
-            double[] alpha = new double[n];
-            double[] beta = new double[n];
-            alpha[1] = -B[0] / C[0];
-            beta[1] = F[0] / C[0];
-            for (int i = 1; i < n - 1; i++)
-            {
-                alpha[i + 1] = -B[i] / (A[i] * alpha[i] + C[i]);
-                beta[i + 1] = (F[i] - A[i] * beta[i]) / (A[i] * alpha[i] + C[i]);
-            }
-            double[] x = new double[n];
-            x[n - 1] = (F[n - 1] - A[n - 1] * beta[n - 1]) / (C[n - 1] + A[n - 1] * alpha[n - 1]);
-            for (int i = n - 2; i >= 0; i--)
-            {
-                x[i] = alpha[i + 1] * x[i + 1] + beta[i];
-            }
-            return x;
-        }
+        } 
     }
 }

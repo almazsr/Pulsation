@@ -71,10 +71,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IDataWriter.cs" />
+    <Compile Include="Solvers\IAsyncSolver.cs" />
+    <Compile Include="SpecialFunctions.cs" />
     <Compile Include="Models\PulsationLaminarCalculationData.cs" />
     <Compile Include="Solvers\IPulsationLaminarSolver.cs" />
     <Compile Include="Solvers\PulsationLaminarExactSolver.cs" />
-    <Compile Include="Solvers\PulsationLaminarImplicitSchemeSolver.cs" />
+    <Compile Include="Solvers\PulsationLaminarSchemeSolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\PulsationLaminarPhysicalData.cs" />
@@ -102,10 +105,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MathExtensions\MathExtensions.csproj">
-      <Project>{C153778F-B9AB-411E-8C42-EF4790496CE3}</Project>
-      <Name>MathExtensions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OpenGlExtensions\OpenGlExtensions.csproj">
       <Project>{1ae1d42b-c1e9-42cc-b697-7be765d3d5a9}</Project>
       <Name>OpenGlExtensions</Name>

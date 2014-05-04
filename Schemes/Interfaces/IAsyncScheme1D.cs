@@ -5,7 +5,7 @@ using Schemes.TimeDependent1D;
 
 namespace Schemes.Interfaces
 {
-    public interface IAsyncScheme1D : IFinishCondition
+    public interface IAsyncScheme1D : IStopCondition
     {
         void BeginSolve(Grid1D grid, IList<BoundaryCondition> boundaryConditions, double[] initialLayer, double dt);
 

@@ -34,6 +34,7 @@ namespace Pulsation.WinForms.Views
             tbRe.AddBinding(m => m.Text, ViewModel.PhysicalData, m => m.Re);
             tbs.AddBinding(m => m.Text, ViewModel.PhysicalData, m => m.s);
             cbExactSolution.AddBinding(m => m.Checked, ViewModel, m => m.ExactSolutionVisible, DataSourceUpdateMode.OnPropertyChanged);
+            cbCrankNikolsonSolution.AddBinding(m => m.Checked, ViewModel, m => m.CrankNikolsonSchemeSolutionVisible, DataSourceUpdateMode.OnPropertyChanged);
             cbImplicitScheme.AddBinding(m => m.Checked, ViewModel, m => m.ImplicitSchemeSolutionVisible, DataSourceUpdateMode.OnPropertyChanged);
             trbLayer.AddBinding(m => m.Maximum, ViewModel.CalculationData, m => m.NTime, DataSourceUpdateMode.OnPropertyChanged);
             trbLayer.AddBinding(m => m.Value, ViewModel, m => m.CurrentLayerIndex, DataSourceUpdateMode.OnPropertyChanged);
@@ -41,7 +42,7 @@ namespace Pulsation.WinForms.Views
             trbLayer.AddBinding(m => m.Visible, ViewModel, m => m.Solved, DataSourceUpdateMode.OnPropertyChanged);
         }
 
-        public PulsationLaminarExactSolutionViewModel ViewModel { get; set; }
+        public PulsationLaminarSolutionViewModel ViewModel { get; set; }
 
         public IOpenGlContext2D Context2D
         {

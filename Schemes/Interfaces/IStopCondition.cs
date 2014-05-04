@@ -2,7 +2,7 @@
 
 namespace Schemes.Interfaces
 {
-    public interface IFinishCondition
+    public interface IStopCondition
     {
         bool IsFinish(TimeDependent1DSolution solution); 
     }

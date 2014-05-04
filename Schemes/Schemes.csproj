@@ -40,18 +40,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\BoundaryCondition.cs" />
-    <Compile Include="Classes\Schemes\DiffusionCylindricSheme.cs" />
-    <Compile Include="Classes\Schemes\DiffusionDecartScheme.cs" />
-    <Compile Include="Classes\Schemes\DiffusionScheme.cs" />
-    <Compile Include="Classes\Schemes\Scheme.cs" />
-    <Compile Include="Classes\TimeMaxFinishCondition.cs" />
+    <Compile Include="Classes\Schemes\CrankNicolsonCylindricScheme1D.cs" />
+    <Compile Include="Classes\Schemes\DiffusionImplicitCylindricScheme1D.cs" />
+    <Compile Include="Classes\Schemes\DiffusionImplicitDecartScheme1D.cs" />
+    <Compile Include="Classes\Schemes\DiffusionScheme1D.cs" />
+    <Compile Include="Classes\Schemes\Scheme1D.cs" />
+    <Compile Include="Classes\TimeLimitCondition.cs" />
     <Compile Include="Classes\TriDiagMatrix.cs" />
     <Compile Include="Enums\BoundaryConditionLocation.cs" />
     <Compile Include="Enums\BoundaryConditionType.cs" />
     <Compile Include="Exceptions\CalculationException.cs" />
     <Compile Include="Interfaces\IAsyncScheme1D.cs" />
     <Compile Include="Interfaces\IBoundaryCondition.cs" />
-    <Compile Include="Interfaces\IFinishCondition.cs" />
+    <Compile Include="Interfaces\IStopCondition.cs" />
     <Compile Include="Interfaces\IScheme1D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimeDependent1D\Grid1D.cs" />

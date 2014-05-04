@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using OpenGlExtensions.Interfaces;
 using Pulsation.WinForms.Presenters;
 using Pulsation.WinForms.ViewModels;
+using Schemes.TimeDependent1D;
 
 namespace Pulsation.WinForms.Views
 {
@@ -9,14 +11,10 @@ namespace Pulsation.WinForms.Views
     {
         PulsationLaminarPresenter Presenter { get; }
 
-        PulsationLaminarExactSolutionViewModel ViewModel { get; set; }
+        PulsationLaminarSolutionViewModel ViewModel { get; set; }
 
         #region Controls
         IOpenGlContext2D Context2D { get; }
-        #endregion
-
-        #region Events
-        event EventHandler SolveClicked;
-        #endregion
+        #endregion 
     }
 }

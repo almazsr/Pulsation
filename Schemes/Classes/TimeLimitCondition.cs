@@ -3,14 +3,14 @@ using Schemes.TimeDependent1D;
 
 namespace Schemes.Classes
 {
-    public abstract class TimeMaxFinishCondition : IFinishCondition
+    public class TimeLimitCondition : IStopCondition
     {
-        public TimeMaxFinishCondition(double tMax)
+        public TimeLimitCondition(double tMax)
         {
             TMax = tMax;
         }
 
-        public virtual bool IsFinish(TimeDependent1DSolution solution)
+        public bool IsFinish(TimeDependent1DSolution solution)
         {
             return solution.tCurrent > TMax;
         }

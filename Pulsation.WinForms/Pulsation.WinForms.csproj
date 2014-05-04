@@ -49,8 +49,9 @@
     <Compile Include="Helpers\BindingHelper.cs" />
     <Compile Include="Presenters\PulsationLaminarPresenter.cs" />
     <Compile Include="ViewModels\PulsationLaminarComparisonViewModel.cs" />
-    <Compile Include="ViewModels\PulsationLaminarExactSolutionViewModel.cs" />
+    <Compile Include="ViewModels\PulsationLaminarSolutionViewModel.cs" />
     <Compile Include="Views\IPulsationLaminarComparisonView.cs" />
+    <Compile Include="Views\IPulsationLaminarSolutionView.cs" />
     <Compile Include="Views\IPulsationLaminarView.cs" />
     <Compile Include="Views\PulsationLaminarView.cs">
       <SubType>Form</SubType>
