@@ -1,14 +1,16 @@
 ﻿using System;
+using System.IO;
 using Pulsation.Models;
 using Schemes.Classes;
+using Schemes.Classes.Schemes;
 using Schemes.Interfaces;
 using Schemes.TimeDependent1D;
 
 namespace Pulsation.Solvers
 {
-    internal class PulsationLaminarSchemeSolver : IAsyncSolver<PulsationLaminarPhysicalData, PulsationLaminarCalculationData, TimeDependent1DSolution>
+    internal abstract class PulsationLaminarSchemeSolver : PulsationLaminarSolver
     {
-        public PulsationLaminarSchemeSolver()
+        protected PulsationLaminarSchemeSolver()
         {
             SolutionTimeout = new TimeSpan(0, 0, 0, DefaultSeconds);
         }
@@ -39,9 +41,13 @@ namespace Pulsation.Solvers
             throw new NotImplementedException();
         }
 
-        public PulsationLaminarPhysicalData PhysicalData { get; set; }
-        public PulsationLaminarCalculationData CalculationData { get; set; }
         public TimeDependent1DSolution Solution { get; private set; }
-        public event EventHandler Solved;
+
+        public abstract Scheme1D Scheme { get; }
+
+        public override void BeginSolve(TextWriter writer)
+        {
+            
+        }
     }
 }

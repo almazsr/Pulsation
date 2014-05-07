@@ -4,7 +4,7 @@ using Schemes.TimeDependent1D;
 
 namespace Pulsation.Solvers
 {
-    public class PulsationLaminarExactSolver : IPulsationLaminarSolver
+    public class PulsationLaminarExactSolver : IPulsationLaminarSolver, IAsyncSolver
     {
         public PulsationLaminarExactSolver(PulsationLaminarPhysicalData physicalData)
         {
@@ -13,6 +13,8 @@ namespace Pulsation.Solvers
 
         #region Properties
         public PulsationLaminarPhysicalData PhysicalData { get; set; }
+        public PulsationLaminarCalculationData CalculationData { get; set; }
+
         #endregion
 
         #region Methods

@@ -75,7 +75,7 @@
     <Compile Include="Solvers\IAsyncSolver.cs" />
     <Compile Include="SpecialFunctions.cs" />
     <Compile Include="Models\PulsationLaminarCalculationData.cs" />
-    <Compile Include="Solvers\IPulsationLaminarSolver.cs" />
+    <Compile Include="Solvers\PulsationLaminarSolver.cs" />
     <Compile Include="Solvers\PulsationLaminarExactSolver.cs" />
     <Compile Include="Solvers\PulsationLaminarSchemeSolver.cs" />
   </ItemGroup>

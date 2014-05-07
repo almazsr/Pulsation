@@ -30,7 +30,7 @@ namespace Schemes.Classes.Schemes
             return matrix;
         }
 
-        protected virtual internal double[] SolveLayer(double[] currentLayer, Grid1D grid, double t, double dt)
+        public virtual double[] SolveLayer(double[] currentLayer, Grid1D grid, double t, double dt)
         {
             // Решение СЛАУ методом прогонки.
             var matrix = BuildMatrix(currentLayer, grid, t, dt);

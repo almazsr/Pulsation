@@ -3,15 +3,9 @@ using System.IO;
 
 namespace Pulsation.Solvers
 {
-    public interface IAsyncSolver<TPhysicalData, TCalculationData, TSolution>
+    public interface IAsyncSolver
     {
-        void BeginSolve(TextWriter textWriter);
-
-        TPhysicalData PhysicalData { get; set; }
-
-        TCalculationData CalculationData { get; set; }
-
-        TSolution Solution { get; }
+        void BeginSolve(TextWriter writer);
 
         event EventHandler Solved;
     }

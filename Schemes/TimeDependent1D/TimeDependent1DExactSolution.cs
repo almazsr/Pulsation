@@ -2,7 +2,7 @@
 
 namespace Schemes.TimeDependent1D
 {
-    public class TimeDependent1DExactSolution : TimeDependent1DSolution
+    public class TimeDependent1DExactSolution
     {
         public TimeDependent1DExactSolution(Grid1D grid, double dt, Func<double, double, double> func, double tMax)
             : base(grid, dt)

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Schemes.Interfaces;
 
 namespace Schemes.TimeDependent1D
 {
-    public class Grid1D : ReadOnlyCollection<double>
+    public class Grid1D : IGrid1D
     {       
         public static Grid1D Build(double min, double max, int N)
         {
@@ -38,6 +39,11 @@ namespace Schemes.TimeDependent1D
         }
 
         public double h { get; private set; }
+
+        public double this[int i]
+        {
+            get { throw new System.NotImplementedException(); }
+        }
 
         public double Min { get; private set; }
         public double Max { get; private set; }
