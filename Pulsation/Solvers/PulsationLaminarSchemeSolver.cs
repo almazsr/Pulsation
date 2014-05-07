@@ -6,7 +6,7 @@ using Schemes.TimeDependent1D;
 
 namespace Pulsation.Solvers
 {
-    internal class PulsationLaminarSchemeSolver
+    internal class PulsationLaminarSchemeSolver : IAsyncSolver<PulsationLaminarPhysicalData, PulsationLaminarCalculationData, TimeDependent1DSolution>
     {
         public PulsationLaminarSchemeSolver()
         {
@@ -33,6 +33,15 @@ namespace Pulsation.Solvers
 
         public TimeSpan SolutionTimeout { get; set; }
 
-        public const double Epsilon = 1E-6; 
+        public const double Epsilon = 1E-6;
+        public void BeginSolve()
+        {
+            throw new NotImplementedException();
+        }
+
+        public PulsationLaminarPhysicalData PhysicalData { get; set; }
+        public PulsationLaminarCalculationData CalculationData { get; set; }
+        public TimeDependent1DSolution Solution { get; private set; }
+        public event EventHandler Solved;
     }
 }
