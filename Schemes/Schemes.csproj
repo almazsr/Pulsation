@@ -54,10 +54,12 @@
     <Compile Include="Classes\Schemes\Scheme1D.cs" />
     <Compile Include="Classes\TimeLimitCondition.cs" />
     <Compile Include="Classes\TriDiagMatrix.cs" />
-    <Compile Include="Database\DbTimeDependentSolution1D.Overrides.cs" />
-    <Compile Include="Database\DbGrid1D.cs" />
+    <Compile Include="Database\DbGrid1D.Entity.cs" />
     <Compile Include="Database\DbLayer1D.cs" />
     <Compile Include="Database\DbTimeDependentSolution1D.cs" />
+    <Compile Include="Database\DbGrid1D.cs" />
+    <Compile Include="Database\DbLayer1D.Entity.cs" />
+    <Compile Include="Database\DbTimeDependentSolution1D.Entity.cs" />
     <Compile Include="Database\DbSolutionContext.cs" />
     <Compile Include="Enums\BoundaryConditionLocation.cs" />
     <Compile Include="Enums\BoundaryConditionType.cs" />

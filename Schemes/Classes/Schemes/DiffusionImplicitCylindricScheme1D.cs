@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Schemes.Interfaces;
 using Schemes.TimeDependent1D;
 
 namespace Schemes.Classes.Schemes
@@ -17,17 +18,17 @@ namespace Schemes.Classes.Schemes
         {
         }
 
-        protected internal override void FillMatrix(TriDiagMatrix matrix, double[] currentLayer, Grid1D grid, double t, double dt)
+        protected internal override void FillMatrix(TriDiagMatrix matrix, ILayer1D currentLayer, IGrid1D grid, double t, double dt)
         {
-            double[] Un = currentLayer;
+            var Un = currentLayer;
             for (int i = 1; i < matrix.N - 1; i++)
             {
                 double r = grid[i];
-                double dr = grid.h;                
+                double dr = grid.h;
                 double a2 = a * a;
-                matrix.A[i] = -a2*dt/dr*(1/dr - 1/(2*r));
-                matrix.C[i] = 1 + a2*2*dt/(dr*dr);
-                matrix.B[i] = -a2*dt/dr*(1/dr + 1/(2*r));
+                matrix.A[i] = -a2 * dt / dr * (1 / dr - 1 / (2 * r));
+                matrix.C[i] = 1 + a2 * 2 * dt / (dr * dr);
+                matrix.B[i] = -a2 * dt / dr * (1 / dr + 1 / (2 * r));
                 matrix.F[i] = Un[i] + dt * FFunc(r, t);
             }
         }

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Schemes.Classes;
-using Schemes.TimeDependent1D;
 
 namespace Schemes.Interfaces
 {
@@ -8,6 +8,8 @@ namespace Schemes.Interfaces
     {
         IList<BoundaryCondition> BoundaryConditions { get; }
 
-        TimeDependent1DSolution Solve(IStopCondition stopCondition, Grid1D grid, double[] initialLayer, double dt);
+        void BeginSolve(IStopCondition stopCondition, IGrid1D grid, double[] initialValues, double dt);
+
+        event EventHandler Solved;
     }
 }

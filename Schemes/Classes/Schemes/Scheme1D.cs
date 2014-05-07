@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Schemes.Database;
 using Schemes.Enums;
 using Schemes.Interfaces;
-using Schemes.TimeDependent1D;
 
 namespace Schemes.Classes.Schemes
 {
@@ -13,7 +14,7 @@ namespace Schemes.Classes.Schemes
             BoundaryConditions = boundaryConditions;
         }
 
-        protected virtual internal TriDiagMatrix BuildMatrix(double[] currentLayer, Grid1D grid, double t, double dt)
+        protected virtual internal TriDiagMatrix BuildMatrix(ILayer1D currentLayer, IGrid1D grid, double t, double dt)
         {            
             // Решение.
             TriDiagMatrix matrix = new TriDiagMatrix(grid.N);
@@ -30,7 +31,7 @@ namespace Schemes.Classes.Schemes
             return matrix;
         }
 
-        public virtual double[] SolveLayer(double[] currentLayer, Grid1D grid, double t, double dt)
+        public virtual double[] SolveLayer(ILayer1D currentLayer, IGrid1D grid, double t, double dt)
         {
             // Решение СЛАУ методом прогонки.
             var matrix = BuildMatrix(currentLayer, grid, t, dt);
@@ -39,11 +40,40 @@ namespace Schemes.Classes.Schemes
             return matrix.Solve();
         }
 
-        protected internal abstract void FillMatrix(TriDiagMatrix matrix, double[] currentLayer, Grid1D grid, double t, double dt);
+        protected internal abstract void FillMatrix(TriDiagMatrix matrix, ILayer1D currentLayer, IGrid1D grid, double t, double dt);
 
         #region Boundary conditions
 
         public IList<BoundaryCondition> BoundaryConditions { get; private set; }
+
+        public void BeginSolve(IStopCondition stopCondition, IGrid1D grid, double[] initialvalues, double dt)
+        {            
+            using (DbSolutionContext db = new DbSolutionContext())
+            {
+                var solution = Factory.Instance.CreateSolution(grid, dt);
+                int solutionId = solution.Save();
+            }
+            solution.dt = dt;
+            solution.AddLayer(initialvalues);
+            Action cycle = () =>
+                               {
+                                   do
+                                   {
+                                       // Следующий шаг по времени.
+                                       solution.NextTime();
+
+                                       // Решение.
+                                       var newLayer = SolveLayer(solution.CurrentLayer, grid, solution.CurrentTime,
+                                                                 solution.dt);
+
+                                       // Добавления нового слоя в результат.
+                                       solution.AddLayer(newLayer);
+                                   } while (!stopCondition.IsFinish(solution));
+                               };
+            cycle.BeginInvoke(null, null);
+        }
+
+        public event EventHandler Solved;
 
         protected internal virtual void SetLeftBoundaryCondition(TriDiagMatrix matrix, double t)
         {
@@ -88,24 +118,5 @@ namespace Schemes.Classes.Schemes
             }
         } 
         #endregion
-
-        public TimeDependent1DSolution Solve(IStopCondition stopCondition, Grid1D grid, double[] initialLayer, double dt)
-        {
-            TimeDependent1DSolution solution = new TimeDependent1DSolution(grid, dt);
-            solution.Initialize(initialLayer);
-            do
-            {
-                // Следующий шаг по времени.
-                solution.Next();
-
-                // Решение.
-                var newLayer = SolveLayer(solution.CurrentLayer, grid, solution.tCurrent, solution.dt);
-
-                // Добавления нового слоя в результат.
-                solution.AddLayer(newLayer);
-            }
-            while (!stopCondition.IsFinish(solution));
-            return solution;
-        }
     }
 }

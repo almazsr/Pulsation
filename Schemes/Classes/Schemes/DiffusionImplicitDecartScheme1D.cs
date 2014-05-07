@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Schemes.TimeDependent1D;
+using Schemes.Interfaces;
 
 namespace Schemes.Classes.Schemes
 {
@@ -17,9 +17,9 @@ namespace Schemes.Classes.Schemes
         {
         }
 
-        protected internal override void FillMatrix(TriDiagMatrix matrix, double[] currentLayer, Grid1D grid, double t, double dt)
+        protected internal override void FillMatrix(TriDiagMatrix matrix, ILayer1D currentLayer, IGrid1D grid, double t, double dt)
         {
-            double[] Un = currentLayer;
+            var Un = currentLayer;
             for (int i = 1; i < matrix.N - 1; i++)
             {
                 double x = grid[i];

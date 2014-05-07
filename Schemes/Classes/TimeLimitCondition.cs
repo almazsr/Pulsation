@@ -1,5 +1,4 @@
 ﻿using Schemes.Interfaces;
-using Schemes.TimeDependent1D;
 
 namespace Schemes.Classes
 {
@@ -10,9 +9,9 @@ namespace Schemes.Classes
             TMax = tMax;
         }
 
-        public bool IsFinish(TimeDependent1DSolution solution)
+        public bool IsFinish(ITimeDependentSolution1D solution)
         {
-            return solution.tCurrent > TMax;
+            return solution.CurrentTime > TMax;
         }
 
         public double TMax { get; set; }

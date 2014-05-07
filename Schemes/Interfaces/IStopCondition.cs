@@ -1,9 +1,7 @@
-﻿using Schemes.TimeDependent1D;
-
-namespace Schemes.Interfaces
+﻿namespace Schemes.Interfaces
 {
     public interface IStopCondition
     {
-        bool IsFinish(TimeDependent1DSolution solution); 
+        bool IsFinish(ITimeDependentSolution1D solution); 
     }
 }
