@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\BoundaryCondition.cs" />
+    <Compile Include="Classes\DbFactory.cs" />
+    <Compile Include="Classes\Factory.cs" />
     <Compile Include="Classes\Schemes\CrankNicolsonCylindricScheme1D.cs" />
     <Compile Include="Classes\Schemes\DiffusionImplicitCylindricScheme1D.cs" />
     <Compile Include="Classes\Schemes\DiffusionImplicitDecartScheme1D.cs" />
@@ -65,21 +67,21 @@
     <Compile Include="Enums\BoundaryConditionType.cs" />
     <Compile Include="Exceptions\CalculationException.cs" />
     <Compile Include="Helpers\Convert.cs" />
-    <Compile Include="Interfaces\IAsyncScheme1D.cs" />
     <Compile Include="Interfaces\IBoundaryCondition.cs" />
+    <Compile Include="Interfaces\IFactory.cs" />
     <Compile Include="Interfaces\IGrid1D.cs" />
     <Compile Include="Interfaces\ILayer1D.cs" />
     <Compile Include="Interfaces\IStopCondition.cs" />
     <Compile Include="Interfaces\IScheme1D.cs" />
-    <Compile Include="Interfaces\ITimeDependentSolution1DInternal.cs" />
     <Compile Include="Interfaces\ITimeDependentSolution1D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TimeDependent1D\Grid1D.cs" />
-    <Compile Include="TimeDependent1D\TimeDependent1DExactSolution.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Factories\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
