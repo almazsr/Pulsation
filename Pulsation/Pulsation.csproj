@@ -71,7 +71,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IDataWriter.cs" />
     <Compile Include="Solvers\IAsyncSolver.cs" />
     <Compile Include="SpecialFunctions.cs" />
     <Compile Include="Models\PulsationLaminarCalculationData.cs" />
@@ -108,10 +107,6 @@
     <ProjectReference Include="..\OpenGlExtensions\OpenGlExtensions.csproj">
       <Project>{1ae1d42b-c1e9-42cc-b697-7be765d3d5a9}</Project>
       <Name>OpenGlExtensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Schemes\Schemes.csproj">
-      <Project>{db313285-7735-4dac-a8e5-93d7c924d00d}</Project>
-      <Name>Schemes</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -9,11 +9,7 @@ namespace Calculation.Classes.Schemes
     /// </summary>
     public class DiffusionImplicitDecartScheme1D : DiffusionScheme1D
     {
-        public DiffusionImplicitDecartScheme1D(IList<BoundaryCondition> boundaryConditions, Func<double, double, double> fFunc, double a) : base(boundaryConditions, fFunc, a)
-        {
-        }
-
-        public DiffusionImplicitDecartScheme1D(IList<BoundaryCondition> boundaryConditions) : base(boundaryConditions)
+        public DiffusionImplicitDecartScheme1D(Func<double, double, double> fFunc, double a) : base(fFunc, a)
         {
         }
 

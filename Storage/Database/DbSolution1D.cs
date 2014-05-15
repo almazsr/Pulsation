@@ -1,34 +1,87 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Calculation.Interfaces;
-using Storage.Logic;
+using Newtonsoft.Json;
 
 namespace Storage.Database
 {
     public partial class DbSolution1D
     {
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        private DbSolution1D(DbSolutionContext dbContext, DbGrid1D grid, object physicalData, bool isExact = false, bool isTimeDependent = false)
+        {
+            this.DbContext = dbContext;
+            this.DbGridId = grid.Id;
+            this.PhysicalData = JsonConvert.SerializeObject(physicalData);
+            this.IsExact = isExact;
+            this.IsTimeDependent = isTimeDependent;
+        }
+
+        /// <summary>
+        /// Exact, time undependent.
+        /// </summary>
+        internal DbSolution1D(DbSolutionContext dbContext, DbGrid1D grid, object physicalData)
+            : this(dbContext, grid, physicalData, isExact: true)
+        {
+                     
+        }
+
+        /// <summary>
+        /// Exact, time dependent.
+        /// </summary>
+        internal DbSolution1D(DbSolutionContext dbContext, DbGrid1D grid, object physicalData, double dt)
+            : this(dbContext, grid, physicalData, isTimeDependent: true, isExact: true)
+        {
+            this.dt = dt;
+        } 
+
+        /// <summary>
+        /// Default numeric constructor.
+        /// </summary>
+        private DbSolution1D(DbSolutionContext dbContext, DbGrid1D grid, object physicalData, Type solverType, bool isTimeDependent) :
+            this(dbContext, grid, physicalData, isTimeDependent: isTimeDependent)
+        {
+            this.Solver = solverType.FullName;
+        }      
+        
+        /// <summary>
+        /// Numeric, time undependent.
+        /// </summary>
+        internal DbSolution1D(DbSolutionContext dbContext, DbGrid1D grid, object physicalData, Type solverType) :
+            this(dbContext, grid, physicalData, solverType, isTimeDependent: false)
+        {
+        }      
+
+        /// <summary>
+        /// Numeric, time dependent.
+        /// </summary>
+        internal DbSolution1D(DbSolutionContext dbContext, DbGrid1D grid, object physicalData, double dt, Type solverType)
+            : this(dbContext, grid, physicalData, solverType, isTimeDependent: true)
+        {
+            this.dt = dt;
+        }
+
         public ILayer1D GetLayer(int timeIndex)
         {
-            return DbLayers.ElementAt(timeIndex);
+            return DbContext.GetLayer(this, timeIndex);
         }
 
         public double GetTime(int timeIndex)
         {
-            return timeIndex*TimeStep;
+            return timeIndex*dt;
         }
 
-        public void AddLayer(double[] values)
+        public void AddLayer(double[] layerValues)
         {
-            DbLayer1D layer = new DbLayer1D(values);
-            layer.TimeIndex = CurrentTimeIndex;
-            layer.Time = GetTime(CurrentTimeIndex);
-            layer.DbSolutionId = Id;
-            LayerLogic.Save(layer);
+            DbContext.AddLayerToSolution(this, layerValues);
         }
 
         public void NextTime()
         {
-            CurrentTimeIndex++;
+            DbContext.NextTimeSolution(this);
         }
 
         [NotMapped]
@@ -36,23 +89,27 @@ namespace Storage.Database
         {
             get { return DbGrid; }
             set
-            {                
-                if (DbGrid == null) DbGrid = new DbGrid1D();
-                DbGrid.Min = value.Min;
-                DbGrid.Max = value.Max;
-                DbGrid.N = value.N;
-                DbGrid.h = value.h;
-                DbGrid.Name = string.Format("[{0:0.##}, {1:0.##}]({2})", value.Min, value.Max, value.N);                
+            {
+                if (DbGrid == null)
+                {
+                    DbGrid = new DbGrid1D(value.Min, value.Max, value.N);
+                }
             }
         }
 
         [NotMapped]
         public ILayer1D CurrentLayer
         {
-            get { return DbLayers.OrderByDescending(l => l.TimeIndex).FirstOrDefault(); }
+            get { return DbLayers.OrderByDescending(l => l.nt).FirstOrDefault(); }
         }
 
         [NotMapped]
-        public double CurrentTime { get; private set; }
+        public double tCurrent
+        {
+            get { return dt*Nt; }
+        }
+
+        [NotMapped]
+        public DbSolutionContext DbContext { get; private set; }
     }
 }

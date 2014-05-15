@@ -7,9 +7,9 @@ namespace Storage.Database
         [Key]
         public int Id { get; set; }
 
-        public int TimeIndex { get; set; }
+        public int nt { get; set; }
 
-        public double Time { get; set; }
+        public double t { get; set; }
 
         public int DbSolutionId { get; set; }
 

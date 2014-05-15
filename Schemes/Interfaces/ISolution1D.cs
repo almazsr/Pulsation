@@ -5,28 +5,46 @@ namespace Calculation.Interfaces
 {
     public interface ISolution1D
     {
-        IGrid1D Grid { get; }     
+        object Key { get; }
 
+        #region Main properties
+        IGrid1D Grid { get; }
+
+        string PhysicalData { get; set; } 
+        #endregion
+
+        #region Numeric or analytic
+        bool IsExact { get; }
+
+        string Solver { get; } 
+        #endregion
+
+        #region Time properties
+        bool IsTimeDependent { get; }
+
+        double dt { get; }
+
+        double tCurrent { get; }
+
+        int Nt { get; }
+
+        ILayer1D CurrentLayer { get; }
+        #endregion
+
+        #region State properties
+        DateTime Started { get; }
+
+        SolutionState State { get; } 
+        #endregion
+
+        #region Methods
         ILayer1D GetLayer(int timeIndex);
 
         double GetTime(int timeIndex);
 
-        double TimeStep { get; }
-        
-        ILayer1D CurrentLayer { get; }
+        void AddLayer(double[] layerValues);
 
-        int CurrentTimeIndex { get; }
-
-        double CurrentTime { get; }
-
-        DateTime Started { get; }
-
-        SolutionState State { get; }
-
-        void AddLayer(double[] values);
-
-        void NextTime();
-
-        bool IsExact { get; }
+        void NextTime(); 
+        #endregion
     }
 }

@@ -9,9 +9,9 @@ namespace Calculation.Classes
             TMax = tMax;
         }
 
-        public bool IsFinish(ITimeDependentSolution1D solution)
+        public bool IsFinish(ISolution1D solution)
         {
-            return solution.CurrentTime > TMax;
+            return solution.tCurrent > TMax;
         }
 
         public double TMax { get; set; }

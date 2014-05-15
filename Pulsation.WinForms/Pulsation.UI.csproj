@@ -96,10 +96,6 @@
       <Project>{B877B0CC-A9A4-47F6-B581-12246A6EEAA2}</Project>
       <Name>Pulsation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Schemes\Schemes.csproj">
-      <Project>{DB313285-7735-4DAC-A8E5-93D7C924D00D}</Project>
-      <Name>Schemes</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -2,9 +2,9 @@
 {
     public interface ILayer1D
     {
-        int TimeIndex { get; set; }
+        int nt { get; set; }
 
-        double Time { get; set; }
+        double t { get; set; }
 
         double this[int i] { get; }
     }

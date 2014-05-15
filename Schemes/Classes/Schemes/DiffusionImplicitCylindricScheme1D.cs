@@ -9,11 +9,7 @@ namespace Calculation.Classes.Schemes
     /// </summary>
     public class DiffusionImplicitCylindricScheme1D : DiffusionScheme1D
     {
-        public DiffusionImplicitCylindricScheme1D(IList<BoundaryCondition> boundaryConditions, Func<double, double, double> fFunc, double a) : base(boundaryConditions, fFunc, a)
-        {
-        }
-
-        public DiffusionImplicitCylindricScheme1D(IList<BoundaryCondition> boundaryConditions) : base(boundaryConditions)
+        public DiffusionImplicitCylindricScheme1D(Func<double, double, double> fFunc, double a) : base(fFunc, a)
         {
         }
 

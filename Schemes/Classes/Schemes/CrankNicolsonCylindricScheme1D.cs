@@ -6,13 +6,9 @@ namespace Calculation.Classes.Schemes
 {
     public class CrankNicolsonCylindricScheme1D : DiffusionScheme1D
     {
-        public CrankNicolsonCylindricScheme1D(IList<BoundaryCondition> boundaryConditions, Func<double, double, double> fFunc, double a) : base(boundaryConditions, fFunc, a)
+        public CrankNicolsonCylindricScheme1D(Func<double, double, double> fFunc, double a) : base(fFunc, a)
         {
         }
-
-        public CrankNicolsonCylindricScheme1D(IList<BoundaryCondition> boundaryConditions) : base(boundaryConditions)
-        {
-        }       
 
         protected internal override void FillMatrix(TriDiagMatrix matrix, ILayer1D currentLayer, IGrid1D grid, double t, double dt)
         {
