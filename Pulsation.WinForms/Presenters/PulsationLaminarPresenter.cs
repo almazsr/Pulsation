@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Calculation.Classes.Schemes;
 using OpenGlExtensions.Classes;
 using Pulsation.Solvers;
-using Pulsation.WinForms.ViewModels;
-using Pulsation.WinForms.Views;
-using Schemes.Classes.Schemes;
-using Schemes.TimeDependent1D;
+using Pulsation.UI.ViewModels;
+using Pulsation.UI.Views;
 
-namespace Pulsation.WinForms.Presenters
+namespace Pulsation.UI.Presenters
 {
     public class PulsationLaminarPresenter
     { 

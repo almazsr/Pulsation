@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Schemes.Interfaces;
-using Schemes.TimeDependent1D;
+using Calculation.Interfaces;
 
-namespace Schemes.Classes.Schemes
+namespace Calculation.Classes.Schemes
 {
     /// <summary>
     /// dU/dt=a^2*(d^2U/dr^2+1/r*dU/dr)+F(r,t)

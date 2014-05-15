@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Schemes.Database
+namespace Storage.Database
 {
     public partial class DbLayer1D
     {
@@ -15,6 +15,6 @@ namespace Schemes.Database
 
         internal byte[] Data { get; set; }
 
-        public virtual DbTimeDependentSolution1D DbSolution { get; set; }
+        public virtual DbSolution1D DbSolution { get; set; }
     }
 }

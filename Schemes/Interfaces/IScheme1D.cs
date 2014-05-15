@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Schemes.Classes;
+using Calculation.Classes;
 
-namespace Schemes.Interfaces
+namespace Calculation.Interfaces
 {
     public interface IScheme1D
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using Schemes.Enums;
-using Schemes.Interfaces;
+using Calculation.Enums;
+using Calculation.Interfaces;
 
-namespace Schemes.Classes
+namespace Calculation.Classes
 {
     public class BoundaryCondition : IBoundaryCondition
     {

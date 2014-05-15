@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Schemes.Database;
-using Schemes.Enums;
-using Schemes.Interfaces;
+using Calculation.Enums;
+using Calculation.Interfaces;
 
-namespace Schemes.Classes.Schemes
+namespace Calculation.Classes.Schemes
 {
     public abstract class Scheme1D : IScheme1D
     {
@@ -47,13 +46,8 @@ namespace Schemes.Classes.Schemes
         public IList<BoundaryCondition> BoundaryConditions { get; private set; }
 
         public void BeginSolve(IStopCondition stopCondition, IGrid1D grid, double[] initialvalues, double dt)
-        {            
-            using (DbSolutionContext db = new DbSolutionContext())
-            {
-                var solution = Factory.Instance.CreateSolution(grid, dt);
-                int solutionId = solution.Save();
-            }
-            solution.dt = dt;
+        {
+            var solution = Factory.Instance.CreateSolution(grid, dt);            
             solution.AddLayer(initialvalues);
             Action cycle = () =>
                                {
@@ -64,7 +58,7 @@ namespace Schemes.Classes.Schemes
 
                                        // Решение.
                                        var newLayer = SolveLayer(solution.CurrentLayer, grid, solution.CurrentTime,
-                                                                 solution.dt);
+                                                                 solution.TimeStep);
 
                                        // Добавления нового слоя в результат.
                                        solution.AddLayer(newLayer);

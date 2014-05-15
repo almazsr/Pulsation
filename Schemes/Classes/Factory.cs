@@ -1,12 +1,25 @@
-﻿using Schemes.Interfaces;
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using Calculation.Interfaces;
 
-namespace Schemes.Classes
+namespace Calculation.Classes
 {
-    public static class Factory
+    public class Factory
     {
         static Factory()
         {
-            Instance = new DbFactory();
+            Initialize();
+        }
+
+        private static void Initialize()
+        {
+            Assembly assembly = Assembly.LoadFrom("Storage.dll");
+            Type factoryType = assembly.GetTypes().FirstOrDefault(t => typeof(IFactory).IsAssignableFrom(t));
+            if (factoryType != null)
+            {
+                Instance = (IFactory)Activator.CreateInstance(factoryType);
+            }
         }
 
         public static IFactory Instance { get; private set; }

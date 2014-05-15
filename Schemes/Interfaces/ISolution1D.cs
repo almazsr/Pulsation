@@ -1,8 +1,9 @@
 ﻿using System;
+using Calculation.Enums;
 
-namespace Schemes.Interfaces
+namespace Calculation.Interfaces
 {
-    public interface ITimeDependentSolution1D
+    public interface ISolution1D
     {
         IGrid1D Grid { get; }     
 
@@ -10,20 +11,22 @@ namespace Schemes.Interfaces
 
         double GetTime(int timeIndex);
 
-        double dt { get; set; }
+        double TimeStep { get; }
         
         ILayer1D CurrentLayer { get; }
 
         int CurrentTimeIndex { get; }
 
-        double CurrentTime { get; }         
-        
-        void AddLayer(double[] values);
+        double CurrentTime { get; }
 
         DateTime Started { get; }
 
+        SolutionState State { get; }
+
+        void AddLayer(double[] values);
+
         void NextTime();
 
-        int Save();
+        bool IsExact { get; }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Schemes.Interfaces
+﻿namespace Calculation.Interfaces
 {
     public interface IGrid1D
     {

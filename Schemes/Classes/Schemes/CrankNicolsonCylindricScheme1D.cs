@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Schemes.Interfaces;
+using Calculation.Interfaces;
 
-namespace Schemes.Classes.Schemes
+namespace Calculation.Classes.Schemes
 {
     public class CrankNicolsonCylindricScheme1D : DiffusionScheme1D
     {

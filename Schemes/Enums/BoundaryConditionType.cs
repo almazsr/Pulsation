@@ -1,4 +1,4 @@
-﻿namespace Schemes.Enums
+﻿namespace Calculation.Enums
 {
     public enum BoundaryConditionType
     {

@@ -1,7 +1,7 @@
 ﻿using System;
-using Schemes.Enums;
+using Calculation.Enums;
 
-namespace Schemes.Interfaces
+namespace Calculation.Interfaces
 {
     public interface IBoundaryCondition
     {

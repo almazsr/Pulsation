@@ -1,7 +1,7 @@
-﻿namespace Schemes.Interfaces
+﻿namespace Calculation.Interfaces
 {
     public interface IStopCondition
     {
-        bool IsFinish(ITimeDependentSolution1D solution); 
+        bool IsFinish(ISolution1D solution); 
     }
 }

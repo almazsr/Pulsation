@@ -1,6 +1,6 @@
 ﻿using System;
-using Schemes.Classes;
-using Schemes.Enums;
+using Calculation.Classes;
+using Calculation.Enums;
 
 namespace Pulsation.Models
 {

@@ -1,6 +1,6 @@
-﻿using Schemes.Interfaces;
+﻿using Calculation.Interfaces;
 
-namespace Schemes.Database
+namespace Storage.Database
 {
     public partial class DbGrid1D : IGrid1D
     {

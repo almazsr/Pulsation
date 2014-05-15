@@ -1,4 +1,4 @@
-﻿namespace Schemes.Classes
+﻿namespace Calculation.Classes
 {
     public class TriDiagMatrix
     {

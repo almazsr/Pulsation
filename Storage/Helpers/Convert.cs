@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Schemes.Helpers
+namespace Storage.Helpers
 {
     internal class Convert
     {

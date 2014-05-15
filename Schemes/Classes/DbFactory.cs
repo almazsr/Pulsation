@@ -1,7 +1,6 @@
-﻿using Schemes.Database;
-using Schemes.Interfaces;
+﻿using Calculation.Interfaces;
 
-namespace Schemes.Classes
+namespace Calculation.Classes
 {
     public class DbFactory : IFactory
     {

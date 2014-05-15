@@ -1,4 +1,4 @@
-﻿namespace Pulsation.WinForms.Views
+﻿namespace Pulsation.UI.Views
 {
     partial class PulsationLaminarView
     {

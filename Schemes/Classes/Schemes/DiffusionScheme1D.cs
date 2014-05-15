@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Schemes.Classes.Schemes
+namespace Calculation.Classes.Schemes
 {
     public abstract class DiffusionScheme1D : Scheme1D
     {

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
-namespace Schemes.Database
+namespace Storage.Database
 {
     public partial class DbGrid1D
     {
@@ -17,6 +16,6 @@ namespace Schemes.Database
 
         public string Name { get; set; }
 
-        public virtual ICollection<DbTimeDependentSolution1D> DbSolutions { get; set; }
+        public virtual ICollection<DbSolution1D> DbSolutions { get; set; }
     }
 }

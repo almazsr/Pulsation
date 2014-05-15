@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
+using Calculation.Classes;
+using Calculation.Classes.Schemes;
+using Calculation.Interfaces;
 using Pulsation.Models;
-using Schemes.Classes;
-using Schemes.Classes.Schemes;
-using Schemes.Interfaces;
 using Schemes.TimeDependent1D;
 
 namespace Pulsation.Solvers

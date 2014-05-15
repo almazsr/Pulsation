@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using Schemes.Interfaces;
+using Calculation.Interfaces;
+using Storage.Logic;
 
-namespace Schemes.Database
+namespace Storage.Database
 {
-    public partial class DbTimeDependentSolution1D
+    public partial class DbSolution1D
     {
         public ILayer1D GetLayer(int timeIndex)
         {
@@ -13,7 +14,7 @@ namespace Schemes.Database
 
         public double GetTime(int timeIndex)
         {
-            return timeIndex*dt;
+            return timeIndex*TimeStep;
         }
 
         public void AddLayer(double[] values)
@@ -21,7 +22,8 @@ namespace Schemes.Database
             DbLayer1D layer = new DbLayer1D(values);
             layer.TimeIndex = CurrentTimeIndex;
             layer.Time = GetTime(CurrentTimeIndex);
-            DbLayers.Add(layer);
+            layer.DbSolutionId = Id;
+            LayerLogic.Save(layer);
         }
 
         public void NextTime()

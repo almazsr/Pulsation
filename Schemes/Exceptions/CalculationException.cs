@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Schemes.Exceptions
+namespace Calculation.Exceptions
 {
     public class CalculationException : Exception
     {

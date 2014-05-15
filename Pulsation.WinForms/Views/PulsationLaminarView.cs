@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq.Expressions;
 using System.Windows.Forms;
-using OpenGlExtensions;
 using OpenGlExtensions.Interfaces;
-using Pulsation.Models;
-using Pulsation.WinForms.Helpers;
-using Pulsation.WinForms.Presenters;
-using Pulsation.WinForms.ViewModels;
+using Pulsation.UI.Helpers;
+using Pulsation.UI.Presenters;
+using Pulsation.UI.ViewModels;
 
-namespace Pulsation.WinForms.Views
+namespace Pulsation.UI.Views
 {
     public partial class PulsationLaminarView : Form, IPulsationLaminarView
     {

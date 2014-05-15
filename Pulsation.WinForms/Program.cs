@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Pulsation.WinForms.Views;
+using Pulsation.UI.Views;
 
-namespace Pulsation.WinForms
+namespace Pulsation.UI
 {
     static class Program
     {

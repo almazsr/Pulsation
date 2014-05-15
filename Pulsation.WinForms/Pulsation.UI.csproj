@@ -7,8 +7,8 @@
     <ProjectGuid>{C4B049A1-AD01-4357-BDC0-4BADF23633ED}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Pulsation.WinForms</RootNamespace>
-    <AssemblyName>Pulsation.WinForms</AssemblyName>
+    <RootNamespace>Pulsation.UI</RootNamespace>
+    <AssemblyName>Pulsation.UI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -72,6 +72,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

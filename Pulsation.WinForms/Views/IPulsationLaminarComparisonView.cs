@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using OpenGlExtensions.Interfaces;
-using Pulsation.WinForms.Presenters;
-using Pulsation.WinForms.ViewModels;
-using Schemes.TimeDependent1D;
+﻿using OpenGlExtensions.Interfaces;
+using Pulsation.UI.Presenters;
+using Pulsation.UI.ViewModels;
 
-namespace Pulsation.WinForms.Views
+namespace Pulsation.UI.Views
 {
     public interface IPulsationLaminarComparisonView
     {

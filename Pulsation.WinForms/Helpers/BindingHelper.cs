@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Windows.Forms;
 
-namespace Pulsation.WinForms.Helpers
+namespace Pulsation.UI.Helpers
 {
     public static class BindingHelper
     {
