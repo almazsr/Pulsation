@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Calculation.Classes.Schemes;
 using OpenGlExtensions.Classes;
 using Pulsation.Solvers;
 using Pulsation.UI.ViewModels;

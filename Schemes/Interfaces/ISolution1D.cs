@@ -32,7 +32,7 @@ namespace Calculation.Interfaces
         #endregion
 
         #region State properties
-        DateTime Started { get; }
+        DateTime? Started { get; }
 
         SolutionState State { get; } 
         #endregion

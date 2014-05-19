@@ -4,8 +4,10 @@ namespace Calculation.Interfaces
 {
     public interface IAccessSolutionContext : ISolutionContext
     {
-        ISolution1D GetSolution(object key);
+        IList<ISolution1D> GetSolutions();
 
+        ISolution1D GetSolution(object key);
+        
         ILayer1D GetLayer(ISolution1D solution, int nt);
 
         IList<ILayer1D> GetLayers(ISolution1D solution, int count);
