@@ -8,11 +8,14 @@
     <Setting Name="s" Type="System.Double" Scope="User">
       <Value Profile="(Default)">2.737</Value>
     </Setting>
-    <Setting Name="Nr" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="NGrid" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="dAngle" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="NTime" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
     </Setting>
   </Settings>
 </SettingsFile>
