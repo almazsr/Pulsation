@@ -17,9 +17,16 @@ namespace Calculation.UI
         [STAThread]
         static void Main()
         {
+            Application.ApplicationExit += Application_ApplicationExit;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new SolutionListView());
+        }
+
+        static void Application_ApplicationExit(object sender, EventArgs e)
+        {
+            AppSettings.Default.Save();
         }
     }
 }

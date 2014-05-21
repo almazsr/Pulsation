@@ -8,6 +8,8 @@ namespace Calculation.UI.Views
     {
         PulsationLaminarModel Model { get; set; }
 
+        void Bind();
+
         PulsationLaminarPresenter Presenter { get; }
 
         int Progress { get; set; }

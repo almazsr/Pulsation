@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Forms;
 using Calculation.UI.Helpers;
 using Calculation.UI.Models;
 using Calculation.UI.Views;
@@ -37,7 +38,11 @@ namespace Calculation.UI.Presenters
 
         private void OnCreateClicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            PulsationLaminarView view = new PulsationLaminarView();
+            if (view.ShowDialog() == DialogResult.OK)
+            {
+                var model = view.Model;
+            }
         }
 
         private void OnViewInitialized(object sender, EventArgs e)
