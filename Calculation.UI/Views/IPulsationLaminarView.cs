@@ -18,6 +18,6 @@ namespace Calculation.UI.Views
 
         event EventHandler SolveClicked;
 
-        event EventHandler CancelClicked;       
+        event EventHandler Initialized;
     }
 }

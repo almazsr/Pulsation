@@ -1,4 +1,6 @@
-﻿namespace Calculation.Interfaces
+﻿using System.Collections.Generic;
+
+namespace Calculation.Interfaces
 {
     public interface IGrid1D
     {

@@ -100,7 +100,7 @@ namespace Storage
         [NotMapped]
         public ILayer1D CurrentLayer
         {
-            get { return DbLayers.OrderByDescending(l => l.nt).FirstOrDefault(); }
+            get { return DbContext.GetLayer(this, Nt - 1); }
         }
 
         [NotMapped]

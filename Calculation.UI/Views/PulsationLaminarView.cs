@@ -21,7 +21,10 @@ namespace Calculation.UI.Views
             Presenter = new PulsationLaminarPresenter(this);
 
             InitializeComponent();
-            Bind();
+
+            Load += Initialized;
+            btnSolve.Click += SolveClicked;
+            btnShow.Click += ShowClicked;
         }        
 
         public PulsationLaminarModel Model { get; set; }
@@ -29,15 +32,19 @@ namespace Calculation.UI.Views
         public void Bind()
         {
             tbs.AddBinding(c => c.Text, Model, m => m.s);
+            tbdAngle.AddBinding(c => c.Text, Model, m => m.dAngle);
             tbRe.AddBinding(c => c.Text, Model, m => m.Re);
             tbNGrid.AddBinding(c => c.Text, Model, m => m.NGrid);
             tbNTime.AddBinding(c => c.Text, Model, m => m.NTime);
+            cbCrankNikolson.AddBinding(c=>c.Checked, Model, m=>m.CrankNikolson, DataSourceUpdateMode.OnPropertyChanged);
+            cbExact.AddBinding(c => c.Checked, Model, m => m.Exact, DataSourceUpdateMode.OnPropertyChanged);
+            cbImplicit.AddBinding(c => c.Checked, Model, m => m.Implicit, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         public PulsationLaminarPresenter Presenter { get; private set; }
         public int Progress { get; set; }
         public event EventHandler ShowClicked;
         public event EventHandler SolveClicked;
-        public event EventHandler CancelClicked;
+        public event EventHandler Initialized;
     }
 }

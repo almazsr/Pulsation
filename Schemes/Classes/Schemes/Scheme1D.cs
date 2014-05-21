@@ -6,7 +6,7 @@ namespace Calculation.Classes.Schemes
 {
     public abstract class Scheme1D : IScheme1D
     {
-        protected virtual internal TriDiagMatrix BuildMatrix(BoundaryCondition leftBoundaryCondition, BoundaryCondition rightBoundaryCondition, ILayer1D currentLayer, IGrid1D grid, double t, double dt)
+        protected virtual internal TriDiagMatrix BuildMatrix(IBoundaryCondition leftBoundaryCondition, IBoundaryCondition rightBoundaryCondition, ILayer1D currentLayer, IGrid1D grid, double t, double dt)
         {            
             // Решение.
             var matrix = new TriDiagMatrix(grid.N);
@@ -27,8 +27,7 @@ namespace Calculation.Classes.Schemes
 
         #region Boundary conditions
 
-        public void Solve(ISolution1D solution, BoundaryCondition leftBoundaryCondition, BoundaryCondition rightBoundaryCondition,
-                          IStopCondition stopCondition)
+        public void Solve(ISolution1D solution, IBoundaryCondition leftBoundaryCondition, IBoundaryCondition rightBoundaryCondition, IStopCondition stopCondition)
         {
             Action cycle = () =>
             {
@@ -53,7 +52,7 @@ namespace Calculation.Classes.Schemes
 
         public event EventHandler Solved;
 
-        protected internal virtual void SetLeftBoundaryCondition(TriDiagMatrix matrix, BoundaryCondition leftBoundaryCondition, double t)
+        protected internal virtual void SetLeftBoundaryCondition(TriDiagMatrix matrix, IBoundaryCondition leftBoundaryCondition, double t)
         {
             matrix.F[0] = leftBoundaryCondition.Value(t);
             switch (leftBoundaryCondition.Type)
@@ -68,7 +67,7 @@ namespace Calculation.Classes.Schemes
             }
         }
 
-        protected internal virtual void SetRightBoundaryCondition(TriDiagMatrix matrix, BoundaryCondition rightBoundaryCondition, double t)
+        protected internal virtual void SetRightBoundaryCondition(TriDiagMatrix matrix, IBoundaryCondition rightBoundaryCondition, double t)
         {
             // Правая граница.
             int N = matrix.N;

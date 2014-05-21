@@ -13,6 +13,8 @@ namespace Storage
         public DbSolutionContext() : base("SolutionsConnectionString")
         {
             Database.SetInitializer(new CreateDatabaseIfNotExists<DbSolutionContext>());
+            Configuration.LazyLoadingEnabled = true;
+            Configuration.AutoDetectChangesEnabled = false;
         }
 
         public DbSet<DbSolution1D> Solutions { get; set; }
@@ -76,18 +78,18 @@ namespace Storage
         #region Solution updaters
         public void StartSolution(ISolution1D solution)
         {
-            var dbSolution = GetSolution(solution.Key) as DbSolution1D;
+            var dbSolution = solution as DbSolution1D;
             if (dbSolution != null)
             {
                 dbSolution.Started = DateTime.Now;
                 dbSolution.State = SolutionState.InProcess;
-                dbSolution.NextTime();
+                SaveChanges();
             }
         }
 
         public void NextTimeSolution(ISolution1D solution)
         {
-            var dbSolution = GetSolution(solution.Key) as DbSolution1D;
+            var dbSolution = solution as DbSolution1D;
             if (dbSolution != null)
             {
                 dbSolution.Nt++;
@@ -99,12 +101,12 @@ namespace Storage
         #region Add layer
         public ILayer1D AddLayerToSolution(ISolution1D solution, double[] layerValues)
         {
-            var dbSolution = GetSolution(solution.Key) as DbSolution1D;
+            var dbSolution = solution as DbSolution1D;
             if (dbSolution != null)
             {
-                SaveSolution(dbSolution);
+                return SaveLayer(new DbLayer1D(layerValues, (DbSolution1D)solution));
             }
-            return SaveLayer(new DbLayer1D(layerValues, (DbSolution1D)solution));
+            return null;
         } 
         #endregion
 

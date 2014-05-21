@@ -82,5 +82,41 @@ namespace Calculation.UI {
                 this["NTime"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Exact {
+            get {
+                return ((bool)(this["Exact"]));
+            }
+            set {
+                this["Exact"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CrankNikolson {
+            get {
+                return ((bool)(this["CrankNikolson"]));
+            }
+            set {
+                this["CrankNikolson"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Implicit {
+            get {
+                return ((bool)(this["Implicit"]));
+            }
+            set {
+                this["Implicit"] = value;
+            }
+        }
     }
 }

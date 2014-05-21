@@ -54,12 +54,14 @@
     <Compile Include="Classes\Schemes\DiffusionImplicitDecartScheme1D.cs" />
     <Compile Include="Classes\Schemes\DiffusionScheme1D.cs" />
     <Compile Include="Classes\Schemes\Scheme1D.cs" />
+    <Compile Include="Classes\SolutionExtensions.cs" />
     <Compile Include="Classes\TimeLimitCondition.cs" />
     <Compile Include="Classes\TriDiagMatrix.cs" />
     <Compile Include="Enums\BoundaryConditionLocation.cs" />
     <Compile Include="Enums\BoundaryConditionType.cs" />
     <Compile Include="Enums\SolutionState.cs" />
     <Compile Include="Exceptions\CalculationException.cs" />
+    <Compile Include="Helpers\SpecialFunctions.cs" />
     <Compile Include="Interfaces\IAccessSolutionContext.cs" />
     <Compile Include="Interfaces\IBoundaryCondition.cs" />
     <Compile Include="Interfaces\IGrid1D.cs" />

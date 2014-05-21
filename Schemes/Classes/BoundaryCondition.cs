@@ -7,11 +7,16 @@ namespace Calculation.Classes
 {
     public class BoundaryCondition : IBoundaryCondition
     {
-        public BoundaryCondition(Func<double, double> value, BoundaryConditionLocation location, BoundaryConditionType type)
+        public BoundaryCondition(BoundaryConditionLocation location, BoundaryConditionType type, Func<double, double> value)
         {
             Value = value;
             Location = location;
             Type = type;
+        }
+
+        public BoundaryCondition(BoundaryConditionLocation location, BoundaryConditionType type)
+            : this(location, type, x => 0)
+        {
         }
 
         public int Index
