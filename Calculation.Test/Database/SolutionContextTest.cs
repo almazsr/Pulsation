@@ -54,7 +54,7 @@ namespace Calculation.Test.Database
                 Assert.AreEqual(0, solution.tCurrent);
                 Assert.AreEqual(JsonConvert.SerializeObject(physicalData), solution.PhysicalData);
                 Assert.AreEqual(null, solution.Solver);
-                Assert.AreEqual(null, solution.Started);
+                Assert.AreEqual(null, solution.StartedAt);
                 Assert.AreEqual(SolutionState.None, solution.State);
             }
         }
@@ -81,7 +81,7 @@ namespace Calculation.Test.Database
                 Assert.AreEqual(0, solution.tCurrent);
                 Assert.AreEqual(JsonConvert.SerializeObject(physicalData), solution.PhysicalData);
                 Assert.AreEqual(solverType.ToString(), solution.Solver);
-                Assert.AreEqual(null, solution.Started);
+                Assert.AreEqual(null, solution.StartedAt);
                 Assert.AreEqual(SolutionState.None, solution.State);
             }
         }
@@ -110,7 +110,7 @@ namespace Calculation.Test.Database
                 Assert.AreEqual(0, solution.tCurrent);
                 Assert.AreEqual(JsonConvert.SerializeObject(physicalData), solution.PhysicalData);
                 Assert.AreEqual(solverType.ToString(), solution.Solver);
-                Assert.AreEqual(null, solution.Started);
+                Assert.AreEqual(null, solution.StartedAt);
                 Assert.AreEqual(SolutionState.None, solution.State);
 
                 db.StartSolution(solution);
@@ -147,7 +147,7 @@ namespace Calculation.Test.Database
                 Assert.AreEqual(0, solution.tCurrent);
                 Assert.AreEqual(JsonConvert.SerializeObject(physicalData), solution.PhysicalData);
                 Assert.AreEqual(null, solution.Solver);
-                Assert.AreEqual(null, solution.Started);
+                Assert.AreEqual(null, solution.StartedAt);
                 Assert.AreEqual(SolutionState.None, solution.State);
 
                 db.StartSolution(solution);
@@ -180,8 +180,7 @@ namespace Calculation.Test.Database
                 int n = 100;
                 int m = 10;
                 for (int i = 0; i < n;i++ )
-                {
-                    db.AddLayerToSolution(solution, new double[grid.N]);
+                {                    
                     db.SolutionNextTime(solution);
                 }
 

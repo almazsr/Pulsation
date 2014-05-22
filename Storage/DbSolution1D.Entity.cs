@@ -36,7 +36,7 @@ namespace Calculation.Database
         /// <summary>
         /// Datetime, when solution has been started.
         /// </summary>
-        public DateTime? Started { get; set; }
+        public DateTime? StartedAt { get; set; }
 
         /// <summary>
         /// Solution state.

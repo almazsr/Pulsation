@@ -14,10 +14,6 @@ namespace Calculation.Interfaces
 
         object GetPhysicalData(ISolution1D solution);
 
-        void StartSolution(ISolution1D solution);
-
-        void SolutionNextTime(ISolution1D solution);
-
         IGrid1D GetGrid(ISolution1D solution);
     }
 }

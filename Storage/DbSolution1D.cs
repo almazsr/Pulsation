@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Calculation.Database.Helpers;
+using System.Data.Entity;
+using System.Linq;
+using Calculation.Enums;
 using Calculation.Interfaces;
 using Newtonsoft.Json;
 
@@ -14,7 +16,8 @@ namespace Calculation.Database
         /// </summary>
         private DbSolution1D(DbGrid1D grid, object physicalData, bool isExact = false, bool isTimeDependent = false)
         {
-            LayersBuffer = new List<ILayer1D>();
+            Context = new DbSolutionContext();
+            LayersBuffer = new List<DbLayer1D>();
             this.DbGridId = grid.Id;
             this.PhysicalData = JsonConvert.SerializeObject(physicalData);
             this.IsExact = isExact;
@@ -65,9 +68,12 @@ namespace Calculation.Database
             this.dt = dt;
         }
 
+        [NotMapped]
+        public DbSolutionContext Context { get; set; }
+
         public ILayer1D GetLayer(int nt)
         {
-            return DbAccess.GetLayer(this, nt);
+            return Context.GetLayer(this, nt);
         }
 
         public double GetTime(int nt)
@@ -77,21 +83,17 @@ namespace Calculation.Database
 
         public void AddLayer(double[] layerValues)
         {            
-            DbLayer1D layer = new DbLayer1D(layerValues, this);
-            if (LayersBuffer.Count < LayersBufferMaxSize)
+            var layer = new DbLayer1D(layerValues, this);
+            LayersBuffer.Add(layer); 
+            CurrentLayer = layer;
+            if (LayersBuffer.Count >= MaxBufferSize)
             {
-                LayersBuffer.Add(layer);
-            }
-            else
-            {
-                DbAccess.SaveLayers(LayersBuffer);
+                Context.Layers.AddRange(LayersBuffer);
+                Context.SaveChanges();
+                Context.Dispose();
                 LayersBuffer.Clear();
+                Context = new DbSolutionContext();
             }
-        }
-
-        public void NextTime()
-        {
-            DbAccess.SolutionNextTime(this);
         }
 
         [NotMapped]
@@ -108,10 +110,7 @@ namespace Calculation.Database
         }
 
         [NotMapped]
-        public ILayer1D CurrentLayer
-        {
-            get { return DbAccess.GetLayer(this, Nt - 1); }
-        }
+        public ILayer1D CurrentLayer { get; private set; }
 
         [NotMapped]
         public double tCurrent
@@ -120,9 +119,40 @@ namespace Calculation.Database
         }
 
         [NotMapped]
-        internal int LayersBufferMaxSize = 10;
+        internal static int MaxBufferSize = 100;
+
+        public void Start()
+        {            
+            StartedAt = DateTime.Now;
+            State = SolutionState.InProcess;
+            if (Started != null)
+            {
+                Started(this, new EventArgs());
+            }
+            Context.Entry(this).State = EntityState.Modified;
+            Context.SaveChanges();
+        }
+
+        public void Finish(bool success)
+        {
+            State = success ? SolutionState.Success : SolutionState.Failed;
+            if (Finished != null)
+            {
+                Finished(this, new EventArgs());
+            } 
+            Context.Entry(this).State = EntityState.Modified;
+            Context.SaveChanges();
+        }
+
+        public void NextTime()
+        {
+            Nt++;
+        }
 
         [NotMapped]
-        internal List<DbLayer1D> LayersBuffer { get; set; }
+        public List<DbLayer1D> LayersBuffer { get; private set; }
+
+        public event EventHandler Started;
+        public event EventHandler Finished;
     }
 }

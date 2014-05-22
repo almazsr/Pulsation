@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using Calculation.Enums;
 using Calculation.Interfaces;
 using Newtonsoft.Json;
 
@@ -11,30 +10,19 @@ namespace Calculation.Database
     public class DbSolutionContext : DbContext, IAccessSolutionContext
     {
         public DbSolutionContext() : base("SolutionsConnectionString")
-        {
-            System.Data.Entity.Database.SetInitializer(new CreateDatabaseIfNotExists<DbSolutionContext>());
+        {           
             Configuration.LazyLoadingEnabled = true;
-            Configuration.AutoDetectChangesEnabled = false;
         }
 
         public DbSet<DbSolution1D> Solutions { get; set; }
         public DbSet<DbLayer1D> Layers { get; set; }
         public DbSet<DbGrid1D> Grids { get; set; }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (ChangeTracker.HasChanges())
-            {
-                SaveChanges();
-            }
-        }
-
         #region Grid creators
         public IGrid1D CreateGrid(double min, double max, int N)
         {
             var grid = new DbGrid1D(min, max, N);
             Grids.Add(grid);
-            SaveChanges();
             return grid;
         } 
         #endregion
@@ -42,63 +30,32 @@ namespace Calculation.Database
         #region Solution creators
         public ISolution1D CreateNumericSolution(IGrid1D grid, object physicalData, Type solverType)
         {
-            return SaveSolution(new DbSolution1D((DbGrid1D)grid, physicalData, solverType));
+            var solution = new DbSolution1D((DbGrid1D) grid, physicalData, solverType);
+            Solutions.Add(solution);
+            return solution;            
         }
 
         public ISolution1D CreateNumericTimeDependentSolution(IGrid1D grid, object physicalData, double dt, Type solverType)
         {
-            return SaveSolution(new DbSolution1D((DbGrid1D)grid, physicalData, dt, solverType));
+            var solution = new DbSolution1D((DbGrid1D)grid, physicalData, dt, solverType);
+            Solutions.Add(solution);
+            return solution;   
         }
 
         public ISolution1D CreateExactSolution(IGrid1D grid, object physicalData)
         {
-            return SaveSolution(new DbSolution1D((DbGrid1D)grid, physicalData));
+            var solution = new DbSolution1D((DbGrid1D)grid, physicalData);
+            Solutions.Add(solution);
+            return solution;   
         }
 
         public ISolution1D CreateExactTimeDependentSolution(IGrid1D grid, object physicalData, double dt)
         {
-            return SaveSolution(new DbSolution1D((DbGrid1D)grid, physicalData, dt));
-        }
-
-        #endregion
-
-        #region Private savers into DB.
-        internal DbSolution1D SaveSolution(DbSolution1D solution)
-        {
+            var solution = new DbSolution1D((DbGrid1D)grid, physicalData, dt);
             Solutions.Add(solution);
-            SaveChanges();
-            return solution;
+            return solution;   
         }
 
-        internal DbLayer1D SaveLayer(DbLayer1D layer)
-        {
-            Layers.Add(layer);
-            SaveChanges();
-            return layer;
-        }
-        #endregion
-
-        #region Solution updaters
-        public void StartSolution(ISolution1D solution)
-        {
-            var dbSolution = solution as DbSolution1D;
-            if (dbSolution != null)
-            {
-                dbSolution.Started = DateTime.Now;
-                dbSolution.State = SolutionState.InProcess;
-                SaveChanges();
-            }
-        }
-
-        public void SolutionNextTime(ISolution1D solution)
-        {
-            var dbSolution = solution as DbSolution1D;
-            if (dbSolution != null)
-            {
-                dbSolution.Nt++;
-                SaveChanges();
-            }
-        } 
         #endregion
 
         #region Getters

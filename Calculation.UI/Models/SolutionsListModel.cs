@@ -12,6 +12,8 @@ namespace Calculation.UI.Models
             Solutions = new ObservableCollection<SolutionItemModel>();
         }
 
+        public SolutionItemModel SelectedItem { get; set; }
+
         private ObservableCollection<SolutionItemModel> _solutions;
 
         public ObservableCollection<SolutionItemModel> Solutions

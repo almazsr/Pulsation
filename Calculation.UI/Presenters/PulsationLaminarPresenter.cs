@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using Calculation.Classes;
 using Calculation.Classes.Schemes;
 using Calculation.Database;
@@ -19,20 +20,18 @@ namespace Calculation.UI.Presenters
         private void OnSolveClicked(object sender, EventArgs e)
         {
             var model = View.Model;
-            using (DbSolutionContext db = new DbSolutionContext())
-            {                
-                if (model.Exact)
-                {
-                    PulsationLaminar.SolveExact(db, model);
-                }
-                if (model.Implicit)
-                {
-                    PulsationLaminar.SolveImplicit(db, model);
-                }
-                if (model.CrankNikolson)
-                {
-                    PulsationLaminar.SolveCrankNikolson(db, model);
-                }
+            PulsationLaminarSolver solver = new PulsationLaminarSolver(model);
+            if (model.Exact)
+            {
+                solver.SolveExact();                
+            }
+            if (model.Implicit)
+            {
+                solver.SolveImplicit();
+            }
+            if (model.CrankNikolson)
+            {
+                solver.SolveCrankNikolson();
             }
         }
 

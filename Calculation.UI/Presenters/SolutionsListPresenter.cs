@@ -23,7 +23,7 @@ namespace Calculation.UI.Presenters
 
         private void OnDeleteClicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+
         }
 
         private void OnShowClicked(object sender, EventArgs e)
@@ -41,12 +41,13 @@ namespace Calculation.UI.Presenters
             PulsationLaminarView view = new PulsationLaminarView();
             if (view.ShowDialog() == DialogResult.OK)
             {
-                var model = view.Model;
+                FillData();
             }
         }
 
         private void OnViewInitialized(object sender, EventArgs e)
         {
+            View.Bind();
             FillData();
         }
 

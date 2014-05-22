@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Calculation.Enums;
 using Calculation.Interfaces;
 
@@ -29,8 +30,9 @@ namespace Calculation.Classes.Schemes
 
         public void Solve(ISolution1D solution, IBoundaryCondition leftBoundaryCondition, IBoundaryCondition rightBoundaryCondition, IStopCondition stopCondition)
         {
-            Action cycle = () =>
+            try
             {
+                solution.Start();
                 do
                 {
                     // Следующий шаг по времени.
@@ -46,8 +48,18 @@ namespace Calculation.Classes.Schemes
                     solution.AddLayer(newLayer);
                 }
                 while (!stopCondition.IsFinish(solution));
-            };
-            cycle.BeginInvoke(null, null);
+                solution.Finish(true);
+            }
+            catch (Exception exception)
+            {
+                solution.Finish(false);
+            }
+        }
+
+        public async void SolveAsync(ISolution1D solution, IBoundaryCondition leftBoundaryCondition,
+                               IBoundaryCondition rightBoundaryCondition, IStopCondition stopCondition)
+        {
+            await Task.Run(() => Solve(solution, leftBoundaryCondition, rightBoundaryCondition, stopCondition));
         }
 
         public event EventHandler Solved;

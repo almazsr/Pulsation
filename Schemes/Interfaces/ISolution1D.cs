@@ -32,19 +32,28 @@ namespace Calculation.Interfaces
         #endregion
 
         #region State properties
-        DateTime? Started { get; }
+        DateTime? StartedAt { get; }
 
         SolutionState State { get; } 
         #endregion
 
         #region Methods
+
         ILayer1D GetLayer(int timeIndex);
 
         double GetTime(int timeIndex);
 
         void AddLayer(double[] layerValues);
 
-        void NextTime(); 
+        void Finish(bool success);
+
+        void NextTime();
+
+        void Start();
+
         #endregion
+
+        event EventHandler Started;
+        event EventHandler Finished;
     }
 }

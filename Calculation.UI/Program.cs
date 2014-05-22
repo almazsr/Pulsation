@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Calculation.Database;
 using Calculation.UI.Views;
 
 namespace Calculation.UI
@@ -17,7 +18,6 @@ namespace Calculation.UI
         static void Main()
         {
             Application.ApplicationExit += Application_ApplicationExit;
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new SolutionListView());

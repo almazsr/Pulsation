@@ -13,7 +13,7 @@ namespace Calculation.UI.Helpers
                             IsExact = s.IsExact,
                             IsTimeDependent = s.IsTimeDependent,
                             State = s.State,
-                            Started = s.Started,
+                            Started = s.StartedAt,
                             SolverType = s.Solver,
                             PhysicalData = s.PhysicalData,
                             Grid = string.Format(GridFormatTemplate, s.Grid.Min, s.Grid.Max, s.Grid.N, s.Grid.h),
