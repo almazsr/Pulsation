@@ -70,8 +70,11 @@
     </Compile>
     <Compile Include="Helpers\BindingHelper.cs" />
     <Compile Include="Helpers\Convert.cs" />
+    <Compile Include="Models\LayerModel.cs" />
     <Compile Include="Models\PulsationLaminarModel.cs" />
     <Compile Include="Models\SolutionItemModel.cs" />
+    <Compile Include="Models\SolutionModel.cs" />
+    <Compile Include="Models\SolutionsGroupModel.cs" />
     <Compile Include="Models\SolutionsListModel.cs" />
     <Compile Include="Presenters\PulsationLaminarPresenter.cs" />
     <Compile Include="Presenters\SolutionsListPresenter.cs" />
@@ -80,6 +83,8 @@
     <Compile Include="Solvers\PulsationLaminarSolver.cs" />
     <Compile Include="Views\IPulsationLaminarView.cs" />
     <Compile Include="Views\ISolutionListView.cs" />
+    <Compile Include="Views\ISolutionsComparisonView.cs" />
+    <Compile Include="Views\ISolutionsView.cs" />
     <Compile Include="Views\PulsationLaminarView.cs">
       <SubType>Form</SubType>
     </Compile>
