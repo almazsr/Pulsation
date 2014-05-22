@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Calculation.Database.Helpers;
 using Calculation.Interfaces;
-using Storage.Helpers;
 
-namespace Storage
+namespace Calculation.Database
 {
     public partial class DbLayer1D : ILayer1D
     {        

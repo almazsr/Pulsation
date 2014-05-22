@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Calculation.Enums;
 using Calculation.Interfaces;
 
-namespace Storage
+namespace Calculation.Database
 {
     public partial class DbSolution1D : ISolution1D
     {

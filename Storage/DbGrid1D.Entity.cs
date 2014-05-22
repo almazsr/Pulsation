@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Storage
+namespace Calculation.Database
 {
     public partial class DbGrid1D
     {

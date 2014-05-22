@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Calculation.Interfaces;
+﻿using Calculation.Interfaces;
 
-namespace Storage
+namespace Calculation.Database
 {
     public partial class DbGrid1D : IGrid1D
     {
@@ -12,8 +10,10 @@ namespace Storage
             this.Min = min;
             this.N = N;
             this.h = (max - min) / N;
-            this.Name = string.Format("[{0:0.##}, {1:0.##}]({2})", min, max, N);
+            this.Name = string.Format(NameFormat, min, max, N);
         }
+
+        public static string NameFormat = "[{0:0.##}, {1:0.##}]({2})";
 
         public double this[int i]
         {

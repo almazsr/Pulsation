@@ -6,13 +6,13 @@ using Calculation.Enums;
 using Calculation.Interfaces;
 using Newtonsoft.Json;
 
-namespace Storage
+namespace Calculation.Database
 {
     public class DbSolutionContext : DbContext, IAccessSolutionContext
     {
         public DbSolutionContext() : base("SolutionsConnectionString")
         {
-            Database.SetInitializer(new CreateDatabaseIfNotExists<DbSolutionContext>());
+            System.Data.Entity.Database.SetInitializer(new CreateDatabaseIfNotExists<DbSolutionContext>());
             Configuration.LazyLoadingEnabled = true;
             Configuration.AutoDetectChangesEnabled = false;
         }
@@ -42,35 +42,38 @@ namespace Storage
         #region Solution creators
         public ISolution1D CreateNumericSolution(IGrid1D grid, object physicalData, Type solverType)
         {
-            return SaveSolution(new DbSolution1D(this, (DbGrid1D)grid, physicalData, solverType));
+            return SaveSolution(new DbSolution1D((DbGrid1D)grid, physicalData, solverType));
         }
 
         public ISolution1D CreateNumericTimeDependentSolution(IGrid1D grid, object physicalData, double dt, Type solverType)
         {
-            return SaveSolution(new DbSolution1D(this, (DbGrid1D)grid, physicalData, dt, solverType));
+            return SaveSolution(new DbSolution1D((DbGrid1D)grid, physicalData, dt, solverType));
         }
 
         public ISolution1D CreateExactSolution(IGrid1D grid, object physicalData)
         {
-            return SaveSolution(new DbSolution1D(this, (DbGrid1D)grid, physicalData));
+            return SaveSolution(new DbSolution1D((DbGrid1D)grid, physicalData));
         }
 
         public ISolution1D CreateExactTimeDependentSolution(IGrid1D grid, object physicalData, double dt)
         {
-            return SaveSolution(new DbSolution1D(this, (DbGrid1D)grid, physicalData, dt));
-        } 
+            return SaveSolution(new DbSolution1D((DbGrid1D)grid, physicalData, dt));
+        }
+
         #endregion
 
         #region Private savers into DB.
-        private DbSolution1D SaveSolution(DbSolution1D solution)
+        internal DbSolution1D SaveSolution(DbSolution1D solution)
         {
             Solutions.Add(solution);
+            SaveChanges();
             return solution;
         }
 
-        private DbLayer1D SaveLayer(DbLayer1D layer)
+        internal DbLayer1D SaveLayer(DbLayer1D layer)
         {
             Layers.Add(layer);
+            SaveChanges();
             return layer;
         }
         #endregion
@@ -87,7 +90,7 @@ namespace Storage
             }
         }
 
-        public void NextTimeSolution(ISolution1D solution)
+        public void SolutionNextTime(ISolution1D solution)
         {
             var dbSolution = solution as DbSolution1D;
             if (dbSolution != null)
@@ -95,18 +98,6 @@ namespace Storage
                 dbSolution.Nt++;
                 SaveChanges();
             }
-        } 
-        #endregion
-
-        #region Add layer
-        public ILayer1D AddLayerToSolution(ISolution1D solution, double[] layerValues)
-        {
-            var dbSolution = solution as DbSolution1D;
-            if (dbSolution != null)
-            {
-                return SaveLayer(new DbLayer1D(layerValues, (DbSolution1D)solution));
-            }
-            return null;
         } 
         #endregion
 
@@ -135,10 +126,11 @@ namespace Storage
             int N = layersQuery.Count();
             int timeStep = N / count;
 
-            var firstLayer = Layers.OrderBy(l => l.nt).FirstOrDefault();
+            var firstLayer = layersQuery.FirstOrDefault(l => l.nt == 0);
+
             result.Add(firstLayer);
 
-            var layers = Layers.Where(l => l.DbSolutionId == (int)solution.Key && l.nt % timeStep == 0);
+            var layers = layersQuery.Where(l => l.nt != 0 && l.nt % timeStep == 0);
             result.AddRange(layers);
 
             return result;
@@ -158,6 +150,11 @@ namespace Storage
             }
             return null;
         } 
+
+        public IGrid1D GetGrid(string name)
+        {
+            return Grids.FirstOrDefault(g => g.Name == name);
+        }
         #endregion
     }
 }

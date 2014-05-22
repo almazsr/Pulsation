@@ -16,7 +16,7 @@ namespace Calculation.Interfaces
 
         void StartSolution(ISolution1D solution);
 
-        void NextTimeSolution(ISolution1D solution);
+        void SolutionNextTime(ISolution1D solution);
 
         IGrid1D GetGrid(ISolution1D solution);
     }

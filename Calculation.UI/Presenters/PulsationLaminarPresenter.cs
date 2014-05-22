@@ -1,9 +1,9 @@
 ﻿using System;
 using Calculation.Classes;
 using Calculation.Classes.Schemes;
+using Calculation.Database;
 using Calculation.UI.Solvers;
 using Calculation.UI.Views;
-using Storage;
 
 namespace Calculation.UI.Presenters
 {

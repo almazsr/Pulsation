@@ -10,7 +10,5 @@ namespace Calculation.Interfaces
         ISolution1D CreateNumericTimeDependentSolution(IGrid1D grid, object physicalData, double dt, Type solverType);
         ISolution1D CreateExactSolution(IGrid1D grid, object physicalData);
         ISolution1D CreateExactTimeDependentSolution(IGrid1D grid, object physicalData, double dt);
-
-        ILayer1D AddLayerToSolution(ISolution1D solution, double[] layerValues);
     }
 }

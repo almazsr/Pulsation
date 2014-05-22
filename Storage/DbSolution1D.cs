@@ -1,19 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
+using Calculation.Database.Helpers;
 using Calculation.Interfaces;
 using Newtonsoft.Json;
 
-namespace Storage
+namespace Calculation.Database
 {
     public partial class DbSolution1D
     {
         /// <summary>
         /// Default constructor.
         /// </summary>
-        private DbSolution1D(DbSolutionContext dbContext, DbGrid1D grid, object physicalData, bool isExact = false, bool isTimeDependent = false)
+        private DbSolution1D(DbGrid1D grid, object physicalData, bool isExact = false, bool isTimeDependent = false)
         {
-            this.DbContext = dbContext;
+            LayersBuffer = new List<ILayer1D>();
             this.DbGridId = grid.Id;
             this.PhysicalData = JsonConvert.SerializeObject(physicalData);
             this.IsExact = isExact;
@@ -23,8 +24,8 @@ namespace Storage
         /// <summary>
         /// Exact, time undependent.
         /// </summary>
-        internal DbSolution1D(DbSolutionContext dbContext, DbGrid1D grid, object physicalData)
-            : this(dbContext, grid, physicalData, isExact: true)
+        internal DbSolution1D(DbGrid1D grid, object physicalData)
+            : this(grid, physicalData, isExact: true)
         {
                      
         }
@@ -32,8 +33,8 @@ namespace Storage
         /// <summary>
         /// Exact, time dependent.
         /// </summary>
-        internal DbSolution1D(DbSolutionContext dbContext, DbGrid1D grid, object physicalData, double dt)
-            : this(dbContext, grid, physicalData, isTimeDependent: true, isExact: true)
+        internal DbSolution1D(DbGrid1D grid, object physicalData, double dt)
+            : this(grid, physicalData, isTimeDependent: true, isExact: true)
         {
             this.dt = dt;
         } 
@@ -41,8 +42,8 @@ namespace Storage
         /// <summary>
         /// Default numeric constructor.
         /// </summary>
-        private DbSolution1D(DbSolutionContext dbContext, DbGrid1D grid, object physicalData, Type solverType, bool isTimeDependent) :
-            this(dbContext, grid, physicalData, isTimeDependent: isTimeDependent)
+        private DbSolution1D(DbGrid1D grid, object physicalData, Type solverType, bool isTimeDependent) :
+            this(grid, physicalData, isTimeDependent: isTimeDependent)
         {
             this.Solver = solverType.FullName;
         }      
@@ -50,38 +51,47 @@ namespace Storage
         /// <summary>
         /// Numeric, time undependent.
         /// </summary>
-        internal DbSolution1D(DbSolutionContext dbContext, DbGrid1D grid, object physicalData, Type solverType) :
-            this(dbContext, grid, physicalData, solverType, isTimeDependent: false)
+        internal DbSolution1D(DbGrid1D grid, object physicalData, Type solverType) :
+            this(grid, physicalData, solverType, isTimeDependent: false)
         {
         }      
 
         /// <summary>
         /// Numeric, time dependent.
         /// </summary>
-        internal DbSolution1D(DbSolutionContext dbContext, DbGrid1D grid, object physicalData, double dt, Type solverType)
-            : this(dbContext, grid, physicalData, solverType, isTimeDependent: true)
+        internal DbSolution1D(DbGrid1D grid, object physicalData, double dt, Type solverType)
+            : this(grid, physicalData, solverType, isTimeDependent: true)
         {
             this.dt = dt;
         }
 
-        public ILayer1D GetLayer(int timeIndex)
+        public ILayer1D GetLayer(int nt)
         {
-            return DbContext.GetLayer(this, timeIndex);
+            return DbAccess.GetLayer(this, nt);
         }
 
-        public double GetTime(int timeIndex)
+        public double GetTime(int nt)
         {
-            return timeIndex*dt;
+            return nt*dt;
         }
 
         public void AddLayer(double[] layerValues)
-        {
-            DbContext.AddLayerToSolution(this, layerValues);
+        {            
+            DbLayer1D layer = new DbLayer1D(layerValues, this);
+            if (LayersBuffer.Count < LayersBufferMaxSize)
+            {
+                LayersBuffer.Add(layer);
+            }
+            else
+            {
+                DbAccess.SaveLayers(LayersBuffer);
+                LayersBuffer.Clear();
+            }
         }
 
         public void NextTime()
         {
-            DbContext.NextTimeSolution(this);
+            DbAccess.SolutionNextTime(this);
         }
 
         [NotMapped]
@@ -100,7 +110,7 @@ namespace Storage
         [NotMapped]
         public ILayer1D CurrentLayer
         {
-            get { return DbContext.GetLayer(this, Nt - 1); }
+            get { return DbAccess.GetLayer(this, Nt - 1); }
         }
 
         [NotMapped]
@@ -110,6 +120,9 @@ namespace Storage
         }
 
         [NotMapped]
-        public DbSolutionContext DbContext { get; private set; }
+        internal int LayersBufferMaxSize = 10;
+
+        [NotMapped]
+        internal List<DbLayer1D> LayersBuffer { get; set; }
     }
 }
