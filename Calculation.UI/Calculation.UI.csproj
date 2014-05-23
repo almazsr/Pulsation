@@ -61,6 +61,8 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tao.OpenGl, Version=2.1.0.12, Culture=neutral, PublicKeyToken=1ca010269a4501ef, processorArchitecture=MSIL" />
+    <Reference Include="Tao.Platform.Windows, Version=1.0.0.5, Culture=neutral, PublicKeyToken=701104b2da67a104, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppSettings.Designer.cs">
@@ -70,13 +72,19 @@
     </Compile>
     <Compile Include="Helpers\BindingHelper.cs" />
     <Compile Include="Helpers\Convert.cs" />
+    <Compile Include="Helpers\Pallete.cs" />
+    <Compile Include="Helpers\ViewManager.cs" />
     <Compile Include="Models\LayerModel.cs" />
     <Compile Include="Models\PulsationLaminarModel.cs" />
+    <Compile Include="Models\PulsationLaminarSolutionsModel.cs" />
+    <Compile Include="Models\SolutionItemColoredModel.cs" />
     <Compile Include="Models\SolutionItemModel.cs" />
     <Compile Include="Models\SolutionModel.cs" />
     <Compile Include="Models\SolutionsGroupModel.cs" />
     <Compile Include="Models\SolutionsListModel.cs" />
+    <Compile Include="Presenters\PulsationLaminarComparisonPresenter.cs" />
     <Compile Include="Presenters\PulsationLaminarPresenter.cs" />
+    <Compile Include="Presenters\PulsationLaminarSolutionsPresenter.cs" />
     <Compile Include="Presenters\SolutionsListPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,12 +92,24 @@
     <Compile Include="Views\IPulsationLaminarView.cs" />
     <Compile Include="Views\ISolutionListView.cs" />
     <Compile Include="Views\ISolutionsComparisonView.cs" />
-    <Compile Include="Views\ISolutionsView.cs" />
+    <Compile Include="Views\IPulsationLaminarSolutionsView.cs" />
+    <Compile Include="Views\PulsationLaminarSolutionsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\PulsationLaminarSolutionsView.Designer.cs">
+      <DependentUpon>PulsationLaminarSolutionsView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\PulsationLaminarView.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\PulsationLaminarView.Designer.cs">
       <DependentUpon>PulsationLaminarView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SolutionComparisonView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SolutionComparisonView.Designer.cs">
+      <DependentUpon>SolutionComparisonView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\SolutionListView.cs">
       <SubType>Form</SubType>
@@ -106,8 +126,14 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\PulsationLaminarSolutionsView.resx">
+      <DependentUpon>PulsationLaminarSolutionsView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\PulsationLaminarView.resx">
       <DependentUpon>PulsationLaminarView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SolutionComparisonView.resx">
+      <DependentUpon>SolutionComparisonView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SolutionListView.resx">
       <DependentUpon>SolutionListView.cs</DependentUpon>
@@ -131,6 +157,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OpenGlExtensions\OpenGlExtensions.csproj">
+      <Project>{1AE1D42B-C1E9-42CC-B697-7BE765D3D5A9}</Project>
+      <Name>OpenGlExtensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Schemes\Calculation.csproj">
       <Project>{3FDBE64A-7C3A-4295-9CD0-032C36AAF0ED}</Project>
       <Name>Calculation</Name>

@@ -37,7 +37,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnSolve = new System.Windows.Forms.Button();
-            this.btnShow = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.cbExact = new System.Windows.Forms.CheckBox();
             this.cbImplicit = new System.Windows.Forms.CheckBox();
@@ -113,21 +112,12 @@
             // btnSolve
             // 
             this.btnSolve.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnSolve.Location = new System.Drawing.Point(155, 207);
+            this.btnSolve.Location = new System.Drawing.Point(236, 207);
             this.btnSolve.Name = "btnSolve";
             this.btnSolve.Size = new System.Drawing.Size(75, 23);
             this.btnSolve.TabIndex = 8;
             this.btnSolve.Text = "Решить";
             this.btnSolve.UseVisualStyleBackColor = true;
-            // 
-            // btnShow
-            // 
-            this.btnShow.Location = new System.Drawing.Point(236, 207);
-            this.btnShow.Name = "btnShow";
-            this.btnShow.Size = new System.Drawing.Size(75, 23);
-            this.btnShow.TabIndex = 9;
-            this.btnShow.Text = "Показать";
-            this.btnShow.UseVisualStyleBackColor = true;
             // 
             // progressBar1
             // 
@@ -169,11 +159,12 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(154, 78);
+            this.label5.Location = new System.Drawing.Point(151, 78);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(40, 13);
+            this.label5.Size = new System.Drawing.Size(43, 13);
             this.label5.TabIndex = 16;
-            this.label5.Text = "dAngle";
+            this.label5.Text = "dt (deg)";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // tbdAngle
             // 
@@ -193,7 +184,6 @@
             this.Controls.Add(this.cbImplicit);
             this.Controls.Add(this.cbExact);
             this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.btnShow);
             this.Controls.Add(this.btnSolve);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -204,7 +194,8 @@
             this.Controls.Add(this.tbNTime);
             this.Controls.Add(this.tbs);
             this.Name = "PulsationLaminarView";
-            this.Text = "PulsationLaminarView";
+            this.Text = "Пульсация";
+            this.Load += new System.EventHandler(this.PulsationLaminarView_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -221,7 +212,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnSolve;
-        private System.Windows.Forms.Button btnShow;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.CheckBox cbExact;
         private System.Windows.Forms.CheckBox cbImplicit;

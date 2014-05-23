@@ -19,5 +19,15 @@ namespace Calculation.Database
         {
             get { return Min + i*h; }
         }
+
+        public double[] ToArray()
+        {
+            double[] result = new double[N];
+            for (int i=0;i<N;i++)
+            {
+                result[i] = this[i];
+            }
+            return result;
+        }
     }
 }

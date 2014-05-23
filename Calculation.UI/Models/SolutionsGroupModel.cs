@@ -2,7 +2,7 @@
 
 namespace Calculation.UI.Models
 {
-    public class SolutionsGroupModel : List<Dictionary<string, SolutionModel>>
+    public class SolutionsGroupModel
     {
 
     }

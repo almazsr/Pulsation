@@ -18,7 +18,7 @@ namespace Calculation.Database
 
         public int DbSolutionId { get; set; }
 
-        internal byte[] Data { get; set; }
+        public byte[] Data { get; set; }
 
         public virtual DbSolution1D DbSolution { get; set; }
     }

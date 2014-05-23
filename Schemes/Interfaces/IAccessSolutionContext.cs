@@ -6,14 +6,16 @@ namespace Calculation.Interfaces
     {
         IList<ISolution1D> GetSolutions();
 
-        ISolution1D GetSolution(object key);
-        
-        ILayer1D GetLayer(ISolution1D solution, int nt);
+        ISolution1D GetSolution(int solutionId);
 
-        IList<ILayer1D> GetLayers(ISolution1D solution, int count);
+        ILayer1D GetLayer(int solutionId, int nt);
 
-        object GetPhysicalData(ISolution1D solution);
+        IList<ILayer1D> GetLayers(int solutionId, int count);
 
-        IGrid1D GetGrid(ISolution1D solution);
+        object GetPhysicalData(int solutionId);
+
+        IGrid1D GetGrid(int solutionId);
+
+        void DeleteSolution(int id);
     }
 }

@@ -28,26 +28,76 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.dgvSolutions = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnShow = new System.Windows.Forms.Button();
-            this.btnCompare = new System.Windows.Forms.Button();
-            this.btnCreate = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.btnCreate = new System.Windows.Forms.Button();
+            this.btnCompare = new System.Windows.Forms.Button();
+            this.btnShow = new System.Windows.Forms.Button();
+            this.dgvSolutions = new System.Windows.Forms.DataGridView();
+            this.btnRefresh = new System.Windows.Forms.Button();
+            this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSolutions)).BeginInit();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.panel1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(0, 512);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(750, 69);
+            this.panel2.TabIndex = 2;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.dgvSolutions);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Controls.Add(this.btnRefresh);
+            this.panel1.Controls.Add(this.btnDelete);
+            this.panel1.Controls.Add(this.btnCreate);
+            this.panel1.Controls.Add(this.btnCompare);
+            this.panel1.Controls.Add(this.btnShow);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel1.Location = new System.Drawing.Point(279, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(750, 506);
-            this.panel1.TabIndex = 1;
+            this.panel1.Size = new System.Drawing.Size(471, 69);
+            this.panel1.TabIndex = 4;
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(60, 20);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.TabIndex = 7;
+            this.btnDelete.Text = "Удалить";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            // 
+            // btnCreate
+            // 
+            this.btnCreate.Location = new System.Drawing.Point(384, 20);
+            this.btnCreate.Name = "btnCreate";
+            this.btnCreate.Size = new System.Drawing.Size(75, 23);
+            this.btnCreate.TabIndex = 6;
+            this.btnCreate.Text = "Создать";
+            this.btnCreate.UseVisualStyleBackColor = true;
+            // 
+            // btnCompare
+            // 
+            this.btnCompare.Location = new System.Drawing.Point(222, 20);
+            this.btnCompare.Name = "btnCompare";
+            this.btnCompare.Size = new System.Drawing.Size(75, 23);
+            this.btnCompare.TabIndex = 5;
+            this.btnCompare.Text = "Сравнить";
+            this.btnCompare.UseVisualStyleBackColor = true;
+            // 
+            // btnShow
+            // 
+            this.btnShow.Location = new System.Drawing.Point(303, 20);
+            this.btnShow.Name = "btnShow";
+            this.btnShow.Size = new System.Drawing.Size(75, 23);
+            this.btnShow.TabIndex = 4;
+            this.btnShow.Text = "Показать";
+            this.btnShow.UseVisualStyleBackColor = true;
             // 
             // dgvSolutions
             // 
@@ -58,81 +108,45 @@
             this.dgvSolutions.Location = new System.Drawing.Point(0, 0);
             this.dgvSolutions.Name = "dgvSolutions";
             this.dgvSolutions.ReadOnly = true;
-            this.dgvSolutions.Size = new System.Drawing.Size(750, 506);
-            this.dgvSolutions.TabIndex = 1;
+            this.dgvSolutions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvSolutions.Size = new System.Drawing.Size(750, 512);
+            this.dgvSolutions.TabIndex = 3;
             // 
-            // panel2
+            // btnRefresh
             // 
-            this.panel2.Controls.Add(this.btnDelete);
-            this.panel2.Controls.Add(this.btnCreate);
-            this.panel2.Controls.Add(this.btnCompare);
-            this.panel2.Controls.Add(this.btnShow);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 481);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(750, 100);
-            this.panel2.TabIndex = 2;
-            // 
-            // btnShow
-            // 
-            this.btnShow.Location = new System.Drawing.Point(582, 17);
-            this.btnShow.Name = "btnShow";
-            this.btnShow.Size = new System.Drawing.Size(75, 23);
-            this.btnShow.TabIndex = 0;
-            this.btnShow.Text = "Показать";
-            this.btnShow.UseVisualStyleBackColor = true;
-            // 
-            // btnCompare
-            // 
-            this.btnCompare.Location = new System.Drawing.Point(501, 17);
-            this.btnCompare.Name = "btnCompare";
-            this.btnCompare.Size = new System.Drawing.Size(75, 23);
-            this.btnCompare.TabIndex = 1;
-            this.btnCompare.Text = "Сравнить";
-            this.btnCompare.UseVisualStyleBackColor = true;
-            // 
-            // btnCreate
-            // 
-            this.btnCreate.Location = new System.Drawing.Point(663, 17);
-            this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(75, 23);
-            this.btnCreate.TabIndex = 2;
-            this.btnCreate.Text = "Создать";
-            this.btnCreate.UseVisualStyleBackColor = true;
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Location = new System.Drawing.Point(420, 17);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 3;
-            this.btnDelete.Text = "Удалить";
-            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnRefresh.Location = new System.Drawing.Point(141, 20);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.TabIndex = 8;
+            this.btnRefresh.Text = "Обновить";
+            this.btnRefresh.UseVisualStyleBackColor = true;
             // 
             // SolutionListView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(750, 581);
+            this.Controls.Add(this.dgvSolutions);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
             this.Name = "SolutionListView";
-            this.Text = "SolutionListView";
+            this.Text = "Решения";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSolutions)).EndInit();
-            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.DataGridView dgvSolutions;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.DataGridView dgvSolutions;
+        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnCreate;
         private System.Windows.Forms.Button btnCompare;
         private System.Windows.Forms.Button btnShow;
+        private System.Windows.Forms.Button btnRefresh;
     }
 }

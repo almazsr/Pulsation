@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace OpenGlExtensions.Classes
@@ -10,13 +11,20 @@ namespace OpenGlExtensions.Classes
             Points = new List<Point2D>();
         }
 
-        public Curve2D(IEnumerable<Point2D> points)
+        public Curve2D(Color color)
+            : this()
         {
-            Points = points.ToList();
+            Color = color;
         }
 
-        public Curve2D(double[] x, double[] y)
-            : this()
+        public Curve2D(IEnumerable<Point2D> points, Color color)
+        {
+            Points = points.ToList();
+            Color = color;
+        }
+
+        public Curve2D(double[] x, double[] y, Color color)
+            : this(color)
         {
             for (int i = 0; i < x.Length; i++)
             {

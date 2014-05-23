@@ -7,5 +7,7 @@
         double t { get; set; }
 
         double this[int i] { get; }
+
+        double[] ToArray();
     }
 }

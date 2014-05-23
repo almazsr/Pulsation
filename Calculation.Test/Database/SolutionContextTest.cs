@@ -113,11 +113,11 @@ namespace Calculation.Test.Database
                 Assert.AreEqual(null, solution.StartedAt);
                 Assert.AreEqual(SolutionState.None, solution.State);
 
-                db.StartSolution(solution);
+                solution.Start();
 
                 Assert.AreEqual(SolutionState.InProcess, solution.State);
 
-                db.SolutionNextTime(solution);
+                solution.NextTime();
 
                 Assert.AreEqual(dt, solution.dt);
                 Assert.AreEqual(1, solution.Nt);
@@ -150,11 +150,11 @@ namespace Calculation.Test.Database
                 Assert.AreEqual(null, solution.StartedAt);
                 Assert.AreEqual(SolutionState.None, solution.State);
 
-                db.StartSolution(solution);
+                solution.Start();
 
                 Assert.AreEqual(SolutionState.InProcess, solution.State);
 
-                db.SolutionNextTime(solution);
+                solution.NextTime();
 
                 Assert.AreEqual(dt, solution.dt);
                 Assert.AreEqual(1, solution.Nt);
@@ -176,19 +176,19 @@ namespace Calculation.Test.Database
                 var physicalData = new {x = 0, y = 0, z = 0};
                 var solution = db.CreateExactTimeDependentSolution(grid, physicalData, dt);
 
-                db.StartSolution(solution);
+                solution.Start();
                 int n = 100;
                 int m = 10;
                 for (int i = 0; i < n;i++ )
                 {                    
-                    db.SolutionNextTime(solution);
+                    solution.NextTime();
                 }
 
                 Assert.AreEqual(dt, solution.dt);
                 Assert.AreEqual(n, solution.Nt);
                 Assert.AreEqual(n*dt, solution.tCurrent);
 
-                var layers = db.GetLayers(solution, m);
+                var layers = db.GetLayers((int)solution.Key, m);
                 Assert.IsNotNull(layers);
                 Assert.AreEqual(m, layers.Count);
 

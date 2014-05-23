@@ -73,7 +73,7 @@ namespace Calculation.Database
 
         public ILayer1D GetLayer(int nt)
         {
-            return Context.GetLayer(this, nt);
+            return Context.GetLayer(Id, nt);
         }
 
         public double GetTime(int nt)

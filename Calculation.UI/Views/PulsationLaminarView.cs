@@ -24,7 +24,6 @@ namespace Calculation.UI.Views
 
             Load += Initialized;
             btnSolve.Click += SolveClicked;
-            btnShow.Click += ShowClicked;
         }        
 
         public PulsationLaminarModel Model { get; set; }
@@ -46,5 +45,15 @@ namespace Calculation.UI.Views
         public event EventHandler ShowClicked;
         public event EventHandler SolveClicked;
         public event EventHandler Initialized;
+
+        private void PulsationLaminarView_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

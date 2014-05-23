@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using Calculation.UI.Models;
 using Calculation.UI.Presenters;
+using OpenGlExtensions.Classes;
 
 namespace Calculation.UI.Views
 {

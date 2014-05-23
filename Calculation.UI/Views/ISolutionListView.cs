@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using Calculation.UI.Models;
 using Calculation.UI.Presenters;
@@ -9,6 +10,10 @@ namespace Calculation.UI.Views
     {
         SolutionsListModel SolutionsList { get; set; }
 
+        SolutionItemModel SelectedItem { get; }
+
+        List<SolutionItemModel> SelectedItems { get; }
+
         void Bind();
 
         SolutionsListPresenter Presenter { get; }
@@ -18,6 +23,8 @@ namespace Calculation.UI.Views
         event EventHandler CompareClicked;
 
         event EventHandler CreateClicked;
+
+        event EventHandler RefreshClicked;
 
         event EventHandler Initialized;
 

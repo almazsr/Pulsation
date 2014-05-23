@@ -5,9 +5,9 @@ namespace Calculation.UI.Models
 {
     public class SolutionItemModel
     {
-        public object Key { get; set; }
+        public int Id { get; set; }
 
-        public string Description { get; set; }
+        public string Name { get; set; }
 
         public SolutionState State { get; set; }
 

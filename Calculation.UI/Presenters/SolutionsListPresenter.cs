@@ -19,26 +19,37 @@ namespace Calculation.UI.Presenters
             View.CompareClicked += OnCompareClicked;
             View.ShowClicked += OnShowClicked;
             View.DeleteClicked += OnDeleteClicked;
+            View.RefreshClicked += OnRefreshClicked;
+        }
+
+        private void OnRefreshClicked(object sender, EventArgs e)
+        {
+            FillData();
         }
 
         private void OnDeleteClicked(object sender, EventArgs e)
         {
-
+            using (DbSolutionContext db = new DbSolutionContext())
+            {
+                db.DeleteSolution(View.SelectedItem.Id);
+            }
         }
 
         private void OnShowClicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            var view = new PulsationLaminarSolutionsView(View.SelectedItems);
+            view.ShowDialog();
         }
 
         private void OnCompareClicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            var view = new SolutionsComparisonView(View.SelectedItems);
+            view.ShowDialog();
         }
 
         private void OnCreateClicked(object sender, EventArgs e)
         {
-            PulsationLaminarView view = new PulsationLaminarView();
+            var view = ViewManager.GetView<PulsationLaminarView>();
             if (view.ShowDialog() == DialogResult.OK)
             {
                 FillData();

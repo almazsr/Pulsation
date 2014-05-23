@@ -7,9 +7,9 @@ namespace Calculation.UI.Helpers
     {
          public static SolutionItemModel ToItemModel(this ISolution1D s)
          {
-             return new SolutionItemModel
+             var result = new SolutionItemModel
                         {
-                            Key = s.Key,
+                            Id = (int)s.Key,
                             IsExact = s.IsExact,
                             IsTimeDependent = s.IsTimeDependent,
                             State = s.State,
@@ -20,6 +20,10 @@ namespace Calculation.UI.Helpers
                             TimeData = string.Format(TimeDataFormatTemplate, s.tCurrent, s.Nt, s.dt),    
                             Selected = false            
                         };
+             result.Name = string.Format("{0:ddMMyyyy_hhmmss}{1}{2}{3}{4}", result.Started, result.PhysicalData, result.Grid,
+                                         result.TimeData,
+                                         result.SolverType);
+             return result;
          }
 
         public const string GridFormatTemplate = "[{0},{1}](N={2})(d={3})";

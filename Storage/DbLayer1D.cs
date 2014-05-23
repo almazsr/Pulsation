@@ -34,5 +34,10 @@ namespace Calculation.Database
                 return _values ?? (_values = Convert.ToDoubles(Data));
             }
         }
+
+        public double[] ToArray()
+        {
+            return Values;
+        }
     }
 }

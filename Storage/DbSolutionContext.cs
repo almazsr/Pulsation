@@ -65,21 +65,21 @@ namespace Calculation.Database
             return Solutions.AsEnumerable().Cast<ISolution1D>().ToList();
         }
 
-        public ISolution1D GetSolution(object id)
+        public ISolution1D GetSolution(int id)
         {
-            return Solutions.FirstOrDefault(s => s.Id == (int)id);
+            return Solutions.FirstOrDefault(s => s.Id == id);
         }
 
-        public ILayer1D GetLayer(ISolution1D solution, int nt)
+        public ILayer1D GetLayer(int solutionId, int nt)
         {
-            return Layers.FirstOrDefault(l => l.DbSolutionId == (int)solution.Key && l.nt == nt);
+            return Layers.FirstOrDefault(l => l.DbSolutionId == solutionId && l.nt == nt);
         }
 
-        public IList<ILayer1D> GetLayers(ISolution1D solution, int count)
+        public IList<ILayer1D> GetLayers(int solutionId, int count)
         {
             var result = new List<ILayer1D>();
 
-            var layersQuery = Layers.Where(l => l.DbSolutionId == (int)solution.Key);
+            var layersQuery = Layers.Where(l => l.DbSolutionId == solutionId);
             int N = layersQuery.Count();
             int timeStep = N / count;
 
@@ -87,26 +87,33 @@ namespace Calculation.Database
 
             result.Add(firstLayer);
 
-            var layers = layersQuery.Where(l => l.nt != 0 && l.nt % timeStep == 0);
+            var layers = timeStep > 0
+                             ? layersQuery.Where(l => l.nt != 0 && l.nt%timeStep == 0)
+                             : layersQuery.Where(l => l.nt != 0);
             result.AddRange(layers);
 
             return result;
         }
 
-        public object GetPhysicalData(ISolution1D solution)
+        public object GetPhysicalData(int solutionId)
         {
+            var solution = GetSolution(solutionId);
             return JsonConvert.DeserializeObject(solution.PhysicalData);
         }
 
-        public IGrid1D GetGrid(ISolution1D solution)
+        public IGrid1D GetGrid(int solutionId)
         {
-            var dbSolution = Solutions.FirstOrDefault(s => s.Id == (int)solution.Key);
-            if (dbSolution != null)
-            {
-                return dbSolution.DbGrid;
-            }
-            return null;
-        } 
+            var solution = GetSolution(solutionId);
+            return solution.Grid;
+        }
+
+        public void DeleteSolution(int id)
+        {
+            var solution = Solutions.FirstOrDefault(s => s.Id == id);
+            var layers = Layers.Where(l => l.DbSolutionId == id);
+            Layers.RemoveRange(layers);
+            Solutions.Remove(solution);
+        }
 
         public IGrid1D GetGrid(string name)
         {

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Calculation.Interfaces
+﻿namespace Calculation.Interfaces
 {
     public interface IGrid1D
     {
@@ -10,5 +8,7 @@ namespace Calculation.Interfaces
         double h { get; }
 
         double this[int i] { get; }
+
+        double[] ToArray();
     }
 }

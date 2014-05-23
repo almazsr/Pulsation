@@ -26,13 +26,38 @@ namespace Calculation.UI.Views
             btnDelete.Click += DeleteClicked;
             btnCreate.Click += CreateClicked;
             btnCompare.Click += CompareClicked;
+            btnRefresh.Click += RefreshClicked;
             SolutionsList.Solutions.CollectionChanged += SolutionsCollectionChanged;
             Load += Initialized;
         }
 
         public void Bind()
         {
-            dgvSolutions.DataSource = SolutionsList.Solutions;            
+            dgvSolutions.DataSource = SolutionsList.Solutions;                    
+        }
+
+        public SolutionItemModel SelectedItem
+        {
+            get
+            {
+                if (dgvSolutions.CurrentRow != null)
+                {
+                    return (SolutionItemModel) dgvSolutions.CurrentRow.DataBoundItem;
+                }
+                return null;
+            }
+        }
+
+        public List<SolutionItemModel> SelectedItems
+        {
+            get
+            {
+                if (dgvSolutions.SelectedRows.Count > 0)
+                {
+                    return (from DataGridViewRow row in dgvSolutions.SelectedRows select (SolutionItemModel) row.DataBoundItem).ToList();
+                }
+                return new List<SolutionItemModel>();
+            }
         }
 
         public SolutionsListModel SolutionsList { get; set; }
@@ -40,6 +65,7 @@ namespace Calculation.UI.Views
         public event EventHandler ShowClicked;
         public event EventHandler CompareClicked;
         public event EventHandler CreateClicked;
+        public event EventHandler RefreshClicked;
         public event EventHandler Initialized;
         public event EventHandler DeleteClicked;
         public event NotifyCollectionChangedEventHandler SolutionsCollectionChanged;
