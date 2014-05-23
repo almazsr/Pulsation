@@ -41,7 +41,7 @@ namespace Calculation.UI.Presenters
                 {
                     var solutionItem = solutionItemColored.Item;
                     var grid = db.GetGrid(solutionItem.Id);
-                    var layers = db.GetLayers(solutionItem.Id, count);
+                    var layers = db.GetAllLayers(solutionItem.Id, count);
                     List<Curve2D> curves =
                         layers.Select(l => new Curve2D(l.ToArray(), grid.ToArray(), solutionItemColored.Color)).ToList();
                     View.Model.CurveGroups.Add(solutionItem.Name, curves);   

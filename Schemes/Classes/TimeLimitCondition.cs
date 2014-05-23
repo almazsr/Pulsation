@@ -9,7 +9,7 @@ namespace Calculation.Classes
             TMax = tMax;
         }
 
-        public bool IsFinish(ISolution1D solution)
+        public virtual bool IsFinish(ISolution1D solution)
         {
             return solution.tCurrent > TMax;
         }

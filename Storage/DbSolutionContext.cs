@@ -75,7 +75,7 @@ namespace Calculation.Database
             return Layers.FirstOrDefault(l => l.DbSolutionId == solutionId && l.nt == nt);
         }
 
-        public IList<ILayer1D> GetLayers(int solutionId, int count)
+        public IList<ILayer1D> GetAllLayers(int solutionId, int count)
         {
             var result = new List<ILayer1D>();
 
@@ -93,6 +93,12 @@ namespace Calculation.Database
             result.AddRange(layers);
 
             return result;
+        }
+
+        public List<ILayer1D> GetLayers(int solutionId, int fromTimeIndex, int count)
+        {
+            var layersQuery = Layers.Where(l => l.DbSolutionId == solutionId && l.nt >= fromTimeIndex).Take(count);
+            return layersQuery.AsEnumerable().Cast<ILayer1D>().ToList();
         }
 
         public object GetPhysicalData(int solutionId)

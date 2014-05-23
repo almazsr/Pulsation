@@ -30,6 +30,11 @@ namespace Calculation.UI.Models
             set { AppSettings.Default.dAngle = value; }
         }
 
+        public int ProgressMax
+        {
+            get { return (Exact ? 1 : 0) + (CrankNikolson ? 1 : 0) + (Implicit ? 1 : 0); }
+        }
+
         public int NGrid
         {
             get { return AppSettings.Default.NGrid; }

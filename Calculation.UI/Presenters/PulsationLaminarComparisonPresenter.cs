@@ -28,14 +28,14 @@ namespace Calculation.UI.Presenters
             using (DbSolutionContext db = new DbSolutionContext())
             {
                 var exactSolution = solutionItems.FirstOrDefault(s => s.Item.IsExact);
-                var exactLayers = db.GetLayers(exactSolution.Item.Id, count);
+                var exactLayers = db.GetAllLayers(exactSolution.Item.Id, count);
                 List<Curve2D> curves = new List<Curve2D>();
                 foreach (var solutionItemColored in solutionItems)
                 {
                     var solutionItem = solutionItemColored.Item;
                     if (!solutionItem.IsExact)
                     {
-                        var layers = db.GetLayers(solutionItem.Id, count);
+                        var layers = db.GetAllLayers(solutionItem.Id, count);
                         Curve2D curve = new Curve2D(solutionItemColored.Color);
                         for (int i = 0; i < exactLayers.Count;i++ )
                         {

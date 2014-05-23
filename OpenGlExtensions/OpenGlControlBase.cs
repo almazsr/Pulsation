@@ -213,36 +213,28 @@ namespace OpenGlExtensions
         #endregion InitializeStyles()
 
         #region DestroyContexts()
-		/// <summary>
-		/// 
-		/// </summary>
-        public void DestroyContexts() {
-            try
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void DestroyContexts()
+        {
+            if (renderingContext != IntPtr.Zero)
             {
-                if (renderingContext != IntPtr.Zero)
-                {
-                    Wgl.wglMakeCurrent(IntPtr.Zero, IntPtr.Zero);
-                    Wgl.wglDeleteContext(renderingContext);
-                    renderingContext = IntPtr.Zero;
-                }
-                if (deviceContext != IntPtr.Zero)
-                {
-                    if (windowHandle != IntPtr.Zero)
-                    {
-                        User.ReleaseDC(windowHandle, deviceContext);
-                    }
-                    deviceContext = IntPtr.Zero;
-                }
-                if (fontHandle != 0)
-                {
-                    Gl.glDeleteLists(fontHandle, 256);
-                }
+                Wgl.wglMakeCurrent(IntPtr.Zero, IntPtr.Zero);
+                Wgl.wglDeleteContext(renderingContext);
+                renderingContext = IntPtr.Zero;
             }
-            catch (AccessViolationException accessViolationException)
+            if (deviceContext != IntPtr.Zero)
             {
-                
+                if (windowHandle != IntPtr.Zero)
+                {
+                    User.ReleaseDC(windowHandle, deviceContext);
+                }
+                deviceContext = IntPtr.Zero;
             }
         }
+
         #endregion DestroyContexts()
 
         #region InitializeContexts()

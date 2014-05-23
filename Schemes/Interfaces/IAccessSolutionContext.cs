@@ -10,7 +10,9 @@ namespace Calculation.Interfaces
 
         ILayer1D GetLayer(int solutionId, int nt);
 
-        IList<ILayer1D> GetLayers(int solutionId, int count);
+        IList<ILayer1D> GetAllLayers(int solutionId, int count);
+
+        List<ILayer1D> GetLayers(int solutionId, int fromTimeIndex, int count);
 
         object GetPhysicalData(int solutionId);
 

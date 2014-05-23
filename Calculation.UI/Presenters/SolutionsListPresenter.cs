@@ -31,8 +31,13 @@ namespace Calculation.UI.Presenters
         {
             using (DbSolutionContext db = new DbSolutionContext())
             {
-                db.DeleteSolution(View.SelectedItem.Id);
+                foreach (var item in View.SelectedItems)
+                {
+                    db.DeleteSolution(item.Id);
+                }
+                db.SaveChanges();
             }
+            FillData();
         }
 
         private void OnShowClicked(object sender, EventArgs e)

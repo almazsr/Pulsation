@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Calculation.Enums;
 
 namespace Calculation.Interfaces
@@ -41,6 +42,8 @@ namespace Calculation.Interfaces
 
         ILayer1D GetLayer(int timeIndex);
 
+        List<ILayer1D> GetLayers(int fromTimeIndex, int count);
+
         double GetTime(int timeIndex);
 
         void AddLayer(double[] layerValues);
@@ -53,7 +56,7 @@ namespace Calculation.Interfaces
 
         #endregion
 
-        event EventHandler Started;
+        event EventHandler Started;                
         event EventHandler Finished;
     }
 }

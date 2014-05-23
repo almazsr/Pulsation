@@ -188,7 +188,7 @@ namespace Calculation.Test.Database
                 Assert.AreEqual(n, solution.Nt);
                 Assert.AreEqual(n*dt, solution.tCurrent);
 
-                var layers = db.GetLayers((int)solution.Key, m);
+                var layers = db.GetAllLayers((int)solution.Key, m);
                 Assert.IsNotNull(layers);
                 Assert.AreEqual(m, layers.Count);
 

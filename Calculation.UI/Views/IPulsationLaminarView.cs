@@ -15,12 +15,12 @@ namespace Calculation.UI.Views
 
         PulsationLaminarPresenter Presenter { get; }
 
-        int Progress { get; set; }
-
         event EventHandler ShowClicked;
 
         event EventHandler SolveClicked;
 
         event EventHandler Initialized;
+
+        void Progress(int percentage);
     }
 }

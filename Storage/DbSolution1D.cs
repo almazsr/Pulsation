@@ -16,7 +16,7 @@ namespace Calculation.Database
         /// </summary>
         private DbSolution1D(DbGrid1D grid, object physicalData, bool isExact = false, bool isTimeDependent = false)
         {
-            Context = new DbSolutionContext();
+            Context = new DbSolutionContext();           
             LayersBuffer = new List<DbLayer1D>();
             this.DbGridId = grid.Id;
             this.PhysicalData = JsonConvert.SerializeObject(physicalData);
@@ -76,6 +76,11 @@ namespace Calculation.Database
             return Context.GetLayer(Id, nt);
         }
 
+        public List<ILayer1D> GetLayers(int fromTimeIndex, int count)
+        {
+            return Context.GetLayers(Id, fromTimeIndex, count);
+        }
+
         public double GetTime(int nt)
         {
             return nt*dt;
@@ -88,12 +93,22 @@ namespace Calculation.Database
             CurrentLayer = layer;
             if (LayersBuffer.Count >= MaxBufferSize)
             {
-                Context.Layers.AddRange(LayersBuffer);
-                Context.SaveChanges();
-                Context.Dispose();
-                LayersBuffer.Clear();
-                Context = new DbSolutionContext();
+                CommitLayers();
+                RecreateContext();
             }
+        }
+
+        private void CommitLayers()
+        {
+            Context.Layers.AddRange(LayersBuffer);
+            Context.SaveChanges();
+            LayersBuffer.Clear();
+        }
+
+        private void RecreateContext()
+        {
+            Context.Dispose();
+            Context = new DbSolutionContext();
         }
 
         [NotMapped]
@@ -135,6 +150,10 @@ namespace Calculation.Database
 
         public void Finish(bool success)
         {
+            if (LayersBuffer.Any())
+            {
+                CommitLayers();
+            }
             State = success ? SolutionState.Success : SolutionState.Failed;
             if (Finished != null)
             {

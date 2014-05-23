@@ -38,13 +38,18 @@ namespace Calculation.UI.Views
             cbCrankNikolson.AddBinding(c=>c.Checked, Model, m=>m.CrankNikolson, DataSourceUpdateMode.OnPropertyChanged);
             cbExact.AddBinding(c => c.Checked, Model, m => m.Exact, DataSourceUpdateMode.OnPropertyChanged);
             cbImplicit.AddBinding(c => c.Checked, Model, m => m.Implicit, DataSourceUpdateMode.OnPropertyChanged);
+            progressBar1.AddBinding(c => c.Maximum, Model, m => m.ProgressMax);
         }
 
         public PulsationLaminarPresenter Presenter { get; private set; }
-        public int Progress { get; set; }
         public event EventHandler ShowClicked;
         public event EventHandler SolveClicked;
         public event EventHandler Initialized;
+
+        public void Progress(int percentage)
+        {
+            progressBar1.Value = percentage;            
+        }
 
         private void PulsationLaminarView_Load(object sender, EventArgs e)
         {

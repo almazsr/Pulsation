@@ -9,7 +9,7 @@ namespace Calculation.Database
             this.Max = max;
             this.Min = min;
             this.N = N;
-            this.h = (max - min) / N;
+            this.h = (max - min)/(N - 1);
             this.Name = string.Format(NameFormat, min, max, N);
         }
 

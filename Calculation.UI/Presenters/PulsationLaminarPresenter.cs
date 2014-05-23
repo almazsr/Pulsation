@@ -21,6 +21,7 @@ namespace Calculation.UI.Presenters
         {
             var model = View.Model;
             PulsationLaminarSolver solver = new PulsationLaminarSolver(model);
+            
             if (model.Exact)
             {
                 solver.SolveExact();                

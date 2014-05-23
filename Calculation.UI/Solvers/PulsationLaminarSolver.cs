@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Diagnostics;
+using System.Linq;
 using Calculation.Classes;
 using Calculation.Classes.Schemes;
 using Calculation.Database;
@@ -52,13 +54,33 @@ namespace Calculation.UI.Solvers
 
                 solution.AddLayer(new double[NGrid]);
 
-                IStopCondition stopCondition = new TimeLimitCondition(PulsationLaminarModel.TimeMax);
                 IBoundaryCondition leftBoundaryCondition = new BoundaryCondition(BoundaryConditionLocation.Left,
                                                                                  BoundaryConditionType.Neumann);
                 IBoundaryCondition rightBoundaryCondition = new BoundaryCondition(BoundaryConditionLocation.Right,
-                                                                                  BoundaryConditionType.Dirichlet); 
-               
-                scheme.Solve(solution, leftBoundaryCondition, rightBoundaryCondition, stopCondition);
+                                                                                  BoundaryConditionType.Dirichlet);
+                double eps = 1E-6;
+                double difference = 1;
+                int N = (int)(PulsationLaminarModel.TimeMax / dt);
+                int k = 0;
+                Stopwatch stopwatch = new Stopwatch();
+                TimeSpan maxTimeSpan = new TimeSpan(0, 0, 30);
+                do
+                {
+                    stopwatch.Start();
+                    IStopCondition stopCondition = new TimeLimitCondition((k+1)*PulsationLaminarModel.TimeMax);
+                    scheme.Solve(solution, leftBoundaryCondition, rightBoundaryCondition, stopCondition);
+                    if (k > 0)
+                    {
+                        var previousLayers = solution.GetLayers(N*(k - 1), N);
+                        var currentLayers = solution.GetLayers(k * N, N);                        
+                        difference =
+                            previousLayers.Select(
+                                (l, j) => l.ToArray().Select((x, i) => Math.Abs(x - currentLayers[j][i])).Max()).Max();
+                    }
+                    k++;
+                    stopwatch.Stop();
+                } 
+                while (difference > eps && stopwatch.Elapsed < maxTimeSpan);
             }
         }
 
