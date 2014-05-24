@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Calculation.Enums;
 using Calculation.Interfaces;
@@ -28,7 +30,7 @@ namespace Calculation.Classes.Schemes
 
         #region Boundary conditions
 
-        public void Solve(ISolution1D solution, IBoundaryCondition leftBoundaryCondition, IBoundaryCondition rightBoundaryCondition, IStopCondition stopCondition)
+        public void Solve(ISolution1D solution, IBoundaryCondition leftBoundaryCondition, IBoundaryCondition rightBoundaryCondition, IEnumerable<IStopCondition> stopConditions)
         {
             try
             {
@@ -47,7 +49,7 @@ namespace Calculation.Classes.Schemes
                     // Добавления нового слоя в результат.
                     solution.AddLayer(newLayer);
                 }
-                while (!stopCondition.IsFinish(solution));
+                while (stopConditions.All(c=>!c.IsFinish(solution)));
                 solution.Finish(true);
             }
             catch (Exception exception)
@@ -57,9 +59,9 @@ namespace Calculation.Classes.Schemes
         }
 
         public async void SolveAsync(ISolution1D solution, IBoundaryCondition leftBoundaryCondition,
-                               IBoundaryCondition rightBoundaryCondition, IStopCondition stopCondition)
+                               IBoundaryCondition rightBoundaryCondition, IEnumerable<IStopCondition> stopConditions)
         {
-            await Task.Run(() => Solve(solution, leftBoundaryCondition, rightBoundaryCondition, stopCondition));
+            await Task.Run(() => Solve(solution, leftBoundaryCondition, rightBoundaryCondition, stopConditions));
         }
 
         public event EventHandler Solved;

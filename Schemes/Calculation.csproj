@@ -55,7 +55,9 @@
     <Compile Include="Classes\Schemes\DiffusionScheme1D.cs" />
     <Compile Include="Classes\Schemes\Scheme1D.cs" />
     <Compile Include="Classes\SolutionExtensions.cs" />
-    <Compile Include="Classes\TimeLimitCondition.cs" />
+    <Compile Include="Classes\StopConditions\CalculationTimeoutCondition.cs" />
+    <Compile Include="Classes\StopConditions\ConvergenceCondition.cs" />
+    <Compile Include="Classes\StopConditions\TimeMaxCondition.cs" />
     <Compile Include="Classes\TriDiagMatrix.cs" />
     <Compile Include="Enums\BoundaryConditionLocation.cs" />
     <Compile Include="Enums\BoundaryConditionType.cs" />

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using Calculation.Classes;
 using Calculation.Classes.Schemes;
+using Calculation.Classes.StopConditions;
 using Calculation.Database;
 using Calculation.Enums;
 using Calculation.Helpers;
@@ -37,7 +38,7 @@ namespace Calculation.UI.Solvers
                 var solution = context.CreateExactTimeDependentSolution(grid, new { Re, s }, dt);
                 context.SaveChanges();
 
-                IStopCondition stopCondition = new TimeLimitCondition(PulsationLaminarModel.TimeMax);          
+                IStopCondition stopCondition = new TimeMaxCondition(PulsationLaminarModel.TimeMax);          
 
                 solution.FillExactAsync((r, t) => u(s, Re, r, t), stopCondition);                
             }
@@ -67,7 +68,7 @@ namespace Calculation.UI.Solvers
                 do
                 {
                     stopwatch.Start();
-                    IStopCondition stopCondition = new TimeLimitCondition((k+1)*PulsationLaminarModel.TimeMax);
+                    IStopCondition stopCondition = new TimeMaxCondition((k+1)*PulsationLaminarModel.TimeMax);
                     scheme.Solve(solution, leftBoundaryCondition, rightBoundaryCondition, stopCondition);
                     if (k > 0)
                     {

@@ -1,10 +1,10 @@
 ﻿using Calculation.Interfaces;
 
-namespace Calculation.Classes
+namespace Calculation.Classes.StopConditions
 {
-    public class TimeLimitCondition : IStopCondition
+    public class TimeMaxCondition : IStopCondition
     {
-        public TimeLimitCondition(double tMax)
+        public TimeMaxCondition(double tMax)
         {
             TMax = tMax;
         }
