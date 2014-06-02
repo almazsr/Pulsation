@@ -11,17 +11,23 @@ namespace Calculation.Interfaces
         #region Main properties
         IGrid1D Grid { get; }
 
-        string PhysicalData { get; set; } 
+        string PhysicalData { get; set; }
+
+        string Name { get; set; }
         #endregion
 
         #region Numeric or analytic
         bool IsExact { get; }
 
-        string Solver { get; } 
+        string SolverType { get; } 
         #endregion
 
         #region Time properties
         bool IsTimeDependent { get; }
+
+        bool IsPeriodic { get; }
+
+        int PeriodNt { get; set; }
 
         double dt { get; }
 
@@ -39,6 +45,8 @@ namespace Calculation.Interfaces
         #endregion
 
         #region Methods
+
+        void SetPeriod(int periodNt);
 
         ILayer1D GetLayer(int timeIndex);
 

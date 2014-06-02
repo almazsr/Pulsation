@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Calculation.UI {
+namespace Pulsation {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -128,30 +128,6 @@ namespace Calculation.UI {
             }
             set {
                 this["LayersCount"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool TimeMaxOnly {
-            get {
-                return ((bool)(this["TimeMaxOnly"]));
-            }
-            set {
-                this["TimeMaxOnly"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
-        public double beta {
-            get {
-                return ((double)(this["beta"]));
-            }
-            set {
-                this["beta"] = value;
             }
         }
     }

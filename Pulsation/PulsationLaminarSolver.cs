@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using Calculation.Classes;
@@ -9,7 +11,7 @@ using Calculation.Database;
 using Calculation.Enums;
 using Calculation.Helpers;
 using Calculation.Interfaces;
-using Calculation.UI.Models;
+using Pulsation.Models;
 
 namespace Calculation.UI.Solvers
 {
@@ -19,19 +21,17 @@ namespace Calculation.UI.Solvers
         {
             this.s = model.s;
             this.Re = model.Re;
-            this.beta = model.beta;
             this.dt = Math.PI * model.dAngle / 180;
             this.NGrid = model.NGrid;
         }
 
         public double s { get; set; }
         public double Re { get; set; }
-        public double beta { get; set; }
         public double dt { get; set; }
         public IGrid1D Grid { get; set; }
         public int NGrid { get; set; }
 
-        public void SolveExact(params IStopCondition[] stopConditions)
+        public void SolveExact()
         {
             using (DbSolutionContext context = new DbSolutionContext())
             {
@@ -43,27 +43,25 @@ namespace Calculation.UI.Solvers
                 
                 solution.SetPeriod(N);
 
-                solution.Name = string.Format("PulsationLaminar.Exact for {0}", solution.PhysicalData);
-
                 context.SaveChanges();
 
-                solution.FillExactAsync(u, stopConditions);                
+                IStopCondition[] stopConditions = new IStopCondition[]
+                                                      {
+                                                          new TimeMaxCondition(PulsationLaminarModel.TimeMax),
+                                                          new CalculationTimeoutCondition()
+                                                      };
+
+                solution.FillExactAsync((r, t) => u(s, Re, r, t), stopConditions);                
             }
         }
 
-        public void Solve(IScheme1D scheme, params IStopCondition[] stopConditions)
+        public void Solve(IScheme1D scheme)
         {
             using (DbSolutionContext context = new DbSolutionContext())
             {
                 var grid = context.CreateGrid(0, 1, NGrid);
-                var solution = context.CreateNumericTimeDependentSolution(grid, new {Re, s, beta}, dt,
-                                                                          scheme.GetType()); 
-                
-                int N = (int)(PulsationLaminarModel.TimeMax / dt);
-                solution.SetPeriod(N);
-
-                solution.Name = string.Format("PulsationLaminar.Numeric for {0} with {1}", solution.PhysicalData,
-                                              solution.SolverType);
+                var solution = context.CreateNumericTimeDependentSolution(grid, new { Re, s }, dt,
+                                                                          scheme.GetType());
                 context.SaveChanges();
 
                 double[] initialLayerValues = new double[NGrid];
@@ -73,46 +71,69 @@ namespace Calculation.UI.Solvers
                                                                                  BoundaryConditionType.Neumann);
                 IBoundaryCondition rightBoundaryCondition = new BoundaryCondition(BoundaryConditionLocation.Right,
                                                                                   BoundaryConditionType.Dirichlet);
-                scheme.Solve(solution, leftBoundaryCondition, rightBoundaryCondition, stopConditions);
+                double eps = 1E-6;
+                double difference = 1;
+                int N = (int)(PulsationLaminarModel.TimeMax / dt);
+                int k = 0;
+                Stopwatch stopwatch = new Stopwatch();
+                TimeSpan maxTimeSpan = new TimeSpan(0, 0, 30);
+                do
+                {
+                    stopwatch.Start();
+                    IStopCondition[] stopConditions = new IStopCondition[]
+                                                        {
+                                                            new CalculationTimeoutCondition(),
+                                                            new ConvergencePeriodicCondition(N)
+                                                        };
+                    scheme.Solve(solution, leftBoundaryCondition, rightBoundaryCondition, stopConditions);
+                    if (k > 0)
+                    {
+                        var previousLayers = solution.GetLayers(N*(k - 1), N);
+                        var currentLayers = solution.GetLayers(k * N, N);                        
+                        difference =
+                            previousLayers.Select(
+                                (l, j) => l.ToArray().Select((x, i) => Math.Abs(x - currentLayers[j][i])).Max()).Max();
+                    }
+                    k++;
+                    stopwatch.Stop();
+                } 
+                while (difference > eps && stopwatch.Elapsed < maxTimeSpan);
             }
         }
 
         /// <summary>
         /// Подсчет коэффициентов alpha.
         /// </summary>
-        public static void CalculateAlpha(int solutionId, int deg)
+        public void CalculateAlpha(ISolution1D solution, int deg)
         {
             using (DbSolutionContext context = new DbSolutionContext())
             {
-                var solution = context.GetSolution(solutionId);
                 if (solution.IsPeriodic)
                 {
+                    int solutionId = (int) solution.Key;
                     double period = solution.PeriodNt*solution.dt;
 
                     var physicalData = context.GetPhysicalData(solutionId);
                     var grid = context.GetGrid(solutionId);
                     var alphaGrid = context.CreateGrid(0, period, solution.PeriodNt);
-                    var alphaSolution = context.CreateNumericSolution(alphaGrid, physicalData, typeof (SimpsonIntegrator));
-                    alphaSolution.Name = string.Format("PulsationLaminar.alpha{0} for {1}", deg, alphaSolution.PhysicalData);
+                    var alphaSolution = context.CreateNumericSolution(grid, physicalData, typeof (SimpsonIntegrator));
                     context.SaveChanges();
                     try
                     {
                         alphaSolution.Start();
 
-                        IIntegrator integrator = new SimpsonIntegrator();
+                        SimpsonIntegrator integrator = new SimpsonIntegrator();
 
-                        var lastPeriodLayers = solution.GetLayers(solution.Nt - solution.PeriodNt, solution.PeriodNt);
+                        var lastPeriodLayers = solution.GetLayers(solution.Nt - solution.PeriodNt - 1, solution.PeriodNt);
 
                         double[] alphaValues = new double[alphaGrid.N];
                         for (int i = 0; i < alphaGrid.N; i++)
                         {
                             var layer = lastPeriodLayers[i];
-                            var r = grid;
                             double[] u = layer.ToArray();
-                            double[] ur = layer.ToArray().Select((uj, j) => uj*r[j]).ToArray();
-                            double[] udeg = u.Select((uj,j) => Math.Pow(uj, deg)*r[j]).ToArray();
-                            double uavg = 2*integrator.GetIntegral(ur, grid.h, grid.N);
-                            alphaValues[i] = 2 * integrator.GetIntegral(udeg, grid.h, grid.N) / Math.Pow(uavg, deg);
+                            double[] udeg = u.Select(x => Math.Pow(x, deg)).ToArray();
+                            alphaValues[i] = integrator.GetIntegral(udeg, grid.h, grid.N)/
+                                             Math.Pow(integrator.GetIntegral(u, grid.h, grid.N), deg);
                         }
                         alphaSolution.AddLayer(alphaValues);
                         alphaSolution.Finish(true);
@@ -128,30 +149,30 @@ namespace Calculation.UI.Solvers
         /// <summary>
         /// Подсчет коэффициентов alpha1.
         /// </summary>
-        public static void CalculateAlpha1(int solutionId)
+        public void CalculateAlpha1(ISolution1D solution)
         {
-            CalculateAlpha(solutionId, 2);
+            CalculateAlpha(solution, 2);
         }
 
         /// <summary>
         /// Подсчет коэффициентов alpha2.
         /// </summary>
-        public static void CalculateAlpha2(int solutionId)
+        public void CalculateAlpha2(ISolution1D solution)
         {
-            CalculateAlpha(solutionId, 3);
+            CalculateAlpha(solution, 3);
         }
 
-        public void SolveImplicit(params IStopCondition[] stopConditions)
+        public void SolveImplicit()
         {
-            Solve(new DiffusionImplicitCylindricScheme1D(f, 1/s), stopConditions);
+            Solve(new DiffusionImplicitCylindricScheme1D((r, t) => f(s, Re, r, t), 1/s));
         }
 
-        public void SolveCrankNikolson(params IStopCondition[] stopConditions)
+        public void SolveCrankNikolson()
         {
-            Solve(new CrankNicolsonCylindricScheme1D(f, 1 / s), stopConditions);
+            Solve(new CrankNicolsonCylindricScheme1D((r, t) => f(s, Re, r, t), 1 / s));
         }
 
-        public double u(double r, double t)
+        public static double u(double s, double Re, double r, double t)
         {
             double beis = SpecialFunctions.bei(s);
             double bers = SpecialFunctions.ber(s);
@@ -161,12 +182,12 @@ namespace Calculation.UI.Solvers
 
             return Re / (s * s) *
                    ((1 - (beis * beirs + bers * berrs) / bei2sber2s) * Math.Sin(t) +
-                    ((beis * berrs - bers * beirs) / bei2sber2s) * Math.Cos(t)+Math.Sin(t)+t);
+                    ((beis * berrs - bers * beirs) / bei2sber2s) * Math.Cos(t));
         }
 
-        public double f(double r, double t)
+        public static double f(double s, double Re, double r, double t)
         {
-            return Re/(s*s)*(beta*Math.Cos(t) + 1);
+            return Re/(s*s)*Math.Cos(t);
         }
     }
 }

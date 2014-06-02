@@ -6,9 +6,11 @@ namespace Calculation.Classes.StopConditions
 {
     public class CalculationTimeoutCondition : IStopCondition
     {
-        public CalculationTimeoutCondition(TimeSpan timeout)
+        public static readonly TimeSpan DefaultTimeout = new TimeSpan(0, 0, 10);
+
+        public CalculationTimeoutCondition(TimeSpan timeout = default(TimeSpan))
         {
-            this.Timeout = timeout;
+            this.Timeout = timeout == default(TimeSpan) ? DefaultTimeout : timeout;
         }
 
         public TimeSpan Timeout { get; set; }
@@ -19,7 +21,7 @@ namespace Calculation.Classes.StopConditions
             {
                 throw new CalculationException("Solution not started.");
             }
-            return DateTime.Now - solution.StartedAt.Value < Timeout;
+            return DateTime.Now - solution.StartedAt.Value > Timeout;
         }
     }
 }

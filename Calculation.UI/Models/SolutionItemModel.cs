@@ -13,7 +13,7 @@ namespace Calculation.UI.Models
 
         public bool IsExact { get; set; }
 
-        public bool IsTimeDependent { get; set; }
+        public bool IsTimeDependent { get; set; }        
 
         public string Grid { get; set; }
 
@@ -24,7 +24,5 @@ namespace Calculation.UI.Models
         public string TimeData { get; set; }
 
         public DateTime? Started { get; set; }
-
-        public bool Selected { get; set; }
     }
 }

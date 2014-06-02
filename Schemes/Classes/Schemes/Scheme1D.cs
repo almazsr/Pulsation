@@ -35,7 +35,8 @@ namespace Calculation.Classes.Schemes
             try
             {
                 solution.Start();
-                do
+
+                while (stopConditions.All(c => !c.IsFinish(solution)))
                 {
                     // Следующий шаг по времени.
                     solution.NextTime();
@@ -49,7 +50,6 @@ namespace Calculation.Classes.Schemes
                     // Добавления нового слоя в результат.
                     solution.AddLayer(newLayer);
                 }
-                while (stopConditions.All(c=>!c.IsFinish(solution)));
                 solution.Finish(true);
             }
             catch (Exception exception)

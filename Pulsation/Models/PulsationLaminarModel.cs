@@ -1,23 +1,14 @@
 ﻿using System;
 
-namespace Calculation.UI.Models
+namespace Pulsation.Models
 {
     public class PulsationLaminarModel
     {
-        public string Name { get; set; }
-
         public double s
         {
             get { return AppSettings.Default.s; }
             set { AppSettings.Default.s = value; }
         }
-
-        public double beta
-        {
-            get { return AppSettings.Default.beta; }
-            set { AppSettings.Default.beta = value; }
-        }
-
 
         public double Re
         {
@@ -65,12 +56,6 @@ namespace Calculation.UI.Models
         {
             get { return AppSettings.Default.Implicit; }
             set { AppSettings.Default.Implicit = value; }
-        }
-
-        public bool TimeMaxOnly
-        {
-            get { return AppSettings.Default.TimeMaxOnly; }
-            set { AppSettings.Default.TimeMaxOnly = value; }
         }
     }
 }

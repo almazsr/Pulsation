@@ -4,13 +4,15 @@ namespace Calculation.Interfaces
 {
     public interface IAccessSolutionContext : ISolutionContext
     {
-        IList<ISolution1D> GetSolutions();
+        List<ISolution1D> GetSolutions();
 
         ISolution1D GetSolution(int solutionId);
 
         ILayer1D GetLayer(int solutionId, int nt);
 
-        IList<ILayer1D> GetAllLayers(int solutionId, int count);
+        List<ILayer1D> GetSeparatedLayers(int solutionId, int separateCount);
+
+        List<ILayer1D> GetSeparatedLayers(int solutionId, int fromTimeIndex, int count, int separateCount);
 
         List<ILayer1D> GetLayers(int solutionId, int fromTimeIndex, int count);
 

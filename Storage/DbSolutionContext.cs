@@ -30,7 +30,7 @@ namespace Calculation.Database
         #region Solution creators
         public ISolution1D CreateNumericSolution(IGrid1D grid, object physicalData, Type solverType)
         {
-            var solution = new DbSolution1D((DbGrid1D) grid, physicalData, solverType);
+            var solution = new DbSolution1D((DbGrid1D)grid, physicalData, solverType);
             Solutions.Add(solution);
             return solution;            
         }
@@ -60,14 +60,19 @@ namespace Calculation.Database
 
         #region Getters
 
-        public IList<ISolution1D> GetSolutions()
+        public List<ISolution1D> GetSolutions()
         {
             return Solutions.AsEnumerable().Cast<ISolution1D>().ToList();
         }
 
         public ISolution1D GetSolution(int id)
         {
-            return Solutions.FirstOrDefault(s => s.Id == id);
+            var solution = Solutions.FirstOrDefault(s => s.Id == id);
+            if (solution != null)
+            {
+                solution.Context = this;
+            }
+            return solution;
         }
 
         public ILayer1D GetLayer(int solutionId, int nt)
@@ -75,7 +80,7 @@ namespace Calculation.Database
             return Layers.FirstOrDefault(l => l.DbSolutionId == solutionId && l.nt == nt);
         }
 
-        public IList<ILayer1D> GetAllLayers(int solutionId, int count)
+        public List<ILayer1D> GetSeparatedLayers(int solutionId, int count)
         {
             var result = new List<ILayer1D>();
 
@@ -88,11 +93,36 @@ namespace Calculation.Database
             result.Add(firstLayer);
 
             var layers = timeStep > 0
-                             ? layersQuery.Where(l => l.nt != 0 && l.nt%timeStep == 0)
+                             ? layersQuery.Where(l => l.nt != 0 && l.nt % timeStep == 0)
                              : layersQuery.Where(l => l.nt != 0);
             result.AddRange(layers);
 
             return result;
+        }
+
+        public List<ILayer1D> GetSeparatedLayers(int solutionId, int fromTimeIndex, int count, int separateCount)
+        {
+            var result = new List<ILayer1D>();
+
+            var layersQuery = Layers.Where(l => l.DbSolutionId == solutionId && l.nt >= fromTimeIndex).Take(count);
+            int timeStep = count / separateCount;
+
+            var firstLayer = layersQuery.FirstOrDefault(l => l.nt == fromTimeIndex);
+
+            result.Add(firstLayer);
+
+            var layers = timeStep > 0
+                             ? layersQuery.Where(l => l.nt != fromTimeIndex && (l.nt - fromTimeIndex)%timeStep == 0)
+                             : layersQuery.Where(l => l.nt != fromTimeIndex);
+            result.AddRange(layers);
+
+            return result;
+        }
+
+        public List<ILayer1D> GetAllLayers(int solutionId)
+        {
+            var layersQuery = Layers.Where(l => l.DbSolutionId == solutionId);
+            return layersQuery.AsEnumerable().Cast<ILayer1D>().ToList();
         }
 
         public List<ILayer1D> GetLayers(int solutionId, int fromTimeIndex, int count)

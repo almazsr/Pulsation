@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\BoundaryCondition.cs" />
+    <Compile Include="Classes\Integrators\IIntegrator.cs" />
+    <Compile Include="Classes\Integrators\SimpsonIntegrator.cs" />
     <Compile Include="Classes\Schemes\CrankNicolsonCylindricScheme1D.cs" />
     <Compile Include="Classes\Schemes\DiffusionImplicitCylindricScheme1D.cs" />
     <Compile Include="Classes\Schemes\DiffusionImplicitDecartScheme1D.cs" />
@@ -57,12 +59,15 @@
     <Compile Include="Classes\SolutionExtensions.cs" />
     <Compile Include="Classes\StopConditions\CalculationTimeoutCondition.cs" />
     <Compile Include="Classes\StopConditions\ConvergenceCondition.cs" />
+    <Compile Include="Classes\StopConditions\ConvergencePeriodicCondition.cs" />
     <Compile Include="Classes\StopConditions\TimeMaxCondition.cs" />
     <Compile Include="Classes\TriDiagMatrix.cs" />
     <Compile Include="Enums\BoundaryConditionLocation.cs" />
     <Compile Include="Enums\BoundaryConditionType.cs" />
     <Compile Include="Enums\SolutionState.cs" />
     <Compile Include="Exceptions\CalculationException.cs" />
+    <Compile Include="Export\SolutionExporter.cs" />
+    <Compile Include="Helpers\LayerExtensions.cs" />
     <Compile Include="Helpers\SpecialFunctions.cs" />
     <Compile Include="Interfaces\IAccessSolutionContext.cs" />
     <Compile Include="Interfaces\IBoundaryCondition.cs" />

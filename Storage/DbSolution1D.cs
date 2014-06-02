@@ -16,13 +16,16 @@ namespace Calculation.Database
         /// </summary>
         private DbSolution1D(DbGrid1D grid, object physicalData, bool isExact = false, bool isTimeDependent = false)
         {
-            Context = new DbSolutionContext();           
-            LayersBuffer = new List<DbLayer1D>();
+            this.Context = new DbSolutionContext();
+            this.LayersBuffer = new List<DbLayer1D>();
             this.DbGridId = grid.Id;
             this.PhysicalData = JsonConvert.SerializeObject(physicalData);
             this.IsExact = isExact;
             this.IsTimeDependent = isTimeDependent;
         }
+
+        public const string GridFormatTemplate = "[{0},{1}](N={2})(d={3})";
+        public const string TimeDataFormatTemplate = "[{0}](N={1})(d={2})";
 
         /// <summary>
         /// Exact, time undependent.
@@ -48,7 +51,7 @@ namespace Calculation.Database
         private DbSolution1D(DbGrid1D grid, object physicalData, Type solverType, bool isTimeDependent) :
             this(grid, physicalData, isTimeDependent: isTimeDependent)
         {
-            this.Solver = solverType.FullName;
+            this.SolverType = solverType.Name;
         }      
         
         /// <summary>
@@ -71,6 +74,12 @@ namespace Calculation.Database
         [NotMapped]
         public DbSolutionContext Context { get; set; }
 
+        public void SetPeriod(int periodNt)
+        {
+            IsPeriodic = true;
+            PeriodNt = periodNt;
+        }
+
         public ILayer1D GetLayer(int nt)
         {
             return Context.GetLayer(Id, nt);
@@ -78,7 +87,9 @@ namespace Calculation.Database
 
         public List<ILayer1D> GetLayers(int fromTimeIndex, int count)
         {
-            return Context.GetLayers(Id, fromTimeIndex, count);
+            LayersBuffer = LayersBuffer ?? new List<DbLayer1D>();
+            var dbLayers = Context.GetLayers(Id, fromTimeIndex, count - LayersBuffer.Count);
+            return dbLayers.Concat(LayersBuffer).ToList();
         }
 
         public double GetTime(int nt)
@@ -137,30 +148,44 @@ namespace Calculation.Database
         internal static int MaxBufferSize = 100;
 
         public void Start()
-        {            
+        {
+            AttachIfNot();
             StartedAt = DateTime.Now;
             State = SolutionState.InProcess;
+            Context.SaveChanges();
             if (Started != null)
             {
                 Started(this, new EventArgs());
             }
-            Context.Entry(this).State = EntityState.Modified;
-            Context.SaveChanges();
+        }
+
+        public void AttachIfNot()
+        {
+            var entry = Context.Entry(this);
+            if (entry.State == EntityState.Detached)
+            {
+                Context.Solutions.Attach(this);
+            }
         }
 
         public void Finish(bool success)
         {
-            if (LayersBuffer.Any())
+            if (LayersBuffer != null && LayersBuffer.Any())
             {
                 CommitLayers();
             }
             State = success ? SolutionState.Success : SolutionState.Failed;
+            var dbSolution = Context.GetSolution(Id) as DbSolution1D;
+            if (dbSolution != null)
+            {
+                dbSolution.State = State;
+                dbSolution.Nt = Nt;
+            }
+            Context.SaveChanges();
             if (Finished != null)
             {
                 Finished(this, new EventArgs());
-            } 
-            Context.Entry(this).State = EntityState.Modified;
-            Context.SaveChanges();
+            }
         }
 
         public void NextTime()

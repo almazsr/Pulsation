@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Calculation.UI.Helpers;
-using Calculation.UI.Models;
 using Calculation.UI.Presenters;
+using PulsationLaminarModel = Calculation.UI.Models.PulsationLaminarModel;
 
 namespace Calculation.UI.Views
 {
@@ -35,16 +28,18 @@ namespace Calculation.UI.Views
             tbRe.AddBinding(c => c.Text, Model, m => m.Re);
             tbNGrid.AddBinding(c => c.Text, Model, m => m.NGrid);
             tbNTime.AddBinding(c => c.Text, Model, m => m.NTime);
+            tbbeta.AddBinding(c => c.Text, Model, m => m.beta);
             cbCrankNikolson.AddBinding(c=>c.Checked, Model, m=>m.CrankNikolson, DataSourceUpdateMode.OnPropertyChanged);
             cbExact.AddBinding(c => c.Checked, Model, m => m.Exact, DataSourceUpdateMode.OnPropertyChanged);
             cbImplicit.AddBinding(c => c.Checked, Model, m => m.Implicit, DataSourceUpdateMode.OnPropertyChanged);
             progressBar1.AddBinding(c => c.Maximum, Model, m => m.ProgressMax);
+            cbTimeMaxOnly.AddBinding(c => c.Checked, Model, m => m.TimeMaxOnly);
         }
 
-        public PulsationLaminarPresenter Presenter { get; private set; }
         public event EventHandler ShowClicked;
         public event EventHandler SolveClicked;
         public event EventHandler Initialized;
+        public PulsationLaminarPresenter Presenter { get; private set; }
 
         public void Progress(int percentage)
         {

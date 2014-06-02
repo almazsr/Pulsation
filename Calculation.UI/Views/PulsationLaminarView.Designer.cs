@@ -43,11 +43,14 @@
             this.cbCrankNikolson = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tbdAngle = new System.Windows.Forms.TextBox();
+            this.cbTimeMaxOnly = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.tbbeta = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // tbs
             // 
-            this.tbs.Location = new System.Drawing.Point(43, 23);
+            this.tbs.Location = new System.Drawing.Point(46, 23);
             this.tbs.Name = "tbs";
             this.tbs.Size = new System.Drawing.Size(100, 20);
             this.tbs.TabIndex = 0;
@@ -68,7 +71,7 @@
             // 
             // tbRe
             // 
-            this.tbRe.Location = new System.Drawing.Point(42, 49);
+            this.tbRe.Location = new System.Drawing.Point(45, 49);
             this.tbRe.Name = "tbRe";
             this.tbRe.Size = new System.Drawing.Size(100, 20);
             this.tbRe.TabIndex = 3;
@@ -76,7 +79,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 23);
+            this.label1.Location = new System.Drawing.Point(27, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(12, 13);
             this.label1.TabIndex = 4;
@@ -85,7 +88,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 52);
+            this.label2.Location = new System.Drawing.Point(18, 52);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(21, 13);
             this.label2.TabIndex = 5;
@@ -173,11 +176,40 @@
             this.tbdAngle.Size = new System.Drawing.Size(100, 20);
             this.tbdAngle.TabIndex = 15;
             // 
+            // cbTimeMaxOnly
+            // 
+            this.cbTimeMaxOnly.AutoSize = true;
+            this.cbTimeMaxOnly.Location = new System.Drawing.Point(192, 132);
+            this.cbTimeMaxOnly.Name = "cbTimeMaxOnly";
+            this.cbTimeMaxOnly.Size = new System.Drawing.Size(53, 17);
+            this.cbTimeMaxOnly.TabIndex = 17;
+            this.cbTimeMaxOnly.Text = "TMax";
+            this.cbTimeMaxOnly.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(11, 78);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(28, 13);
+            this.label6.TabIndex = 19;
+            this.label6.Text = "beta";
+            // 
+            // tbbeta
+            // 
+            this.tbbeta.Location = new System.Drawing.Point(45, 75);
+            this.tbbeta.Name = "tbbeta";
+            this.tbbeta.Size = new System.Drawing.Size(100, 20);
+            this.tbbeta.TabIndex = 18;
+            // 
             // PulsationLaminarView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(324, 275);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.tbbeta);
+            this.Controls.Add(this.cbTimeMaxOnly);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.tbdAngle);
             this.Controls.Add(this.cbCrankNikolson);
@@ -218,5 +250,8 @@
         private System.Windows.Forms.CheckBox cbCrankNikolson;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbdAngle;
+        private System.Windows.Forms.CheckBox cbTimeMaxOnly;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox tbbeta;
     }
 }

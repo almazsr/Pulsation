@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Calculation.Enums;
 using Calculation.Interfaces;
 
 namespace Calculation.Classes
@@ -9,12 +9,12 @@ namespace Calculation.Classes
     public static class SolutionExtensions
     {
         public static void FillExact(this ISolution1D solution, Func<double, double, double> f,
-                                     IStopCondition stopCondition)
+                                     IEnumerable<IStopCondition> stopConditions)
         {
             try
             {
                 solution.Start();
-                while (!stopCondition.IsFinish(solution))
+                while (stopConditions.All(c => !c.IsFinish(solution)))
                 {
                     var grid = solution.Grid;
                     double t = solution.tCurrent;
@@ -36,9 +36,9 @@ namespace Calculation.Classes
         }
 
         public static async void FillExactAsync(this ISolution1D solution, Func<double, double, double> f,
-                                                IStopCondition stopCondition)
+                                                IEnumerable<IStopCondition> stopConditions)
         {
-            await Task.Run(() => solution.FillExact(f, stopCondition));
+            await Task.Run(() => solution.FillExact(f, stopConditions));
         }
     }
 }

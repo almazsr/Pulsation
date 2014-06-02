@@ -6,9 +6,9 @@ using Calculation.UI.Presenters;
 
 namespace Calculation.UI.Views
 {
-    public interface ISolutionListView
+    public interface ISolutionListView : IView<SolutionListPresenter>
     {
-        SolutionsListModel SolutionsList { get; set; }
+        SolutionListModel SolutionsList { get; set; }
 
         SolutionItemModel SelectedItem { get; }
 
@@ -16,19 +16,19 @@ namespace Calculation.UI.Views
 
         void Bind();
 
-        SolutionsListPresenter Presenter { get; }
-
         event EventHandler ShowClicked;
 
         event EventHandler CompareClicked;
+
+        event EventHandler DetailsClicked;
 
         event EventHandler CreateClicked;
 
         event EventHandler RefreshClicked;
 
-        event EventHandler Initialized;
-
         event EventHandler DeleteClicked;
+
+        event EventHandler CalculateAlphaClicked;
 
         event NotifyCollectionChangedEventHandler SolutionsCollectionChanged;
     }

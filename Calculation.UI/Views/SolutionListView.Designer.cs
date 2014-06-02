@@ -30,12 +30,13 @@
         {
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnCreate = new System.Windows.Forms.Button();
             this.btnCompare = new System.Windows.Forms.Button();
             this.btnShow = new System.Windows.Forms.Button();
             this.dgvSolutions = new System.Windows.Forms.DataGridView();
-            this.btnRefresh = new System.Windows.Forms.Button();
+            this.btnAlpha = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSolutions)).BeginInit();
@@ -52,20 +53,30 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnAlpha);
             this.panel1.Controls.Add(this.btnRefresh);
             this.panel1.Controls.Add(this.btnDelete);
             this.panel1.Controls.Add(this.btnCreate);
             this.panel1.Controls.Add(this.btnCompare);
             this.panel1.Controls.Add(this.btnShow);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(279, 0);
+            this.panel1.Location = new System.Drawing.Point(201, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(471, 69);
+            this.panel1.Size = new System.Drawing.Size(549, 69);
             this.panel1.TabIndex = 4;
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Location = new System.Drawing.Point(99, 19);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.btnRefresh.TabIndex = 8;
+            this.btnRefresh.Text = "Обновить";
+            this.btnRefresh.UseVisualStyleBackColor = true;
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(60, 20);
+            this.btnDelete.Location = new System.Drawing.Point(18, 19);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 7;
@@ -74,7 +85,7 @@
             // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(384, 20);
+            this.btnCreate.Location = new System.Drawing.Point(456, 19);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 23);
             this.btnCreate.TabIndex = 6;
@@ -83,7 +94,7 @@
             // 
             // btnCompare
             // 
-            this.btnCompare.Location = new System.Drawing.Point(222, 20);
+            this.btnCompare.Location = new System.Drawing.Point(182, 19);
             this.btnCompare.Name = "btnCompare";
             this.btnCompare.Size = new System.Drawing.Size(75, 23);
             this.btnCompare.TabIndex = 5;
@@ -92,7 +103,7 @@
             // 
             // btnShow
             // 
-            this.btnShow.Location = new System.Drawing.Point(303, 20);
+            this.btnShow.Location = new System.Drawing.Point(263, 19);
             this.btnShow.Name = "btnShow";
             this.btnShow.Size = new System.Drawing.Size(75, 23);
             this.btnShow.TabIndex = 4;
@@ -112,14 +123,14 @@
             this.dgvSolutions.Size = new System.Drawing.Size(750, 512);
             this.dgvSolutions.TabIndex = 3;
             // 
-            // btnRefresh
+            // btnAlpha
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(141, 20);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(75, 23);
-            this.btnRefresh.TabIndex = 8;
-            this.btnRefresh.Text = "Обновить";
-            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnAlpha.Location = new System.Drawing.Point(375, 19);
+            this.btnAlpha.Name = "btnAlpha";
+            this.btnAlpha.Size = new System.Drawing.Size(75, 23);
+            this.btnAlpha.TabIndex = 9;
+            this.btnAlpha.Text = "alpha";
+            this.btnAlpha.UseVisualStyleBackColor = true;
             // 
             // SolutionListView
             // 
@@ -148,5 +159,6 @@
         private System.Windows.Forms.Button btnCompare;
         private System.Windows.Forms.Button btnShow;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.Button btnAlpha;
     }
 }

@@ -29,11 +29,5 @@
     <Setting Name="LayersCount" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100</Value>
     </Setting>
-    <Setting Name="TimeMaxOnly" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="beta" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.5</Value>
-    </Setting>
   </Settings>
 </SettingsFile>

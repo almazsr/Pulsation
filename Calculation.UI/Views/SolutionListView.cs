@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Calculation.UI.Models;
 using Calculation.UI.Presenters;
@@ -19,15 +14,16 @@ namespace Calculation.UI.Views
         {
             InitializeComponent(); 
 
-            Presenter = new SolutionsListPresenter(this);
-            SolutionsList = new SolutionsListModel();
-
+            SolutionsList = new SolutionListModel();
+            Presenter = new SolutionListPresenter(this);
+            
             btnShow.Click += ShowClicked;
             btnDelete.Click += DeleteClicked;
             btnCreate.Click += CreateClicked;
             btnCompare.Click += CompareClicked;
             btnRefresh.Click += RefreshClicked;
             SolutionsList.Solutions.CollectionChanged += SolutionsCollectionChanged;
+            btnAlpha.Click += CalculateAlphaClicked;
             Load += Initialized;
         }
 
@@ -60,14 +56,16 @@ namespace Calculation.UI.Views
             }
         }
 
-        public SolutionsListModel SolutionsList { get; set; }
-        public SolutionsListPresenter Presenter { get; private set; }
+        public SolutionListModel SolutionsList { get; set; }
         public event EventHandler ShowClicked;
         public event EventHandler CompareClicked;
+        public event EventHandler DetailsClicked;
         public event EventHandler CreateClicked;
         public event EventHandler RefreshClicked;
         public event EventHandler Initialized;
+        public SolutionListPresenter Presenter { get; private set; }
         public event EventHandler DeleteClicked;
+        public event EventHandler CalculateAlphaClicked;
         public event NotifyCollectionChangedEventHandler SolutionsCollectionChanged;
     }
 }

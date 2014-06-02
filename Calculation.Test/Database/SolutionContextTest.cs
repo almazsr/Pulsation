@@ -53,7 +53,7 @@ namespace Calculation.Test.Database
                 Assert.AreEqual(0, solution.Nt);
                 Assert.AreEqual(0, solution.tCurrent);
                 Assert.AreEqual(JsonConvert.SerializeObject(physicalData), solution.PhysicalData);
-                Assert.AreEqual(null, solution.Solver);
+                Assert.AreEqual(null, solution.SolverType);
                 Assert.AreEqual(null, solution.StartedAt);
                 Assert.AreEqual(SolutionState.None, solution.State);
             }
@@ -80,7 +80,7 @@ namespace Calculation.Test.Database
                 Assert.AreEqual(0, solution.Nt);
                 Assert.AreEqual(0, solution.tCurrent);
                 Assert.AreEqual(JsonConvert.SerializeObject(physicalData), solution.PhysicalData);
-                Assert.AreEqual(solverType.ToString(), solution.Solver);
+                Assert.AreEqual(solverType.ToString(), solution.SolverType);
                 Assert.AreEqual(null, solution.StartedAt);
                 Assert.AreEqual(SolutionState.None, solution.State);
             }
@@ -109,7 +109,7 @@ namespace Calculation.Test.Database
                 Assert.AreEqual(0, solution.Nt);
                 Assert.AreEqual(0, solution.tCurrent);
                 Assert.AreEqual(JsonConvert.SerializeObject(physicalData), solution.PhysicalData);
-                Assert.AreEqual(solverType.ToString(), solution.Solver);
+                Assert.AreEqual(solverType.ToString(), solution.SolverType);
                 Assert.AreEqual(null, solution.StartedAt);
                 Assert.AreEqual(SolutionState.None, solution.State);
 
@@ -146,7 +146,7 @@ namespace Calculation.Test.Database
                 Assert.AreEqual(0, solution.Nt);
                 Assert.AreEqual(0, solution.tCurrent);
                 Assert.AreEqual(JsonConvert.SerializeObject(physicalData), solution.PhysicalData);
-                Assert.AreEqual(null, solution.Solver);
+                Assert.AreEqual(null, solution.SolverType);
                 Assert.AreEqual(null, solution.StartedAt);
                 Assert.AreEqual(SolutionState.None, solution.State);
 
@@ -188,7 +188,7 @@ namespace Calculation.Test.Database
                 Assert.AreEqual(n, solution.Nt);
                 Assert.AreEqual(n*dt, solution.tCurrent);
 
-                var layers = db.GetAllLayers((int)solution.Key, m);
+                var layers = db.GetSeparatedLayers((int)solution.Key, m);
                 Assert.IsNotNull(layers);
                 Assert.AreEqual(m, layers.Count);
 
