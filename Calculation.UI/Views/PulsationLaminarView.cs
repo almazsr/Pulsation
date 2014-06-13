@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Calculation.UI.Helpers;
 using Calculation.UI.Presenters;
-using PulsationLaminarModel = Calculation.UI.Models.PulsationLaminarModel;
+using Pulsation.Models;
 
 namespace Calculation.UI.Views
 {
@@ -10,8 +10,8 @@ namespace Calculation.UI.Views
     {
         public PulsationLaminarView()
         {
-            Model = new PulsationLaminarModel();
-            Presenter = new PulsationLaminarPresenter(this);
+            Model = new PulsationModel();
+            Presenter = new PulsationPresenter(this);
 
             InitializeComponent();
 
@@ -19,41 +19,31 @@ namespace Calculation.UI.Views
             btnSolve.Click += SolveClicked;
         }        
 
-        public PulsationLaminarModel Model { get; set; }
+        public PulsationModel Model { get; set; }
 
         public void Bind()
         {
             tbs.AddBinding(c => c.Text, Model, m => m.s);
-            tbdAngle.AddBinding(c => c.Text, Model, m => m.dAngle);
+            tbdAngle.AddBinding(c => c.Text, Model, m => m.dtDeg);
             tbRe.AddBinding(c => c.Text, Model, m => m.Re);
-            tbNGrid.AddBinding(c => c.Text, Model, m => m.NGrid);
-            tbNTime.AddBinding(c => c.Text, Model, m => m.NTime);
+            tbNGrid.AddBinding(c => c.Text, Model, m => m.GridN);
+            tbNTime.AddBinding(c => c.Text, Model, m => m.TimeN);
             tbbeta.AddBinding(c => c.Text, Model, m => m.beta);
+            tbepsilon.AddBinding(c => c.Text, Model, m => m.epsilon);
+            tbH1.AddBinding(c => c.Text, Model, m => m.H1);
+            tbH2.AddBinding(c => c.Text, Model, m => m.H2);
+            tbH3.AddBinding(c => c.Text, Model, m => m.H3);
+            cbExplicit.AddBinding(c => c.Checked, Model, m => m.Explicit);
+            cbIsComplexMode.AddBinding(c => c.Checked, Model, m => m.IsComplexMode);
+            cbTurbulent.AddBinding(c => c.Checked, Model, m => m.Turbulent);
             cbCrankNikolson.AddBinding(c=>c.Checked, Model, m=>m.CrankNikolson, DataSourceUpdateMode.OnPropertyChanged);
             cbExact.AddBinding(c => c.Checked, Model, m => m.Exact, DataSourceUpdateMode.OnPropertyChanged);
             cbImplicit.AddBinding(c => c.Checked, Model, m => m.Implicit, DataSourceUpdateMode.OnPropertyChanged);
-            progressBar1.AddBinding(c => c.Maximum, Model, m => m.ProgressMax);
-            cbTimeMaxOnly.AddBinding(c => c.Checked, Model, m => m.TimeMaxOnly);
         }
 
         public event EventHandler ShowClicked;
         public event EventHandler SolveClicked;
         public event EventHandler Initialized;
-        public PulsationLaminarPresenter Presenter { get; private set; }
-
-        public void Progress(int percentage)
-        {
-            progressBar1.Value = percentage;            
-        }
-
-        private void PulsationLaminarView_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
+        public PulsationPresenter Presenter { get; private set; }
     }
 }

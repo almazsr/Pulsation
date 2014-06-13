@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{76BD8974-FE6F-45BB-A9A0-6AF77EF9899D}</ProjectGuid>
+    <ProjectGuid>{F1C77E8A-58A8-4DD0-B538-AB25E54BB442}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Pulsation</RootNamespace>
@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\Schemes\bin\Debug\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,8 +42,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="PulsationSettings.Designer.cs">
+      <DependentUpon>PulsationSettings.settings</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Models\PulsationAlphaData.cs" />
+    <Compile Include="Models\PulsationData.cs" />
+    <Compile Include="Models\PulsationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Solvers\PulsationSolver.cs" />
+    <Compile Include="Solvers\PulsationAlphaSolver.cs" />
+    <Compile Include="Solvers\PulsationLaminarExactSolver.cs" />
+    <Compile Include="Solvers\PulsationSchemeSolver.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Schemes\Calculation.csproj">
+      <Project>{3fdbe64a-7c3a-4295-9cd0-032c36aaf0ed}</Project>
+      <Name>Calculation</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PulsationSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>PulsationSettings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

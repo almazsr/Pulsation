@@ -38,9 +38,15 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Storage\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,40 +54,90 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\BoundaryCondition.cs" />
-    <Compile Include="Classes\Integrators\IIntegrator.cs" />
-    <Compile Include="Classes\Integrators\SimpsonIntegrator.cs" />
-    <Compile Include="Classes\Schemes\CrankNicolsonCylindricScheme1D.cs" />
-    <Compile Include="Classes\Schemes\DiffusionImplicitCylindricScheme1D.cs" />
-    <Compile Include="Classes\Schemes\DiffusionImplicitDecartScheme1D.cs" />
-    <Compile Include="Classes\Schemes\DiffusionScheme1D.cs" />
-    <Compile Include="Classes\Schemes\Scheme1D.cs" />
-    <Compile Include="Classes\SolutionExtensions.cs" />
-    <Compile Include="Classes\StopConditions\CalculationTimeoutCondition.cs" />
-    <Compile Include="Classes\StopConditions\ConvergenceCondition.cs" />
-    <Compile Include="Classes\StopConditions\ConvergencePeriodicCondition.cs" />
-    <Compile Include="Classes\StopConditions\TimeMaxCondition.cs" />
-    <Compile Include="Classes\TriDiagMatrix.cs" />
+    <Compile Include="CalculationSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>CalculationSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Algorithms\Common\Extensions\CommonExtensions.cs" />
+    <Compile Include="Classes\Algorithms\Common\Extensions\GridBundleExtensions.cs" />
+    <Compile Include="Classes\Algorithms\Common\BoundaryCondition.cs" />
+    <Compile Include="Classes\Algorithms\Solvers\PeriodicSchemeSolver.cs" />
+    <Compile Include="Classes\Algorithms\TimeDependent\PeriodicSequenceBundle.cs" />
+    <Compile Include="Classes\Algorithms\TimeDependent\Schemes\DiffusionExplicitScheme1D.cs" />
+    <Compile Include="Classes\Algorithms\TimeDependent\Continues\CalculationTimeoutContinue.cs" />
+    <Compile Include="Classes\Algorithms\TimeDependent\Continues\TimeMaxContinue.cs" />
+    <Compile Include="Classes\Algorithms\Solvers\ExactTimeDependentSolver.cs" />
+    <Compile Include="Classes\Algorithms\Solvers\Solver.cs" />
+    <Compile Include="Classes\Algorithms\TimeDependent\Extensions\TimeDependentBundleExtensions.cs" />
+    <Compile Include="Classes\Algorithms\TimeDependent\SequenceBundle.cs" />
+    <Compile Include="Enums\ParameterType.cs" />
+    <Compile Include="Enums\StopConditionType.cs" />
+    <Compile Include="Exceptions\BundleNotInEditModeException.cs" />
+    <Compile Include="Exceptions\BundleWithoutGridException.cs" />
+    <Compile Include="Helpers\Grid.cs" />
+    <Compile Include="Helpers\ObjectHelper.cs" />
+    <Compile Include="Interfaces\IIntegrator.cs" />
+    <Compile Include="Classes\Algorithms\Common\Integrators\SimpsonIntegrator.cs" />
+    <Compile Include="Classes\Algorithms\Common\Integrators\TrapezoidalIntegrator.cs" />
+    <Compile Include="Classes\Algorithms\TimeDependent\Schemes\DiffusionCrankNicolsonCylindricScheme1D.cs" />
+    <Compile Include="Classes\Algorithms\TimeDependent\Schemes\DiffusionImplicitCylindricScheme1D.cs" />
+    <Compile Include="Classes\Algorithms\TimeDependent\Schemes\DiffusionInhomogeneousImplicitCylindricScheme1D.cs" />
+    <Compile Include="Classes\Algorithms\TimeDependent\Schemes\DiffusionInhomogeneousScheme1D.cs" />
+    <Compile Include="Classes\Algorithms\TimeDependent\Schemes\DiffusionScheme1D.cs" />
+    <Compile Include="Classes\Algorithms\Solvers\SchemeSolver.cs" />
+    <Compile Include="Classes\Algorithms\Solvers\ExactSolver.cs" />
+    <Compile Include="Classes\Algorithms\TimeDependent\Continues\ConvergencePeriodicContinue.cs" />
+    <Compile Include="Classes\Algorithms\Common\Matrixes\TriDiagMatrix.cs" />
+    <Compile Include="Classes\Data\Array.cs" />
+    <Compile Include="Classes\Data\Bundle.cs" />
+    <Compile Include="Classes\Data\Array.Entity.cs" />
+    <Compile Include="Classes\Data\Parameter.Entity.cs" />
+    <Compile Include="Classes\Data\Bundle.Entity.cs" />
+    <Compile Include="Classes\Data\CalculationDbContext.cs" />
+    <Compile Include="Attributes\ParameterAttribute.cs" />
     <Compile Include="Enums\BoundaryConditionLocation.cs" />
     <Compile Include="Enums\BoundaryConditionType.cs" />
     <Compile Include="Enums\SolutionState.cs" />
     <Compile Include="Exceptions\CalculationException.cs" />
-    <Compile Include="Export\SolutionExporter.cs" />
-    <Compile Include="Helpers\LayerExtensions.cs" />
+    <Compile Include="Export\ArraysExporter.cs" />
+    <Compile Include="Helpers\Convert.cs" />
+    <Compile Include="Helpers\ArrayExtensions.cs" />
     <Compile Include="Helpers\SpecialFunctions.cs" />
-    <Compile Include="Interfaces\IAccessSolutionContext.cs" />
-    <Compile Include="Interfaces\IBoundaryCondition.cs" />
-    <Compile Include="Interfaces\IGrid1D.cs" />
-    <Compile Include="Interfaces\ILayer1D.cs" />
-    <Compile Include="Interfaces\ISolutionContext.cs" />
-    <Compile Include="Interfaces\IStopCondition.cs" />
     <Compile Include="Interfaces\IScheme1D.cs" />
-    <Compile Include="Interfaces\ISolution1D.cs" />
+    <Compile Include="Interfaces\IContinue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="CalculationSettings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>CalculationSettings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SqlCE\sqlceca40.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlCE\sqlcecompact40.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlCE\sqlceer40EN.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlCE\sqlceme40.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlCE\sqlceoledb40.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlCE\sqlceqp40.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlCE\sqlcese40.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

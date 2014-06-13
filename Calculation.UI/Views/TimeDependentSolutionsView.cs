@@ -10,7 +10,7 @@ namespace Calculation.UI.Views
 {
     public partial class TimeDependentSolutionsView : Form, ITimeDependentSolutionsView
     {
-        public TimeDependentSolutionsView(IEnumerable<SolutionItemModel> solutionItems)
+        public TimeDependentSolutionsView(IEnumerable<PulsationSolutionItemModel> solutionItems)
         {
             Model = new SolutionsTimeDependentModel(solutionItems);
             InitializeComponent();
@@ -29,8 +29,8 @@ namespace Calculation.UI.Views
         public void Bind()
         {
             trbnt.AddBinding(c => c.Value, Model, m => m.CurrentLayerIndex, DataSourceUpdateMode.OnPropertyChanged);
-            tbLayersCount.AddBinding(c => c.Text, Model, m => m.LayersCount);
-            trbnt.AddBinding(c => c.Maximum, Model, m => m.LayersCount);
+            tbStep.AddBinding(c => c.Text, Model, m => m.Step);
+            trbnt.AddBinding(c => c.Maximum, Model, m => m.MaxIndex);
         }
 
         public void FillListView(List<SolutionItemColoredModel> solutionItems)
@@ -38,7 +38,8 @@ namespace Calculation.UI.Views
             lvSolutions.Items.Clear();
             foreach (var solutionItemColored in solutionItems)
             {
-                ListViewItem listViewItem = new ListViewItem(solutionItemColored.Item.Name);
+                string label = string.Format("{1}", solutionItemColored.Item.Name, solutionItemColored.Item.Info);
+                ListViewItem listViewItem = new ListViewItem(label);
                 listViewItem.ForeColor = solutionItemColored.Color;
                 lvSolutions.Items.Add(listViewItem);
             }

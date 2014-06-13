@@ -67,7 +67,7 @@ namespace Calculation.Test.Database
                 double min = 0;
                 double max = 1;
                 int N = 100;
-                Type solverType = typeof (CrankNicolsonCylindricScheme1D);
+                Type solverType = typeof (DiffusionCrankNicolsonCylindricScheme1D);
 
                 var grid = db.CreateGrid(min, max, N);
                 var physicalData = new { x = 0, y = 0, z = 0 };
@@ -96,7 +96,7 @@ namespace Calculation.Test.Database
                 double max = 1;
                 int N = 100;
                 double dt = 0.01;
-                Type solverType = typeof(CrankNicolsonCylindricScheme1D);
+                Type solverType = typeof(DiffusionCrankNicolsonCylindricScheme1D);
 
                 var grid = db.CreateGrid(min, max, N);
                 var physicalData = new { x = 0, y = 0, z = 0 };

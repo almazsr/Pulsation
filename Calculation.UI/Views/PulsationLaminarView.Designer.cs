@@ -37,15 +37,24 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnSolve = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.cbExact = new System.Windows.Forms.CheckBox();
             this.cbImplicit = new System.Windows.Forms.CheckBox();
             this.cbCrankNikolson = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tbdAngle = new System.Windows.Forms.TextBox();
-            this.cbTimeMaxOnly = new System.Windows.Forms.CheckBox();
+            this.cbIsComplexMode = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.tbbeta = new System.Windows.Forms.TextBox();
+            this.cbTurbulent = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tbepsilon = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tbH3 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tbH2 = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tbH1 = new System.Windows.Forms.TextBox();
+            this.cbExplicit = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // tbs
@@ -115,24 +124,17 @@
             // btnSolve
             // 
             this.btnSolve.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnSolve.Location = new System.Drawing.Point(236, 207);
+            this.btnSolve.Location = new System.Drawing.Point(226, 200);
             this.btnSolve.Name = "btnSolve";
             this.btnSolve.Size = new System.Drawing.Size(75, 23);
             this.btnSolve.TabIndex = 8;
             this.btnSolve.Text = "Решить";
             this.btnSolve.UseVisualStyleBackColor = true;
             // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(14, 236);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(297, 23);
-            this.progressBar1.TabIndex = 11;
-            // 
             // cbExact
             // 
             this.cbExact.AutoSize = true;
-            this.cbExact.Location = new System.Drawing.Point(42, 132);
+            this.cbExact.Location = new System.Drawing.Point(36, 251);
             this.cbExact.Name = "cbExact";
             this.cbExact.Size = new System.Drawing.Size(109, 17);
             this.cbExact.TabIndex = 12;
@@ -142,17 +144,17 @@
             // cbImplicit
             // 
             this.cbImplicit.AutoSize = true;
-            this.cbImplicit.Location = new System.Drawing.Point(41, 155);
+            this.cbImplicit.Location = new System.Drawing.Point(35, 295);
             this.cbImplicit.Name = "cbImplicit";
-            this.cbImplicit.Size = new System.Drawing.Size(104, 17);
+            this.cbImplicit.Size = new System.Drawing.Size(70, 17);
             this.cbImplicit.TabIndex = 13;
-            this.cbImplicit.Text = "Неявная схема";
+            this.cbImplicit.Text = "Неявная";
             this.cbImplicit.UseVisualStyleBackColor = true;
             // 
             // cbCrankNikolson
             // 
             this.cbCrankNikolson.AutoSize = true;
-            this.cbCrankNikolson.Location = new System.Drawing.Point(41, 178);
+            this.cbCrankNikolson.Location = new System.Drawing.Point(35, 318);
             this.cbCrankNikolson.Name = "cbCrankNikolson";
             this.cbCrankNikolson.Size = new System.Drawing.Size(122, 17);
             this.cbCrankNikolson.TabIndex = 14;
@@ -167,7 +169,6 @@
             this.label5.Size = new System.Drawing.Size(43, 13);
             this.label5.TabIndex = 16;
             this.label5.Text = "dt (deg)";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // tbdAngle
             // 
@@ -176,15 +177,15 @@
             this.tbdAngle.Size = new System.Drawing.Size(100, 20);
             this.tbdAngle.TabIndex = 15;
             // 
-            // cbTimeMaxOnly
+            // cbIsComplexMode
             // 
-            this.cbTimeMaxOnly.AutoSize = true;
-            this.cbTimeMaxOnly.Location = new System.Drawing.Point(192, 132);
-            this.cbTimeMaxOnly.Name = "cbTimeMaxOnly";
-            this.cbTimeMaxOnly.Size = new System.Drawing.Size(53, 17);
-            this.cbTimeMaxOnly.TabIndex = 17;
-            this.cbTimeMaxOnly.Text = "TMax";
-            this.cbTimeMaxOnly.UseVisualStyleBackColor = true;
+            this.cbIsComplexMode.AutoSize = true;
+            this.cbIsComplexMode.Location = new System.Drawing.Point(45, 132);
+            this.cbIsComplexMode.Name = "cbIsComplexMode";
+            this.cbIsComplexMode.Size = new System.Drawing.Size(77, 17);
+            this.cbIsComplexMode.TabIndex = 17;
+            this.cbIsComplexMode.Text = "Комплекс";
+            this.cbIsComplexMode.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
@@ -202,20 +203,113 @@
             this.tbbeta.Size = new System.Drawing.Size(100, 20);
             this.tbbeta.TabIndex = 18;
             // 
+            // cbTurbulent
+            // 
+            this.cbTurbulent.AutoSize = true;
+            this.cbTurbulent.Location = new System.Drawing.Point(35, 343);
+            this.cbTurbulent.Name = "cbTurbulent";
+            this.cbTurbulent.Size = new System.Drawing.Size(177, 17);
+            this.cbTurbulent.TabIndex = 20;
+            this.cbTurbulent.Text = "Турбулентный неявная схема";
+            this.cbTurbulent.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(0, 104);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(40, 13);
+            this.label7.TabIndex = 22;
+            this.label7.Text = "epsilon";
+            // 
+            // tbepsilon
+            // 
+            this.tbepsilon.Location = new System.Drawing.Point(46, 101);
+            this.tbepsilon.Name = "tbepsilon";
+            this.tbepsilon.Size = new System.Drawing.Size(100, 20);
+            this.tbepsilon.TabIndex = 21;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(18, 210);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(21, 13);
+            this.label8.TabIndex = 28;
+            this.label8.Text = "H3";
+            // 
+            // tbH3
+            // 
+            this.tbH3.Location = new System.Drawing.Point(47, 207);
+            this.tbH3.Name = "tbH3";
+            this.tbH3.Size = new System.Drawing.Size(100, 20);
+            this.tbH3.TabIndex = 27;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(18, 184);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(21, 13);
+            this.label9.TabIndex = 26;
+            this.label9.Text = "H2";
+            // 
+            // tbH2
+            // 
+            this.tbH2.Location = new System.Drawing.Point(46, 181);
+            this.tbH2.Name = "tbH2";
+            this.tbH2.Size = new System.Drawing.Size(100, 20);
+            this.tbH2.TabIndex = 25;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(19, 158);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(21, 13);
+            this.label10.TabIndex = 24;
+            this.label10.Text = "H1";
+            // 
+            // tbH1
+            // 
+            this.tbH1.Location = new System.Drawing.Point(46, 155);
+            this.tbH1.Name = "tbH1";
+            this.tbH1.Size = new System.Drawing.Size(100, 20);
+            this.tbH1.TabIndex = 23;
+            // 
+            // cbExplicit
+            // 
+            this.cbExplicit.AutoSize = true;
+            this.cbExplicit.Location = new System.Drawing.Point(35, 272);
+            this.cbExplicit.Name = "cbExplicit";
+            this.cbExplicit.Size = new System.Drawing.Size(58, 17);
+            this.cbExplicit.TabIndex = 29;
+            this.cbExplicit.Text = "Явная";
+            this.cbExplicit.UseVisualStyleBackColor = true;
+            // 
             // PulsationLaminarView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(324, 275);
+            this.ClientSize = new System.Drawing.Size(324, 403);
+            this.Controls.Add(this.cbExplicit);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.tbH3);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.tbH2);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.tbH1);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.tbepsilon);
+            this.Controls.Add(this.cbTurbulent);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.tbbeta);
-            this.Controls.Add(this.cbTimeMaxOnly);
+            this.Controls.Add(this.cbIsComplexMode);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.tbdAngle);
             this.Controls.Add(this.cbCrankNikolson);
             this.Controls.Add(this.cbImplicit);
             this.Controls.Add(this.cbExact);
-            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btnSolve);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -227,7 +321,6 @@
             this.Controls.Add(this.tbs);
             this.Name = "PulsationLaminarView";
             this.Text = "Пульсация";
-            this.Load += new System.EventHandler(this.PulsationLaminarView_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -244,14 +337,23 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnSolve;
-        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.CheckBox cbExact;
         private System.Windows.Forms.CheckBox cbImplicit;
         private System.Windows.Forms.CheckBox cbCrankNikolson;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbdAngle;
-        private System.Windows.Forms.CheckBox cbTimeMaxOnly;
+        private System.Windows.Forms.CheckBox cbIsComplexMode;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox tbbeta;
+        private System.Windows.Forms.CheckBox cbTurbulent;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox tbepsilon;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox tbH3;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox tbH2;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox tbH1;
+        private System.Windows.Forms.CheckBox cbExplicit;
     }
 }

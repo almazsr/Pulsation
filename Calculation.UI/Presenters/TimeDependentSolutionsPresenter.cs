@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Calculation.Database;
+using Calculation.Classes.Algorithms.Common.Extensions;
+using Calculation.Classes.Algorithms.TimeDependent.Extensions;
+using Calculation.Classes.Data;
 using Calculation.Interfaces;
 using Calculation.UI.Models;
 using Calculation.UI.Views;
 using OpenGlExtensions.Classes;
+using Array = Calculation.Classes.Data.Array;
 
 namespace Calculation.UI.Presenters
 {
@@ -37,24 +40,26 @@ namespace Calculation.UI.Presenters
 
         public virtual void FillData()
         {
-            int count = View.Model.LayersCount;
+            int step = View.Model.Step;
             List<SolutionItemColoredModel> solutionItems = View.Model.SolutionItems;
 
             View.FillListView(solutionItems);
 
             View.Model.CurveGroups.Clear();
-            using (DbSolutionContext db = new DbSolutionContext())
+            using (CalculationDbContext db = new CalculationDbContext())
             {
                 foreach (var solutionItemColored in solutionItems)
                 {
                     var solutionItem = solutionItemColored.Item;
-                    var solution = db.GetSolution(solutionItem.Id);
-                    var grid = db.GetGrid(solutionItem.Id);
-                    List<ILayer1D> layers = solution.IsPeriodic ?
-                        db.GetSeparatedLayers(solutionItem.Id, solution.Nt - solution.PeriodNt, solution.PeriodNt, count) : 
-                        db.GetSeparatedLayers(solutionItem.Id, count);
+                    var bundle = db.GetBundle(solutionItem.Id);
+                    var grid = bundle.GetGrid();
+                    bool isPeriodic = bundle.IsPeriodic();
+
+                    List<Array> layers = isPeriodic ?
+                        bundle.GetLastPeriodLayers(step) :
+                        bundle.GetSeparatedArrays(step);
                     List<Curve2D> curves =
-                        layers.Select(l => new Curve2D(l.ToArray(), grid.ToArray(), solutionItemColored.Color)).ToList();
+                        layers.Select(l => new Curve2D(l.Values, grid.Values, solutionItemColored.Color)).ToList();
                     View.Model.CurveGroups.Add(Guid.NewGuid().ToString(), curves);
                 }
             }
@@ -66,17 +71,14 @@ namespace Calculation.UI.Presenters
             foreach (var curves in View.Model.CurveGroups)
             {
                 curves.Value.ForEach(l => l.Visible = false);
-                if (index < curves.Value.Count)
-                {
-                    curves.Value[index].Visible = true;
-                }
+                curves.Value[index].Visible = true;
             }
             View.Context2D.Refresh();
         }
 
         public void DrawCurves()
         {
-            int layersCount = View.Model.LayersCount;
+            int layersCount = View.Model.Count;
             View.Context2D.ClearArea();
             for (int i = 0; i < layersCount; i++)
             {

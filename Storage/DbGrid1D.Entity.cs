@@ -22,6 +22,6 @@ namespace Calculation.Database
 
         public string Name { get; set; }
 
-        public virtual ICollection<DbSolution1D> DbSolutions { get; set; }
+        public virtual ICollection<DbGroup1D> DbSolutions { get; set; }
     }
 }

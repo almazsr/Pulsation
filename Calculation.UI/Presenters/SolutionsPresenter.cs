@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Calculation.Database;
+using Calculation.Classes.Algorithms.Common.Extensions;
+using Calculation.Classes.Algorithms.TimeDependent.Extensions;
+using Calculation.Classes.Data;
 using Calculation.UI.Models;
 using Calculation.UI.Views;
 using OpenGlExtensions.Classes;
@@ -24,17 +26,17 @@ namespace Calculation.UI.Presenters
 
             View.Model.Curves.Clear(); 
 
-            using (DbSolutionContext db = new DbSolutionContext())
+            using (CalculationDbContext db = new CalculationDbContext())
             {
                 foreach (var solutionItemColored in solutionItems)
                 {                    
                     var solutionItem = solutionItemColored.Item;
-                    if (!solutionItem.IsTimeDependent)
+                    var bundle = db.GetBundle(solutionItem.Id);
+                    var grid = bundle.GetGrid();
+                    if (!bundle.IsSequence)
                     {
-                        var layer = db.GetLayer(solutionItem.Id, 0);
-                        var grid = db.GetGrid(solutionItem.Id);                        
-
-                        Curve2D curve = new Curve2D(grid.ToArray(), layer.ToArray(), solutionItemColored.Color);
+                        var array = bundle.GetArray(0);
+                        Curve2D curve = new Curve2D(grid.Values, array.Values, solutionItemColored.Color);
                         View.Model.Curves.Add(Guid.NewGuid().ToString(), curve);
                     }
                 }

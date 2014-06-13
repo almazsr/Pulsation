@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using Calculation.UI.Models;
@@ -22,37 +23,47 @@ namespace Calculation.UI.Views
             btnCreate.Click += CreateClicked;
             btnCompare.Click += CompareClicked;
             btnRefresh.Click += RefreshClicked;
-            SolutionsList.Solutions.CollectionChanged += SolutionsCollectionChanged;
             btnAlpha.Click += CalculateAlphaClicked;
+            btnExport.Click += ExportClicked;
             Load += Initialized;
         }
 
         public void Bind()
         {
-            dgvSolutions.DataSource = SolutionsList.Solutions;                    
+            dgvSolutions.ColumnsHierarchy.AutoStretchColumns = true;
+            dgvSolutions.ColumnsHierarchy.AllowDragDrop = true;
+            dgvSolutions.DataSource = SolutionsList.Solutions;
+            dgvSolutions.DataBind();
         }
 
-        public SolutionItemModel SelectedItem
+        public PulsationSolutionItemModel SelectedItem
         {
             get
             {
-                if (dgvSolutions.CurrentRow != null)
+                var items = dgvSolutions.RowsHierarchy.SelectedItems;
+                if (items.Length > 0)
                 {
-                    return (SolutionItemModel) dgvSolutions.CurrentRow.DataBoundItem;
+                    if (items[0].BoundFieldIndex >= 0 && items[0].BoundFieldIndex < SolutionsList.Solutions.Count)
+                    {
+                        return SolutionsList.Solutions[items[0].BoundFieldIndex];
+                    }
                 }
                 return null;
             }
         }
 
-        public List<SolutionItemModel> SelectedItems
+        public List<PulsationSolutionItemModel> SelectedItems
         {
             get
             {
-                if (dgvSolutions.SelectedRows.Count > 0)
+                var items = dgvSolutions.RowsHierarchy.SelectedItems;
+                if (items.Length > 0)
                 {
-                    return (from DataGridViewRow row in dgvSolutions.SelectedRows select (SolutionItemModel) row.DataBoundItem).ToList();
+                    return
+                        items.Where(i => i.BoundFieldIndex >= 0 && i.BoundFieldIndex < SolutionsList.Solutions.Count).
+                            Select(i => SolutionsList.Solutions[i.BoundFieldIndex]).ToList();
                 }
-                return new List<SolutionItemModel>();
+                return null;
             }
         }
 
@@ -66,6 +77,12 @@ namespace Calculation.UI.Views
         public SolutionListPresenter Presenter { get; private set; }
         public event EventHandler DeleteClicked;
         public event EventHandler CalculateAlphaClicked;
+        public event EventHandler ExportClicked;
         public event NotifyCollectionChangedEventHandler SolutionsCollectionChanged;
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace Calculation.UI.Views
 {
     public partial class SolutionsView : Form, ISolutionsView
     {
-        public SolutionsView(List<SolutionItemModel> solutionItems, bool comparison = false)
+        public SolutionsView(List<PulsationSolutionItemModel> solutionItems, bool comparison = false)
         {
             Model = new SolutionsCurvesModel(solutionItems);
             InitializeComponent();

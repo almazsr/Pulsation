@@ -31,7 +31,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.lvSolutions = new System.Windows.Forms.ListView();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.tbLayersCount = new System.Windows.Forms.TextBox();
+            this.tbStep = new System.Windows.Forms.TextBox();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.trbnt = new System.Windows.Forms.TrackBar();
@@ -65,7 +65,7 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.tbLayersCount);
+            this.panel2.Controls.Add(this.tbStep);
             this.panel2.Controls.Add(this.btnRefresh);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
@@ -74,12 +74,12 @@
             this.panel2.Size = new System.Drawing.Size(264, 155);
             this.panel2.TabIndex = 33;
             // 
-            // tbLayersCount
+            // tbStep
             // 
-            this.tbLayersCount.Location = new System.Drawing.Point(150, 13);
-            this.tbLayersCount.Name = "tbLayersCount";
-            this.tbLayersCount.Size = new System.Drawing.Size(100, 20);
-            this.tbLayersCount.TabIndex = 29;
+            this.tbStep.Location = new System.Drawing.Point(150, 13);
+            this.tbStep.Name = "tbStep";
+            this.tbStep.Size = new System.Drawing.Size(100, 20);
+            this.tbStep.TabIndex = 29;
             // 
             // btnRefresh
             // 
@@ -93,11 +93,11 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(129, 16);
+            this.label2.Location = new System.Drawing.Point(115, 16);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(15, 13);
+            this.label2.Size = new System.Drawing.Size(29, 13);
             this.label2.TabIndex = 30;
-            this.label2.Text = "N";
+            this.label2.Text = "Step";
             // 
             // trbnt
             // 
@@ -124,14 +124,14 @@
             this.occLayers.StencilBits = ((byte)(0));
             this.occLayers.TabIndex = 25;
             // 
-            // PulsationLaminarSolutionsView
+            // TimeDependentSolutionsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(845, 622);
             this.Controls.Add(this.occLayers);
             this.Controls.Add(this.panel1);
-            this.Name = "PulsationLaminarSolutionsView";
+            this.Name = "TimeDependentSolutionsView";
             this.Text = "График";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -148,7 +148,7 @@
         private System.Windows.Forms.TrackBar trbnt;
         private OpenGlExtensions.OpenGlChartControl occLayers;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbLayersCount;
+        private System.Windows.Forms.TextBox tbStep;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.ListView lvSolutions;
         private System.Windows.Forms.Panel panel2;

@@ -62,13 +62,15 @@
   <ItemGroup>
     <Compile Include="DbGrid1D.cs" />
     <Compile Include="DbGrid1D.Entity.cs" />
-    <Compile Include="DbLayer1D.cs" />
+    <Compile Include="DbArray.cs" />
     <Compile Include="DbLayer1D.Entity.cs" />
+    <Compile Include="DbParameter.cs" />
     <Compile Include="DbSolutionContext.cs" />
-    <Compile Include="DbSolution1D.cs" />
+    <Compile Include="DbGroup.cs" />
     <Compile Include="DbSolution1D.Entity.cs" />
     <Compile Include="DbSolutionsInitializer.cs" />
     <Compile Include="Helpers\Convert.cs" />
+    <Compile Include="ParameterAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

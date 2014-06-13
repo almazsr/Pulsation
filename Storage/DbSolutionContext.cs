@@ -14,7 +14,7 @@ namespace Calculation.Database
             Configuration.LazyLoadingEnabled = true;
         }
 
-        public DbSet<DbSolution1D> Solutions { get; set; }
+        public DbSet<DbGroup1D> Solutions { get; set; }
         public DbSet<DbLayer1D> Layers { get; set; }
         public DbSet<DbGrid1D> Grids { get; set; }
 
@@ -30,28 +30,28 @@ namespace Calculation.Database
         #region Solution creators
         public ISolution1D CreateNumericSolution(IGrid1D grid, object physicalData, Type solverType)
         {
-            var solution = new DbSolution1D((DbGrid1D)grid, physicalData, solverType);
+            var solution = new DbGroup1D((DbGrid1D)grid, physicalData, solverType);
             Solutions.Add(solution);
             return solution;            
         }
 
         public ISolution1D CreateNumericTimeDependentSolution(IGrid1D grid, object physicalData, double dt, Type solverType)
         {
-            var solution = new DbSolution1D((DbGrid1D)grid, physicalData, dt, solverType);
+            var solution = new DbGroup1D((DbGrid1D)grid, physicalData, dt, solverType);
             Solutions.Add(solution);
             return solution;   
         }
 
         public ISolution1D CreateExactSolution(IGrid1D grid, object physicalData)
         {
-            var solution = new DbSolution1D((DbGrid1D)grid, physicalData);
+            var solution = new DbGroup1D((DbGrid1D)grid, physicalData);
             Solutions.Add(solution);
             return solution;   
         }
 
         public ISolution1D CreateExactTimeDependentSolution(IGrid1D grid, object physicalData, double dt)
         {
-            var solution = new DbSolution1D((DbGrid1D)grid, physicalData, dt);
+            var solution = new DbGroup1D((DbGrid1D)grid, physicalData, dt);
             Solutions.Add(solution);
             return solution;   
         }

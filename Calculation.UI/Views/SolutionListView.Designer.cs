@@ -28,18 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            VIBlend.WinForms.DataGridView.DataGridLocalization dataGridLocalization2 = new VIBlend.WinForms.DataGridView.DataGridLocalization();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnExport = new System.Windows.Forms.Button();
+            this.btnAlpha = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnCreate = new System.Windows.Forms.Button();
             this.btnCompare = new System.Windows.Forms.Button();
             this.btnShow = new System.Windows.Forms.Button();
-            this.dgvSolutions = new System.Windows.Forms.DataGridView();
-            this.btnAlpha = new System.Windows.Forms.Button();
+            this.vDataGridViewGroupsHeader1 = new VIBlend.WinForms.DataGridView.vDataGridViewGroupsHeader();
+            this.dgvSolutions = new VIBlend.WinForms.DataGridView.vDataGridView();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSolutions)).BeginInit();
             this.SuspendLayout();
             // 
             // panel2
@@ -53,6 +55,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnExport);
             this.panel1.Controls.Add(this.btnAlpha);
             this.panel1.Controls.Add(this.btnRefresh);
             this.panel1.Controls.Add(this.btnDelete);
@@ -60,10 +63,29 @@
             this.panel1.Controls.Add(this.btnCompare);
             this.panel1.Controls.Add(this.btnShow);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(201, 0);
+            this.panel1.Location = new System.Drawing.Point(97, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(549, 69);
+            this.panel1.Size = new System.Drawing.Size(653, 69);
             this.panel1.TabIndex = 4;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // btnExport
+            // 
+            this.btnExport.Location = new System.Drawing.Point(404, 19);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(75, 23);
+            this.btnExport.TabIndex = 10;
+            this.btnExport.Text = "Экспорт";
+            this.btnExport.UseVisualStyleBackColor = true;
+            // 
+            // btnAlpha
+            // 
+            this.btnAlpha.Location = new System.Drawing.Point(485, 19);
+            this.btnAlpha.Name = "btnAlpha";
+            this.btnAlpha.Size = new System.Drawing.Size(75, 23);
+            this.btnAlpha.TabIndex = 9;
+            this.btnAlpha.Text = "alpha";
+            this.btnAlpha.UseVisualStyleBackColor = true;
             // 
             // btnRefresh
             // 
@@ -85,7 +107,7 @@
             // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(456, 19);
+            this.btnCreate.Location = new System.Drawing.Point(566, 19);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 23);
             this.btnCreate.TabIndex = 6;
@@ -110,27 +132,91 @@
             this.btnShow.Text = "Показать";
             this.btnShow.UseVisualStyleBackColor = true;
             // 
+            // vDataGridViewGroupsHeader1
+            // 
+            this.vDataGridViewGroupsHeader1.AllowDragDrop = true;
+            this.vDataGridViewGroupsHeader1.BackColor = System.Drawing.Color.White;
+            this.vDataGridViewGroupsHeader1.ConnectingLinesColor = System.Drawing.Color.DarkGray;
+            this.vDataGridViewGroupsHeader1.DataGridView = this.dgvSolutions;
+            this.vDataGridViewGroupsHeader1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.vDataGridViewGroupsHeader1.HeaderItemsAlignment = VIBlend.WinForms.DataGridView.HeaderGroupsAlignment.Near;
+            this.vDataGridViewGroupsHeader1.IsThemeSynchronized = true;
+            this.vDataGridViewGroupsHeader1.Location = new System.Drawing.Point(0, 0);
+            this.vDataGridViewGroupsHeader1.Name = "vDataGridViewGroupsHeader1";
+            this.vDataGridViewGroupsHeader1.PromptText = "";
+            this.vDataGridViewGroupsHeader1.PromptTextColor = System.Drawing.Color.DarkGray;
+            this.vDataGridViewGroupsHeader1.Size = new System.Drawing.Size(750, 28);
+            this.vDataGridViewGroupsHeader1.TabIndex = 5;
+            this.vDataGridViewGroupsHeader1.Text = "vDataGridViewGroupsHeader1";
+            this.vDataGridViewGroupsHeader1.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+            // 
             // dgvSolutions
             // 
-            this.dgvSolutions.AllowUserToAddRows = false;
-            this.dgvSolutions.AllowUserToDeleteRows = false;
-            this.dgvSolutions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSolutions.AllowAnimations = true;
+            this.dgvSolutions.AllowCellMerge = true;
+            this.dgvSolutions.AllowClipDrawing = true;
+            this.dgvSolutions.AllowContextMenuColumnChooser = true;
+            this.dgvSolutions.AllowContextMenuFiltering = true;
+            this.dgvSolutions.AllowContextMenuGrouping = true;
+            this.dgvSolutions.AllowContextMenuSorting = true;
+            this.dgvSolutions.AllowCopyPaste = false;
+            this.dgvSolutions.AllowDefaultContextMenu = true;
+            this.dgvSolutions.AllowDragDropIndication = true;
+            this.dgvSolutions.AllowDrop = true;
+            this.dgvSolutions.AllowHeaderItemHighlightOnCellSelection = true;
+            this.dgvSolutions.AutoUpdateOnListChanged = false;
+            this.dgvSolutions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(171)))), ((int)(((byte)(171)))), ((int)(((byte)(171)))));
+            this.dgvSolutions.BindingProgressEnabled = false;
+            this.dgvSolutions.BindingProgressSampleRate = 20000;
+            this.dgvSolutions.BorderColor = System.Drawing.Color.Empty;
+            this.dgvSolutions.CellsArea.AllowCellMerge = true;
+            this.dgvSolutions.CellsArea.ConditionalFormattingEnabled = false;
+            this.dgvSolutions.ColumnsHierarchy.AllowDragDrop = false;
+            this.dgvSolutions.ColumnsHierarchy.AllowResize = true;
+            this.dgvSolutions.ColumnsHierarchy.AutoStretchColumns = false;
+            this.dgvSolutions.ColumnsHierarchy.Fixed = false;
+            this.dgvSolutions.ColumnsHierarchy.ShowExpandCollapseButtons = true;
             this.dgvSolutions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvSolutions.Location = new System.Drawing.Point(0, 0);
+            this.dgvSolutions.EnableColumnChooser = false;
+            this.dgvSolutions.EnableResizeToolTip = true;
+            this.dgvSolutions.EnableToolTips = true;
+            this.dgvSolutions.FilterDisplayMode = VIBlend.WinForms.DataGridView.FilterDisplayMode.Default;
+            this.dgvSolutions.GridLinesDashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+            this.dgvSolutions.GridLinesDisplayMode = VIBlend.WinForms.DataGridView.GridLinesDisplayMode.DISPLAY_ALL;
+            this.dgvSolutions.GroupingEnabled = true;
+            this.dgvSolutions.HorizontalScroll = 0;
+            this.dgvSolutions.HorizontalScrollBarLargeChange = 20;
+            this.dgvSolutions.HorizontalScrollBarSmallChange = 5;
+            this.dgvSolutions.ImageList = null;
+            this.dgvSolutions.Localization = dataGridLocalization2;
+            this.dgvSolutions.Location = new System.Drawing.Point(0, 28);
+            this.dgvSolutions.MultipleSelectionEnabled = true;
             this.dgvSolutions.Name = "dgvSolutions";
-            this.dgvSolutions.ReadOnly = true;
-            this.dgvSolutions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvSolutions.Size = new System.Drawing.Size(750, 512);
-            this.dgvSolutions.TabIndex = 3;
-            // 
-            // btnAlpha
-            // 
-            this.btnAlpha.Location = new System.Drawing.Point(375, 19);
-            this.btnAlpha.Name = "btnAlpha";
-            this.btnAlpha.Size = new System.Drawing.Size(75, 23);
-            this.btnAlpha.TabIndex = 9;
-            this.btnAlpha.Text = "alpha";
-            this.btnAlpha.UseVisualStyleBackColor = true;
+            this.dgvSolutions.PivotColumnsTotalsEnabled = false;
+            this.dgvSolutions.PivotColumnsTotalsMode = VIBlend.WinForms.DataGridView.PivotTotalsMode.DISPLAY_BOTH;
+            this.dgvSolutions.PivotRowsTotalsEnabled = false;
+            this.dgvSolutions.PivotRowsTotalsMode = VIBlend.WinForms.DataGridView.PivotTotalsMode.DISPLAY_BOTH;
+            this.dgvSolutions.RowsHierarchy.AllowDragDrop = false;
+            this.dgvSolutions.RowsHierarchy.AllowResize = true;
+            this.dgvSolutions.RowsHierarchy.CompactStyleRenderingEnabled = false;
+            this.dgvSolutions.RowsHierarchy.CompactStyleRenderingItemsIndent = 15;
+            this.dgvSolutions.RowsHierarchy.Fixed = false;
+            this.dgvSolutions.RowsHierarchy.ShowExpandCollapseButtons = true;
+            this.dgvSolutions.ScrollBarsEnabled = true;
+            this.dgvSolutions.SelectionBorderDashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+            this.dgvSolutions.SelectionBorderEnabled = true;
+            this.dgvSolutions.SelectionBorderWidth = 2;
+            this.dgvSolutions.SelectionMode = VIBlend.WinForms.DataGridView.vDataGridView.SELECTION_MODE.FULL_ROW_SELECT;
+            this.dgvSolutions.Size = new System.Drawing.Size(750, 484);
+            this.dgvSolutions.TabIndex = 6;
+            this.dgvSolutions.Text = "vDataGridView1";
+            this.dgvSolutions.ToolTipDuration = 5000;
+            this.dgvSolutions.ToolTipShowDelay = 1500;
+            this.dgvSolutions.VerticalScroll = 0;
+            this.dgvSolutions.VerticalScrollBarLargeChange = 20;
+            this.dgvSolutions.VerticalScrollBarSmallChange = 5;
+            this.dgvSolutions.VIBlendTheme = VIBlend.Utilities.VIBLEND_THEME.VISTABLUE;
+            this.dgvSolutions.VirtualModeCellDefault = false;
             // 
             // SolutionListView
             // 
@@ -138,13 +224,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(750, 581);
             this.Controls.Add(this.dgvSolutions);
+            this.Controls.Add(this.vDataGridViewGroupsHeader1);
             this.Controls.Add(this.panel2);
             this.Name = "SolutionListView";
             this.Text = "Решения";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSolutions)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -152,7 +238,6 @@
         #endregion
 
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.DataGridView dgvSolutions;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnCreate;
@@ -160,5 +245,8 @@
         private System.Windows.Forms.Button btnShow;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnAlpha;
+        private System.Windows.Forms.Button btnExport;
+        private VIBlend.WinForms.DataGridView.vDataGridViewGroupsHeader vDataGridViewGroupsHeader1;
+        private VIBlend.WinForms.DataGridView.vDataGridView dgvSolutions;
     }
 }

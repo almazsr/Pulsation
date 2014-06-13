@@ -8,12 +8,12 @@ namespace Calculation.UI.Models
     {
         public SolutionListModel()
         {
-            Solutions = new ObservableCollection<SolutionItemModel>();
+            Solutions = new ObservableCollection<PulsationSolutionItemModel>();
         }
 
-        private ObservableCollection<SolutionItemModel> _solutions;
+        private ObservableCollection<PulsationSolutionItemModel> _solutions;
 
-        public ObservableCollection<SolutionItemModel> Solutions
+        public ObservableCollection<PulsationSolutionItemModel> Solutions
         {
             get { return _solutions; }
             set

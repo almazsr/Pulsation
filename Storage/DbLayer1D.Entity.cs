@@ -2,9 +2,9 @@
 
 namespace Calculation.Database
 {
-    public partial class DbLayer1D
+    public partial class DbArray
     {
-        public DbLayer1D()
+        public DbArray()
         {
             
         }
@@ -12,14 +12,14 @@ namespace Calculation.Database
         [Key]
         public int Id { get; set; }
 
-        public int nt { get; set; }
-
-        public double t { get; set; }
+        public int Number { get; set; }
 
         public int DbSolutionId { get; set; }
 
+        public int GroupId { get; set; }
+        public string Name { get; set; }
         public byte[] Data { get; set; }
 
-        public virtual DbSolution1D DbSolution { get; set; }
+        public virtual DbGroup DbGroup { get; set; }
     }
 }

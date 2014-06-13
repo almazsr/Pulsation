@@ -78,10 +78,6 @@
       <Project>{3FDBE64A-7C3A-4295-9CD0-032C36AAF0ED}</Project>
       <Name>Calculation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Storage\Calculation.Database.csproj">
-      <Project>{2DEA5F05-60CC-413F-BF7B-005FA2DFFF00}</Project>
-      <Name>Calculation.Database</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

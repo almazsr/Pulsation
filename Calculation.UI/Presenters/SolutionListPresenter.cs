@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Windows.Forms;
-using Calculation.Database;
+using Calculation.Classes.Data;
+using Calculation.Export;
 using Calculation.UI.Helpers;
 using Calculation.UI.Models;
-using Calculation.UI.Solvers;
 using Calculation.UI.Views;
+using Pulsation.Models;
+using Pulsation.Solvers;
 
 namespace Calculation.UI.Presenters
 {
@@ -21,7 +24,29 @@ namespace Calculation.UI.Presenters
             View.ShowClicked += OnShowClicked;
             View.DeleteClicked += OnDeleteClicked;
             View.RefreshClicked += OnRefreshClicked;
+            View.ExportClicked += OnExportClicked;
             View.CalculateAlphaClicked += OnCalculateAlphaClicked;
+        }
+
+        private void OnExportClicked(object sender, EventArgs e)
+        {
+            if (View.SelectedItem != null)
+            {
+                var item = View.SelectedItem;
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                                                    {Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*"};
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filename = saveFileDialog.FileName;
+                    ArraysExporter exporter = new ArraysExporter();
+                    using (CalculationDbContext db = new CalculationDbContext())
+                    {
+                        var bundle = db.GetBundle(item.Id);
+                        var arrays = bundle.GetAllArrays();
+                        exporter.ExportToFile(filename, bundle.GetData<PulsationData>(), arrays);
+                    }
+                }
+            }
         }
 
         private void OnCalculateAlphaClicked(object sender, EventArgs e)
@@ -29,8 +54,14 @@ namespace Calculation.UI.Presenters
             var solutionItem = View.SelectedItem;
             if (solutionItem != null)
             {
-                PulsationLaminarSolver.CalculateAlpha1(solutionItem.Id);
-                PulsationLaminarSolver.CalculateAlpha2(solutionItem.Id);
+                PulsationAlphaSolver solver = new PulsationAlphaSolver();
+                using(CalculationDbContext db = new CalculationDbContext())
+                {
+                    var group = db.GetBundle(solutionItem.Id);
+                    var pulsationData = group.GetData<PulsationData>();
+                    PulsationAlphaData data = new PulsationAlphaData(pulsationData, group);
+                    solver.Solve("Alpha", data);
+                }
             }
         }
 
@@ -41,11 +72,11 @@ namespace Calculation.UI.Presenters
 
         private void OnDeleteClicked(object sender, EventArgs e)
         {
-            using (DbSolutionContext db = new DbSolutionContext())
+            using (CalculationDbContext db = new CalculationDbContext())
             {
                 foreach (var item in View.SelectedItems)
                 {
-                    db.DeleteSolution(item.Id);
+                    db.DeleteBundle(item.Id);
                 }
                 db.SaveChanges();
             }
@@ -90,11 +121,11 @@ namespace Calculation.UI.Presenters
 
         public void FillData()
         {
-            using(DbSolutionContext db = new DbSolutionContext())
+            using(CalculationDbContext db = new CalculationDbContext())
             {
-                var solutions = db.GetSolutions();
-                var solutionsList = solutions.Select(s => s.ToItemModel()).ToList();
-                View.SolutionsList.Solutions = new ObservableCollection<SolutionItemModel>(solutionsList);
+                var solutions = db.GetGroups();
+                var solutionsList = solutions.Select(s => s.ToItemModel(s.GetData<PulsationData>())).ToList();
+                View.SolutionsList.Solutions = new ObservableCollection<PulsationSolutionItemModel>(solutionsList);
             }            
             View.Bind();
         }

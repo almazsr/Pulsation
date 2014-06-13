@@ -10,9 +10,9 @@ namespace Calculation.UI.Views
     {
         SolutionListModel SolutionsList { get; set; }
 
-        SolutionItemModel SelectedItem { get; }
+        PulsationSolutionItemModel SelectedItem { get; }
 
-        List<SolutionItemModel> SelectedItems { get; }
+        List<PulsationSolutionItemModel> SelectedItems { get; }
 
         void Bind();
 
@@ -29,6 +29,8 @@ namespace Calculation.UI.Views
         event EventHandler DeleteClicked;
 
         event EventHandler CalculateAlphaClicked;
+
+        event EventHandler ExportClicked;
 
         event NotifyCollectionChangedEventHandler SolutionsCollectionChanged;
     }

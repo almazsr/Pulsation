@@ -4,12 +4,13 @@ using System.ComponentModel;
 using System.Linq;
 using Calculation.UI.Helpers;
 using OpenGlExtensions.Classes;
+using Pulsation;
 
 namespace Calculation.UI.Models
 {
     public class SolutionsModel : INotifyPropertyChanged
     {
-        public SolutionsModel(IEnumerable<SolutionItemModel> solutionItems)
+        public SolutionsModel(IEnumerable<PulsationSolutionItemModel> solutionItems)
         {
             SolutionItems = solutionItems.Select((si, i) => new SolutionItemColoredModel(si, Pallete.GetColor(i))).ToList();
         }
@@ -27,7 +28,7 @@ namespace Calculation.UI.Models
 
     public class SolutionsCurvesModel : SolutionsModel
     {
-        public SolutionsCurvesModel(IEnumerable<SolutionItemModel> solutionItems) 
+        public SolutionsCurvesModel(IEnumerable<PulsationSolutionItemModel> solutionItems) 
             : base(solutionItems)
         {
             Curves = new Dictionary<string, Curve2D>();
@@ -38,7 +39,7 @@ namespace Calculation.UI.Models
 
     public class SolutionsCurveGroupsModel : SolutionsModel
     {
-        public SolutionsCurveGroupsModel(IEnumerable<SolutionItemModel> solutionItems) : base(solutionItems)
+        public SolutionsCurveGroupsModel(IEnumerable<PulsationSolutionItemModel> solutionItems) : base(solutionItems)
         {
             CurveGroups = new Dictionary<string, List<Curve2D>>();
         }
@@ -48,24 +49,62 @@ namespace Calculation.UI.Models
 
     public class SolutionsTimeDependentModel : SolutionsCurveGroupsModel
     {
-        public SolutionsTimeDependentModel(IEnumerable<SolutionItemModel> solutionItems)
+        public SolutionsTimeDependentModel(IEnumerable<PulsationSolutionItemModel> solutionItems)
             : base(solutionItems)
         {
+            this._count = solutionItems.Min(s => s.CountInPeriod > 0 ? s.CountInPeriod : s.Count);
         }
 
-        public int LayersCount
+        public int Step
         {
-            get { return AppSettings.Default.LayersCount; }
+            get { return PulsationSettings.Default.Step; }
             set
             {
-                if (AppSettings.Default.LayersCount != value)
+                if (PulsationSettings.Default.Step != value)
                 {
-                    AppSettings.Default.LayersCount = value;
+                    PulsationSettings.Default.Step = value;
                     OnPropertyChanged("LayersCount");
                     OnLayersCountChanged();
+                    OnPropertyChanged("MaxIndex");
+                    OnMaxIndexChanged();
+                    OnPropertyChanged("Count");
+                    OnCountChanged();
                 }
             }
         }
+
+        public int MaxIndex
+        {
+            get { return _count/Step - 1; }
+        }
+
+        protected virtual void OnMaxIndexChanged()
+        {
+            if (MaxIndexChanged != null)
+            {
+                MaxIndexChanged(this, new EventArgs());
+            }
+            CurrentLayerIndex = 0;
+        }
+
+        public event EventHandler MaxIndexChanged;
+
+        private readonly int _count;
+
+        public int Count
+        {
+            get { return _count / Step; }
+        }
+
+        protected virtual void OnCountChanged()
+        {
+            if (CountChanged != null)
+            {
+                CountChanged(this, new EventArgs());
+            }
+        }
+
+        public event EventHandler CountChanged;
 
         protected virtual void OnLayersCountChanged()
         {
